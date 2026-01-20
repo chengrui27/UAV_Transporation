@@ -1,0 +1,653 @@
+from acados_template import AcadosOcp, AcadosOcpSolver, AcadosSimSolver
+from casadi import vertcat, log, exp, mtimes
+import numpy as np
+import scipy.linalg
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+
+from model import create_kinodynamic_model, quat_to_rotation_matrix
+
+
+np.set_printoptions(suppress=True, precision=4)
+
+
+def build_initial_state(params, n_cables: int):
+    """
+    构造初始状态 x0:
+        - 负载在原点附近静止，姿态为单位四元数
+        - 钢索方向竖直向下 s_i = [0, 0, -1]
+        - 高阶导数和张力导数为 0
+        - 张力 t_i 均分负载重力
+    """
+    m_load = params["m_load"]
+    g = params["g"]
+
+    nx = 13 + 14 * n_cables
+    x0 = np.zeros(nx)
+
+    # 负载位置 p, 速度 v
+    x0[0:3] = np.array([0.0, 0.0, 0.0])  # p
+    x0[3:6] = np.array([0.0, 0.0, 0.0])  # v
+
+    # 姿态四元数 q = [1, 0, 0, 0]
+    x0[6:10] = np.array([1.0, 0.0, 0.0, 0.0])
+
+    # 角速度 ω = 0
+    x0[10:13] = np.array([0.0, 0.0, 0.0])
+
+    # 钢索状态
+    t_nominal = m_load * g / float(n_cables)  # 每条钢索平均分担重力
+
+    for i in range(n_cables):
+        base = 13 + 14 * i
+
+        # s_i
+        x0[base : base + 3] = np.array([0.0, 0.0, -1.0])
+        # r_i, rdot_i, rddot_i
+        x0[base + 3 : base + 12] = 0.0
+        # t_i
+        x0[base + 12] = t_nominal
+        # tdot_i
+        x0[base + 13] = 0.0
+
+    return x0
+
+
+def create_nmpc_solver(n_cables: int = 3):
+    """
+    创建基于 acados 的 NMPC 求解器:
+        - 使用 model.py 中的 create_kinodynamic_model
+        - NONLINEAR_LS 二次型跟踪 + 避障代价
+        - 对输入 u 施加 box 约束，推力为硬约束
+    """
+
+    # 创建 OCP 对象
+    ocp = AcadosOcp()
+
+    # 设置模型
+    model, params = create_kinodynamic_model(n_cables=n_cables)
+    ocp.model = model
+
+    nx = model.x.rows()
+    nu = model.u.rows()
+    ny = nx + nu
+    ny_e = nx
+
+    print(f"kinodynamic model: nx = {nx}, nu = {nu}, cables = {n_cables}")
+
+    # --------------------------
+    # 代价函数（NONLINEAR_LS）
+    # --------------------------
+    ocp.cost.cost_type = "NONLINEAR_LS"
+    ocp.cost.cost_type_e = "NONLINEAR_LS"
+
+    Q = np.eye(nx)
+
+    # 负载位置 p（适中权重，避免过度逼近导致高频控制）
+    Q[0, 0] = 50.0
+    Q[1, 1] = 50.0
+    Q[2, 2] = 50.0
+
+    # 负载速度 v（增加阻尼）
+    Q[3, 3] = 30.0
+    Q[4, 4] = 30.0
+    Q[5, 5] = 30.0
+
+    # 姿态四元数 q
+    Q[6, 6] = 400.0
+    Q[7, 7] = 400.0
+    Q[8, 8] = 400.0
+    Q[9, 9] = 400.0
+
+    # 角速度 ω
+    Q[10, 10] = 20.0
+    Q[11, 11] = 20.0
+    Q[12, 12] = 20.0
+
+    # 钢索方向和高阶导、张力等状态：给予中等权重，抑制高频振荡
+    for i in range(13, nx):
+        Q[i, i] = 10.0
+
+    # 控制输入权重：显著增大，避免过激的 γ_i / λ_i
+    R = np.eye(nu)
+    for i in range(n_cables):
+        # γ_i 三个分量
+        for j in range(3):
+            R[4 * i + j, 4 * i + j] = 2.0
+        # λ_i
+        R[4 * i + 3, 4 * i + 3] = 0.5
+
+    # --------------------------
+    # NONLINEAR_LS 代价输出 y(x,u)
+    #   - 前 nx+nu 维: 状态/输入跟踪
+    #   - 后面若干维: 避障 softplus 代价项
+    # --------------------------
+    x_sym = model.x
+    u_sym = model.u
+
+    # tracking 输出: 直接使用全状态和输入
+    y_track = vertcat(x_sym, u_sym)
+
+    # 避障代价: 每个无人机和其挂点作为控制点
+    attachment_points = params["attachment_points"]
+    rope_length = float(params["cable_length"])
+
+    obs_cx, obs_cy = 2.5, 0.01
+    R_safe = 0.7 + 0.2  # 障碍半径 + 安全裕度
+    beta = 10.0
+    lambda_c = 1.0
+
+    obs_terms = []
+
+    # 负载位置和姿态
+    p_sym = x_sym[0:3]
+    q_sym = x_sym[6:10]
+    R_sym = quat_to_rotation_matrix(q_sym)
+
+    for i in range(n_cables):
+        base = 13 + 14 * i
+        s_i = x_sym[base : base + 3]
+
+        a_i_np = attachment_points[i]
+        a_i = vertcat(a_i_np[0], a_i_np[1], a_i_np[2])
+
+        p_attach = p_sym + mtimes(R_sym, a_i)
+        p_quad = p_attach - rope_length * s_i
+
+        for p_c in (p_attach, p_quad):
+            dx = p_c[0] - obs_cx
+            dy = p_c[1] - obs_cy
+            d2 = dx * dx + dy * dy
+
+            z = beta * (R_safe**2 - d2)
+            soft = log(1 + exp(z))
+            obs_terms.append(lambda_c * soft)
+
+    if obs_terms:
+        y_expr = vertcat(y_track, *obs_terms)
+    else:
+        y_expr = y_track
+
+    ocp.model.cost_y_expr = y_expr
+    ocp.model.cost_y_expr_e = x_sym  # 终端只跟踪状态
+
+    n_extra_terms = len(obs_terms)
+    ny = nx + nu + n_extra_terms
+    ny_e = nx
+
+    # 过程代价和终端代价（终端稍微更重）
+    W_track = scipy.linalg.block_diag(Q, R)
+    w_extra = 1e3
+    if n_extra_terms > 0:
+        W_extra = w_extra * np.eye(n_extra_terms)
+        ocp.cost.W = scipy.linalg.block_diag(W_track, W_extra)
+    else:
+        ocp.cost.W = W_track
+    ocp.cost.W_e = 20.0 * Q
+
+    # --------------------------
+    # 参考轨迹（只对状态部分设置参考）
+    # --------------------------
+    x_ref = np.zeros(nx)
+    # 负载位置、速度、姿态、角速度参考
+    x_ref[0:3] = np.array([5.0, 0.0, 0.0])          # p_ref
+    x_ref[3:6] = np.array([0.0, 0.0, 0.0])          # v_ref
+    x_ref[6:10] = np.array([1.0, 0.0, 0.0, 0.0])    # q_ref
+    x_ref[10:13] = np.array([0.0, 0.0, 0.0])        # ω_ref
+
+    # 钢索方向和张力参考
+    m_load = params["m_load"]
+    g = params["g"]
+    t_nominal = m_load * g / float(n_cables)
+
+    for i in range(n_cables):
+        base = 13 + 14 * i
+        # s_i
+        x_ref[base : base + 3] = np.array([0.0, 0.0, -1.0])
+        # r_i, rdot_i, rddot_i
+        x_ref[base + 3 : base + 12] = 0.0
+        # t_i
+        x_ref[base + 12] = t_nominal
+        # tdot_i
+        x_ref[base + 13] = 0.0
+
+    # 控制和避障代价项的参考值为 0
+    yref_full = np.zeros(ny)
+    yref_full[:nx] = x_ref
+    ocp.cost.yref = yref_full
+    ocp.cost.yref_e = x_ref
+
+    # --------------------------
+    # 约束
+    # --------------------------
+
+    # 输入约束: γ_i 和 λ_i 的 box 约束
+    lbu = []
+    ubu = []
+    for i in range(n_cables):
+        # γ_i 每个分量
+        for _ in range(3):
+            lbu.append(-5.0)
+            ubu.append(5.0)
+        # λ_i
+        lbu.append(-50.0)
+        ubu.append(50.0)
+
+    ocp.constraints.lbu = np.array(lbu)
+    ocp.constraints.ubu = np.array(ubu)
+    ocp.constraints.idxbu = np.arange(nu, dtype=int)
+
+    # 绳子张力约束: 0 < t_i < 10 N
+    t_min = 0.1
+    t_max = 10.0
+    idxbx = []
+    lbx = []
+    ubx = []
+    for i in range(n_cables):
+        idx_t = 13 + 14 * i + 12
+        idxbx.append(idx_t)
+        lbx.append(t_min)
+        ubx.append(t_max)
+    ocp.constraints.idxbx = np.array(idxbx, dtype=int)
+    ocp.constraints.lbx = np.array(lbx)
+    ocp.constraints.ubx = np.array(ubx)
+
+    # 无人机推力约束 + 无人机间碰撞约束（使用 model.con_h_expr）
+    # con_h_expr = [T_1^2, ..., T_n^2, h_coll_1, ...]
+    # 每架无人机质量 2kg，最大推力近似 32N => T_max^2
+    T_max = 32.0
+    n_thrust = n_cables
+    # 碰撞约束个数: n_cables 之间的两两组合
+    n_coll = n_cables * (n_cables - 1) // 2
+    n_h = n_thrust + n_coll
+
+    lh = np.zeros(n_h)
+    uh = np.zeros(n_h)
+
+    # 推力约束: 0 <= T_i^2 <= T_max^2
+    for i in range(n_thrust):
+        lh[i] = 0.0
+        uh[i] = T_max**2
+
+    # 无人机间碰撞约束: h_coll = ‖p_i - p_j‖^2 - d_min^2 >= 0
+    # 对应下界 0，上界给一个较大值
+    for j in range(n_coll):
+        idx = n_thrust + j
+        lh[idx] = 0.0
+        uh[idx] = 1e4
+
+    ocp.constraints.lh = lh
+    ocp.constraints.uh = uh
+
+    # 对无人机间碰撞约束添加松弛量 (soft constraint)，推力保持硬约束
+    if n_coll > 0:
+        idxsh = np.arange(n_thrust, n_h, dtype=int)
+        ocp.constraints.idxsh = idxsh
+        ocp.constraints.lsh = np.zeros(n_coll)          # slack >= 0
+        ocp.constraints.ush = np.ones(n_coll) * 1.0     # 允许有限的最小距离违规
+
+        soft_w_coll = 1e3
+        ocp.cost.Zl = 2 * soft_w_coll * np.ones(n_coll)
+        ocp.cost.Zu = 2 * soft_w_coll * np.ones(n_coll)
+        ocp.cost.zl = 2 * soft_w_coll * np.ones(n_coll)
+        ocp.cost.zu = 2 * soft_w_coll * np.ones(n_coll)
+
+    # 初始状态约束（stage 0 全状态固定为 x0）
+    x0 = build_initial_state(params, n_cables)
+    ocp.constraints.x0 = x0
+
+    # --------------------------
+    # 求解器选项
+    # --------------------------
+    # 使用 FULL_CONDENSING_HPIPM + SQP_RTI，与之前稳定版本一致
+    ocp.solver_options.qp_solver = "FULL_CONDENSING_HPIPM"
+    ocp.solver_options.hessian_approx = "GAUSS_NEWTON"
+    ocp.solver_options.integrator_type = "ERK"
+    ocp.solver_options.nlp_solver_type = "SQP_RTI"
+    ocp.solver_options.qp_solver_warm_start = 1
+    ocp.solver_options.print_level = 0
+
+    # 预测时域
+    N = 20
+    T = 2.0
+    ocp.dims.N = N
+    ocp.solver_options.tf = T
+
+    # 创建求解器
+    json_name = f"kinodynamic_ocp_{n_cables}cables.json"
+    print("Creating ACADOS OCP solver...")
+    acados_ocp = AcadosOcpSolver(ocp, json_file=json_name)
+    acados_sim = AcadosSimSolver(ocp, json_file=json_name)
+    print("Solver created.")
+
+    return acados_ocp, acados_sim, params
+
+
+def nmpc_sim(n_cables: int = 3, Nsim: int = 60):
+    """
+    使用 SQP-RTI 循环进行简单仿真:
+        - 每一步运行 RTI 两个阶段 (1: preparation, 2: feedback)
+        - 使用显式积分器推进系统状态
+    """
+    ocp_solver, integrator, params = create_nmpc_solver(n_cables=n_cables)
+
+    nx = ocp_solver.acados_ocp.dims.nx
+    nu = ocp_solver.acados_ocp.dims.nu
+
+    # 初始状态
+    x0 = build_initial_state(params, n_cables)
+
+    simX = np.zeros((Nsim + 1, nx))
+    simU = np.zeros((Nsim, nu))
+    simX[0, :] = x0
+
+    t_preparation = np.zeros(Nsim)
+    t_feedback = np.zeros(Nsim)
+
+    for i in range(Nsim):
+        # Phase 1: 准备阶段 - 基于先前状态进行线性化
+        ocp_solver.options_set("rti_phase", 1)
+        status = ocp_solver.solve()
+        t_preparation[i] = ocp_solver.get_stats("time_tot")
+
+        if status not in [0, 2, 5]:
+            raise RuntimeError(f"acados preparation phase failed, status = {status}")
+
+        # 更新初始状态约束
+        ocp_solver.set(0, "lbx", simX[i, :])
+        ocp_solver.set(0, "ubx", simX[i, :])
+
+        # Phase 2: 反馈阶段 - 求解 QP
+        ocp_solver.options_set("rti_phase", 2)
+        status = ocp_solver.solve()
+        t_feedback[i] = ocp_solver.get_stats("time_tot")
+
+        if status not in [0, 2, 5]:
+            raise RuntimeError(f"acados feedback phase failed, status = {status}")
+
+        # 读取第一个控制输入并前向仿真
+        u_curr = ocp_solver.get(0, "u")
+        simU[i, :] = u_curr
+        x_next = integrator.simulate(x=simX[i, :], u=u_curr)
+        simX[i + 1, :] = x_next
+
+    # 打印时间统计（准备 / 反馈阶段分开）
+    t_pre_ms = 1e3 * t_preparation
+    t_fb_ms = 1e3 * t_feedback
+    print(
+        f"Preparation phase time [ms]: min {t_pre_ms.min():.3f}, "
+        f"median {np.median(t_pre_ms):.3f}, max {t_pre_ms.max():.3f}"
+    )
+    print(
+        f"Feedback phase time   [ms]: min {t_fb_ms.min():.3f}, "
+        f"median {np.median(t_fb_ms):.3f}, max {t_fb_ms.max():.3f}"
+    )
+
+    # 打印终端负载状态
+    x_terminal = simX[-1, :]
+    print("\nFinal load state:")
+    print(f"  p  = {x_terminal[0:3]}")
+    print(f"  v  = {x_terminal[3:6]}")
+    print(f"  q  = {x_terminal[6:10]}")
+    print(f"  ω  = {x_terminal[10:13]}")
+
+    return simX, simU, params
+
+
+def quaternion_to_rotation_matrix_np(q):
+    """
+    将四元数 q = [qw, qx, qy, qz] 转换为 3x3 旋转矩阵 (numpy 版本).
+    """
+    qw, qx, qy, qz = q
+
+    # 归一化，避免数值积累导致的漂移
+    norm = np.sqrt(qw**2 + qx**2 + qy**2 + qz**2)
+    if norm <= 0.0:
+        return np.eye(3)
+    qw /= norm
+    qx /= norm
+    qy /= norm
+    qz /= norm
+
+    R = np.array(
+        [
+            [1 - 2 * (qy**2 + qz**2), 2 * (qx * qy - qw * qz), 2 * (qx * qz + qw * qy)],
+            [2 * (qx * qy + qw * qz), 1 - 2 * (qx**2 + qz**2), 2 * (qy * qz - qw * qx)],
+            [2 * (qx * qz - qw * qy), 2 * (qy * qz + qw * qx), 1 - 2 * (qx**2 + qy**2)],
+        ]
+    )
+    return R
+
+
+def visualize_multi_drone_payload(simX, simU, params, interval: int = 50, save_animation: bool = False):
+    """
+    可视化 3 架无人机吊载刚性长方体的 3D 动画（模仿 px4_payload_nmpc 的风格）.
+
+    simX: (Nsim+1, nx) 状态轨迹
+    simU: (Nsim,   nu) 控制轨迹
+    params: create_kinodynamic_model 返回的参数字典
+    interval: 动画帧间隔 (ms)
+    save_animation: 是否保存为 GIF
+    """
+
+    n_steps, nx = simX.shape
+    n_cables = int(params["n_cables"])
+    rope_length = float(params["cable_length"])
+    attachment_points = np.array(params["attachment_points"])  # (n_cables, 3)
+    Lx, Ly, Lz = params["dims"]
+
+    # 提取负载位置
+    payload_pos = simX[:, 0:3]  # (N, 3)
+
+    # 预计算每个时间步的无人机位置
+    drone_pos = np.zeros((n_steps, n_cables, 3))
+
+    for k in range(n_steps):
+        p_load = payload_pos[k]
+        q_load = simX[k, 6:10]
+        R_load = quaternion_to_rotation_matrix_np(q_load)
+
+        for i in range(n_cables):
+            base = 13 + 14 * i
+            s_i = simX[k, base : base + 3]  # 绳子方向（从无人机指向负载）
+            a_i = attachment_points[i]
+
+            attach_world = p_load + R_load @ a_i
+            drone_pos[k, i] = attach_world - rope_length * s_i
+
+    # 准备绘图边界
+    all_points = np.concatenate(
+        [
+            payload_pos,
+            drone_pos.reshape(n_steps, -1),
+        ],
+        axis=1,
+    ).reshape(-1, 3)
+
+    x_min, y_min, z_min = all_points.min(axis=0)
+    x_max, y_max, z_max = all_points.max(axis=0)
+    max_range = max(x_max - x_min, y_max - y_min, z_max - z_min) / 2.0
+    center = np.array([(x_max + x_min) / 2.0, (y_max + y_min) / 2.0, (z_max + z_min) / 2.0])
+
+    # 创建 3D 图形
+    fig = plt.figure(figsize=(12, 9))
+    ax = fig.add_subplot(111, projection="3d")
+
+    # 固定视角：elev 仰角，azim 水平角 （单位：度）
+    ax.view_init(elev=30, azim=-60)
+
+    ax.set_xlim(center[0] - max_range, center[0] + max_range)
+    ax.set_ylim(center[1] - max_range, center[1] + max_range)
+    ax.set_zlim(center[2] - max_range, center[2] + max_range)
+
+    ax.set_xlabel("X (m)")
+    ax.set_ylabel("Y (m)")
+    ax.set_zlabel("Z (m)")
+    ax.set_title("Multi-Quadrotor Payload NMPC (kinodynamic planner)")
+
+    # 绘制圆柱体障碍物（位于 (2, 0, 0)，半径 0.5 m）
+    obs_cx, obs_cy = 2.5, 0.01
+    obs_radius = 0.7
+    z_obs_min = z_min - 0.2
+    z_obs_max = z_max + 0.2
+    theta = np.linspace(0, 2 * np.pi, 40)
+    z_lin = np.linspace(z_obs_min, z_obs_max, 10)
+    theta_grid, z_grid = np.meshgrid(theta, z_lin)
+    x_cyl = obs_cx + obs_radius * np.cos(theta_grid)
+    y_cyl = obs_cy + obs_radius * np.sin(theta_grid)
+    z_cyl = z_grid
+    ax.plot_surface(
+        x_cyl,
+        y_cyl,
+        z_cyl,
+        alpha=0.2,
+        color="cyan",
+        linewidth=0,
+        shade=True,
+    )
+
+    # 负载点
+    payload_point = ax.scatter(
+        payload_pos[0, 0],
+        payload_pos[0, 1],
+        payload_pos[0, 2],
+        c="red",
+        s=50,
+        label="Payload",
+    )
+
+    # 无人机点
+    colors = ["blue", "green", "orange", "purple"]
+    drone_points = []
+    for i in range(n_cables):
+        point = ax.scatter(
+            drone_pos[0, i, 0],
+            drone_pos[0, i, 1],
+            drone_pos[0, i, 2],
+            c=colors[i % len(colors)],
+            s=30,
+            label=f"Drone {i+1}",
+        )
+        drone_points.append(point)
+
+    # 绳子线（从负载挂点到无人机）
+    rope_lines = []
+    for i in range(n_cables):
+        line, = ax.plot(
+            [payload_pos[0, 0], drone_pos[0, i, 0]],
+            [payload_pos[0, 1], drone_pos[0, i, 1]],
+            [payload_pos[0, 2], drone_pos[0, i, 2]],
+            c=colors[i % len(colors)],
+            linewidth=1.5,
+        )
+        rope_lines.append(line)
+
+    # 负载长方体轮廓（简单框线）
+    # 8 个角点在负载坐标系下
+    corners_body = np.array(
+        [
+            [Lx / 2, Ly / 2, Lz / 2],
+            [Lx / 2, Ly / 2, -Lz / 2],
+            [Lx / 2, -Ly / 2, Lz / 2],
+            [Lx / 2, -Ly / 2, -Lz / 2],
+            [-Lx / 2, Ly / 2, Lz / 2],
+            [-Lx / 2, Ly / 2, -Lz / 2],
+            [-Lx / 2, -Ly / 2, Lz / 2],
+            [-Lx / 2, -Ly / 2, -Lz / 2],
+        ]
+    )
+    # 以 12 条边绘制连线
+    edges = [
+        (0, 1),
+        (0, 2),
+        (0, 4),
+        (1, 3),
+        (1, 5),
+        (2, 3),
+        (2, 6),
+        (3, 7),
+        (4, 5),
+        (4, 6),
+        (5, 7),
+        (6, 7),
+    ]
+    box_lines = []
+    # 初始变换
+    R0 = quaternion_to_rotation_matrix_np(simX[0, 6:10])
+    p0 = payload_pos[0]
+    corners_world0 = (R0 @ corners_body.T).T + p0
+    for start, end in edges:
+        xs = [corners_world0[start, 0], corners_world0[end, 0]]
+        ys = [corners_world0[start, 1], corners_world0[end, 1]]
+        zs = [corners_world0[start, 2], corners_world0[end, 2]]
+        line, = ax.plot(xs, ys, zs, c="gray", linewidth=1.0, alpha=0.7)
+        box_lines.append(line)
+
+    # 文本信息
+    time_text = ax.text2D(0.02, 0.95, "", transform=ax.transAxes)
+    state_text = ax.text2D(0.02, 0.80, "", transform=ax.transAxes)
+
+    def update(frame):
+        # 更新负载位置
+        p = payload_pos[frame]
+        payload_point._offsets3d = (np.array([p[0]]), np.array([p[1]]), np.array([p[2]]))
+
+        # 更新无人机位置和绳子
+        q_load = simX[frame, 6:10]
+        R_load = quaternion_to_rotation_matrix_np(q_load)
+        for i in range(n_cables):
+            # 无人机点
+            d = drone_pos[frame, i]
+            drone_points[i]._offsets3d = (np.array([d[0]]), np.array([d[1]]), np.array([d[2]]))
+
+            # 负载挂点位置
+            a_i = attachment_points[i]
+            attach_world = p + R_load @ a_i
+
+            # 更新绳子线
+            rope_lines[i].set_data([attach_world[0], d[0]], [attach_world[1], d[1]])
+            rope_lines[i].set_3d_properties([attach_world[2], d[2]])
+
+        # 更新长方体框线
+        corners_world = (R_load @ corners_body.T).T + p
+        for line, (start, end) in zip(box_lines, edges):
+            xs = [corners_world[start, 0], corners_world[end, 0]]
+            ys = [corners_world[start, 1], corners_world[end, 1]]
+            zs = [corners_world[start, 2], corners_world[end, 2]]
+            line.set_data(xs, ys)
+            line.set_3d_properties(zs)
+
+        # 更新时间和简单状态信息
+        dt = 2.0 / max(1, simX.shape[0] - 1)
+        time_text.set_text(f"Time: {frame * dt:.2f} s")
+
+        state_str = (
+            f"Payload pos: ({p[0]:5.2f}, {p[1]:5.2f}, {p[2]:5.2f}) m\n"
+            f"Payload quat: ({simX[frame, 6]:5.2f}, {simX[frame, 7]:5.2f}, "
+            f"{simX[frame, 8]:5.2f}, {simX[frame, 9]:5.2f})\n"
+        )
+        state_text.set_text(state_str)
+
+        return [payload_point, *drone_points, *rope_lines, *box_lines, time_text, state_text]
+
+    anim = FuncAnimation(fig, update, frames=n_steps, interval=interval, blit=False, repeat=True)
+
+    if save_animation:
+        print("Saving animation to multi_drone_payload_animation.gif ...")
+        anim.save("multi_drone_payload_animation.gif", writer="pillow", fps=int(1000 / interval))
+        print("Animation saved!")
+
+    plt.tight_layout()
+    plt.show()
+
+    return anim
+
+
+if __name__ == "__main__":
+    # 运行一个简单仿真测试
+    simX, simU, params = nmpc_sim(n_cables=3, Nsim=100)
+    print("Simulation finished. Trajectory shapes:", simX.shape, simU.shape)
+
+    print("\nGenerating animation...")
+    visualize_multi_drone_payload(simX, simU, params, interval=50, save_animation=False)

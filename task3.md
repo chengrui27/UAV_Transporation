@@ -1,0 +1,10 @@
+该目录下的multi_payload中的python文件都通过ACADOS实现了多无人机的吊运的控制器；
+并且该目录下有px4_payload和TUD_payload两个目录，他们也各自通过ACADOS实现了单无人机和多无人机的吊运的控制器，但是方法有所不同，吊运货物的形状和无人机的分布也不同；
+现在你需要参考px4_payload和TUD_payload中的部分方法，修改multi_payload中的控制器设计，具体实现步骤如下：
+
+1、读TUD_payload中的model.py和nmpc.py文件，重点关注货物的形状和无人机挂点分布、避障代价的设计；
+2、读px4_payload中的px4_payload_model.py和px4_payload_nmpc.py文件，重点关注添加推力导数和无人机角速度二阶导数为输入的部分；
+3、首先修改multi_payload中货物的形状和无人机的分布，货物形状、无人机挂点和绳子长度都要参考TUD_payload中的设计和实现；
+4、将multi_payload中控制器的输入改为无人机推力的导数和角速度的二阶导数，方法参考px4_payload；
+5、为multi_payload中的系统添加避障代价，方法参考TUD_payload；
+
