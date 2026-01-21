@@ -58,6 +58,7 @@ public:
         this->declare_parameter("quad_mass", 1.535);             // 四旋翼质量 (kg)
         this->declare_parameter("payload_mass", 0.35);          // 负载质量 (kg)
         this->declare_parameter("control_frequency", 100.0);   // 控制频率 (Hz)
+        this->declare_parameter("nmpc_frequency", 10.0);       // NMPC求解频率 (Hz)
         this->declare_parameter("offboard_delay", 2.0);        // Offboard延迟 (s)
 
         // 获取参数
@@ -65,6 +66,7 @@ public:
         quad_mass_ = this->get_parameter("quad_mass").as_double();
         payload_mass_ = this->get_parameter("payload_mass").as_double();
         control_frequency_ = this->get_parameter("control_frequency").as_double();
+        nmpc_frequency_ = this->get_parameter("nmpc_frequency").as_double();
         offboard_delay_ = this->get_parameter("offboard_delay").as_double();
         gravity_ = 9.81;
 
@@ -76,6 +78,7 @@ public:
         RCLCPP_INFO(this->get_logger(), "  Quad mass: %.2f kg", quad_mass_);
         RCLCPP_INFO(this->get_logger(), "  Payload mass: %.2f kg", payload_mass_);
         RCLCPP_INFO(this->get_logger(), "  Control frequency: %.0f Hz", control_frequency_);
+        RCLCPP_INFO(this->get_logger(), "  NMPC frequency: %.0f Hz", nmpc_frequency_);
         RCLCPP_INFO(this->get_logger(), "  Offboard delay: %.1f s", offboard_delay_);
 
         // 设置QoS为BEST_EFFORT以匹配MAVROS
@@ -124,12 +127,25 @@ public:
         // 初始化acados求解器
         initializeAcadosSolver();
 
-        // 创建控制定时器 (100Hz)
+        // 初始化默认控制 (悬停)
+        current_control_.thrust = (quad_mass_ + payload_mass_) * gravity_;
+        current_control_.body_rate_x = 0.0;
+        current_control_.body_rate_y = 0.0;
+        current_control_.body_rate_z = 0.0;
+
+        // 创建控制定时器 (发布频率)
         auto timer_period = std::chrono::microseconds(
             static_cast<int64_t>(1e6 / control_frequency_));
         control_timer_ = this->create_wall_timer(
             timer_period,
             std::bind(&NMPCController::controlTimerCallback, this));
+
+        // 创建NMPC求解定时器
+        auto solve_timer_period = std::chrono::microseconds(
+            static_cast<int64_t>(1e6 / nmpc_frequency_));
+        solve_timer_ = this->create_wall_timer(
+            solve_timer_period,
+            std::bind(&NMPCController::solveTimerCallback, this));
 
         // 创建预测轨迹发布定时器 (0.5秒 = 2Hz)
         path_publish_timer_ = this->create_wall_timer(
@@ -154,6 +170,29 @@ public:
     }
 
 private:
+    // ========== 数据结构 ==========
+
+    struct NMPCState {
+        Eigen::Vector3d payload_position_enu;
+        Eigen::Vector3d payload_velocity_enu;
+        Eigen::Vector3d cable_direction;
+        Eigen::Vector3d cable_angular_velocity;
+        Eigen::Quaterniond quad_attitude_enu;
+    };
+
+    struct NMPCControl {
+        double thrust;
+        double body_rate_x;
+        double body_rate_y;
+        double body_rate_z;
+    };
+
+    struct QuadKinematics {
+        Eigen::Vector3d position_enu;
+        Eigen::Vector3d velocity_enu;
+        Eigen::Vector3d accel_enu;
+    };
+
     // ========== 回调函数 ==========
 
     /**
@@ -320,6 +359,18 @@ private:
             return;
         }
 
+        // 100Hz 发布控制指令
+        publishBodyRateControl();
+    }
+
+    /**
+     * @brief NMPC求解定时器回调 (10Hz)
+     */
+    void solveTimerCallback() {
+        if (!all_data_ready_ || !offboard_enabled_) {
+            return;
+        }
+
         // 计算NMPC状态变量
         computeNMPCState();
 
@@ -336,9 +387,6 @@ private:
             solve_success_count_++;
             avg_solve_time_ms_ = (avg_solve_time_ms_ * (solve_count_ - 1) + solve_time) / solve_count_;
 
-            // 发布控制指令
-            publishBodyRateControl();
-
             // 每100次打印一次统计
             if (solve_count_ % 100 == 0) {
                 double success_rate = 100.0 * solve_success_count_ / solve_count_;
@@ -349,8 +397,6 @@ private:
         } else {
             RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
                 "NMPC solver failed! Using previous control input.");
-            // 使用上次的控制输入
-            publishBodyRateControl();
         }
     }
 
@@ -398,6 +444,47 @@ private:
         }
 
 
+    }
+
+    /**
+     * @brief 由NMPC状态计算无人机期望位置/速度/加速度 (ENU)
+     */
+    QuadKinematics computeQuadKinematicsFromState(const double* x) const {
+        Eigen::Vector3d pL(x[0], x[1], x[2]);
+        Eigen::Vector3d vL(x[3], x[4], x[5]);
+        Eigen::Vector3d q(x[6], x[7], x[8]);
+        Eigen::Vector3d w(x[9], x[10], x[11]);
+
+        double q0 = x[12];
+        double q1 = x[13];
+        double q2 = x[14];
+        double q3 = x[15];
+        double T = x[16];
+
+        Eigen::Vector3d r3(
+            2.0 * (q1 * q3 + q0 * q2),
+            2.0 * (q2 * q3 - q0 * q1),
+            q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3);
+
+        Eigen::Vector3d F = T * r3;
+        double qT_F = q.dot(F);
+        Eigen::Vector3d Pq_F = q * qT_F;
+
+        double rope_tension_factor = quad_mass_ * cable_length_ * w.squaredNorm();
+        Eigen::Vector3d aL = Pq_F / (quad_mass_ + payload_mass_)
+            - rope_tension_factor * q / (quad_mass_ + payload_mass_)
+            - Eigen::Vector3d(0.0, 0.0, gravity_);
+
+        Eigen::Vector3d wdot(
+            -T * (q.y() * r3.z() - q.z() * r3.y()) / (quad_mass_ * cable_length_),
+            -T * (q.z() * r3.x() - q.x() * r3.z()) / (quad_mass_ * cable_length_),
+            -T * (q.x() * r3.y() - q.y() * r3.x()) / (quad_mass_ * cable_length_));
+
+        Eigen::Vector3d pQ = pL - cable_length_ * q;
+        Eigen::Vector3d vQ = vL - cable_length_ * w.cross(q);
+        Eigen::Vector3d aQ = aL - cable_length_ * (wdot.cross(q) + w.cross(w.cross(q)));
+
+        return {pQ, vQ, aQ};
     }
 
     /**
@@ -714,13 +801,21 @@ private:
             return false;
         }
 
-        // 当前控制量：从状态向量中读取推力和角速度
-        // 状态索引与 px4_payload_model.py 保持一致:
-        // 16: T, 17: Ωx, 18: Ωy, 19: Ωz
-        current_control_.thrust = x0[16];
-        current_control_.body_rate_x = x0[17];
-        current_control_.body_rate_y = x0[18];
-        current_control_.body_rate_z = x0[19];
+        if (N >= 1) {
+            double x_stage1[PX4_PAYLOAD_MODEL_NX];
+            ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, 1, "x", x_stage1);
+            desired_quad_kinematics_ = computeQuadKinematicsFromState(x_stage1);
+            desired_attitude_enu_.w() = x_stage1[12];
+            desired_attitude_enu_.x() = x_stage1[13];
+            desired_attitude_enu_.y() = x_stage1[14];
+            desired_attitude_enu_.z() = x_stage1[15];
+            desired_attitude_enu_ = normalizeQuaternionSign(desired_attitude_enu_);
+
+            current_control_.thrust = x_stage1[16];
+            current_control_.body_rate_x = x_stage1[17];
+            current_control_.body_rate_y = x_stage1[18];
+            current_control_.body_rate_z = x_stage1[19];
+        }
 
         // 打印状态和控制输出 (每10次打印一次，避免刷屏)
         print_counter_++;
@@ -738,15 +833,38 @@ private:
                 x0[12], x0[13], x0[14], x0[15]);
             RCLCPP_INFO(this->get_logger(), "NMPC Output (from state):");
             RCLCPP_INFO(this->get_logger(), "  Thrust: %.3f N", current_control_.thrust);
-            RCLCPP_INFO(this->get_logger(), "  Body Rate: [%.3f, %.3f, %.3f] rad/s",
-                current_control_.body_rate_x,
-                current_control_.body_rate_y,
-                current_control_.body_rate_z);
+            RCLCPP_INFO(this->get_logger(), "  Desired Att (stage1): [%.3f, %.3f, %.3f, %.3f]",
+                desired_attitude_enu_.w(),
+                desired_attitude_enu_.x(),
+                desired_attitude_enu_.y(),
+                desired_attitude_enu_.z());
             RCLCPP_INFO(this->get_logger(), "Reference (Circular):");
             RCLCPP_INFO(this->get_logger(), "  Pos: [%.3f, %.3f, %.3f] m", yref[0], yref[1], yref[2]);
             RCLCPP_INFO(this->get_logger(), "  Vel: [%.3f, %.3f, %.3f] m/s", yref[3], yref[4], yref[5]);
             RCLCPP_INFO(this->get_logger(), "  Yaw: %.3f rad", atan2(yref[15], yref[12]) * 2.0);
             RCLCPP_INFO(this->get_logger(), "  Thrust: %.3f N", yref[16]);
+            double x_stageN[PX4_PAYLOAD_MODEL_NX];
+            ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, N, "x", x_stageN);
+            Eigen::Vector3d payload_pos_N(x_stageN[0], x_stageN[1], x_stageN[2]);
+            Eigen::Vector3d payload_err_N = payload_pos_N - Eigen::Vector3d(yref[0], yref[1], yref[2]);
+            RCLCPP_INFO(this->get_logger(), "Stage N Payload Err: [%.3f, %.3f, %.3f] m (norm=%.3f)",
+                payload_err_N.x(),
+                payload_err_N.y(),
+                payload_err_N.z(),
+                payload_err_N.norm());
+            RCLCPP_INFO(this->get_logger(), "Desired Quad (stage1):");
+            RCLCPP_INFO(this->get_logger(), "  Pos: [%.3f, %.3f, %.3f] m",
+                desired_quad_kinematics_.position_enu.x(),
+                desired_quad_kinematics_.position_enu.y(),
+                desired_quad_kinematics_.position_enu.z());
+            RCLCPP_INFO(this->get_logger(), "  Vel: [%.3f, %.3f, %.3f] m/s",
+                desired_quad_kinematics_.velocity_enu.x(),
+                desired_quad_kinematics_.velocity_enu.y(),
+                desired_quad_kinematics_.velocity_enu.z());
+            RCLCPP_INFO(this->get_logger(), "  Acc: [%.3f, %.3f, %.3f] m/s^2",
+                desired_quad_kinematics_.accel_enu.x(),
+                desired_quad_kinematics_.accel_enu.y(),
+                desired_quad_kinematics_.accel_enu.z());
             RCLCPP_INFO(this->get_logger(), "==========================================");
         }
 
@@ -816,58 +934,38 @@ private:
     }
 
     /**
-     * @brief 发布Body Rate控制指令
+     * @brief 发布Attitude控制指令
      */
     void publishBodyRateControl() {
         auto msg = mavros_msgs::msg::AttitudeTarget();
         msg.header.stamp = this->now();
         msg.header.frame_id = "base_link";
 
-        // 设置控制模式: Body Rate + Thrust
-        msg.type_mask = mavros_msgs::msg::AttitudeTarget::IGNORE_ATTITUDE;
+        // 设置控制模式: Attitude + Thrust (忽略Body Rate)
+        msg.type_mask =
+            mavros_msgs::msg::AttitudeTarget::IGNORE_ROLL_RATE |
+            mavros_msgs::msg::AttitudeTarget::IGNORE_PITCH_RATE |
+            mavros_msgs::msg::AttitudeTarget::IGNORE_YAW_RATE;
 
-        Eigen::Vector3d payload_pos = payload_position_enu_;
-        double payload_x_current = payload_pos.x();
-        double payload_y_current = payload_pos.y();
-        double payload_x_target = goal_payload_position_.x();
-        double payload_y_target = goal_payload_position_.y();
+        msg.orientation.w = desired_attitude_enu_.w();
+        msg.orientation.x = desired_attitude_enu_.x();
+        msg.orientation.y = desired_attitude_enu_.y();
+        msg.orientation.z = desired_attitude_enu_.z();
 
-        double wx_tuned = bodyratePID(
-            payload_y_target,
-            payload_y_current,
-            0.3);
+        Eigen::Matrix3d R_body_to_enu = quad_attitude_enu_.toRotationMatrix();
+        Eigen::Matrix3d R_enu_to_body = R_body_to_enu.transpose();
 
-        double wy_tuned = bodyratePID(
-            payload_x_target,
-            payload_x_current,
-            0.3);
-
-        // 设置Body Rate (rad/s, body frame)
-        // ENU+FLU坐标系: 直接使用NMPC输出，无需转换
-        msg.body_rate.x = current_control_.body_rate_x - wx_tuned;
-        msg.body_rate.y = current_control_.body_rate_y + wy_tuned;
-        msg.body_rate.z = current_control_.body_rate_z; 
-
-        double payload_height_current = payload_pos.z();
-        double payload_height_target = 0.8;
-        // double x_pred[PX4_PAYLOAD_MODEL_NX];  // [xp, yp, zp, vxp, vyp, vzp, qx, qy, qz, wx, wy, wz, q0, q1, q2, q3, ...]
-        // ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, 1, "x", x_pred);
-        // Eigen::Vector3d payload_pos(x_pred[0], x_pred[1], x_pred[2]);
-
-        double accel_tuned = AcceleratorPID(
-            payload_height_target,
-            payload_height_current,
-            height_integral_,
-            3.0, 0.7);
+        Eigen::Vector3d p_err_enu = desired_quad_kinematics_.position_enu - quad_position_enu_;
+        Eigen::Vector3d p_err_body = R_enu_to_body * p_err_enu;
+        double thrust_tuned = ThrustPID(p_err_body[2], 30.0);
 
         // 设置推力 (归一化 0-1)
-        // T_normalized = T / (mQ + mL) / g
-        double max_thrust = 23.59 - accel_tuned;
-        double thrust_normalized = current_control_.thrust / max_thrust;
+        double max_thrust = 23.59;
+        double thrust_normalized = (current_control_.thrust + thrust_tuned) / max_thrust;
 
         // 限制范围
         thrust_normalized = std::max(-1.0, std::min(1.0, thrust_normalized));
-        msg.thrust = thrust_normalized;//0.7937;
+        msg.thrust = thrust_normalized;
 
         attitude_target_pub_->publish(msg);
     }
@@ -884,6 +982,17 @@ private:
 
         return output;
     }   
+
+    double ThrustPID(double p_err, double kp) {
+        double output = 0.0;
+
+        output = kp * p_err; // 假设控制频率为100Hz
+
+        if(output > 2.0) output = 2.0;
+        if(output < -2.0) output = -2.0;
+
+        return output;
+    }
 
     double height_integral_ = 0.0;
     double AcceleratorPID(double target, double current, double& integral, double kp, double ki) {
@@ -1129,23 +1238,6 @@ private:
                     gamma);
     }
 
-    // ========== 数据结构 ==========
-
-    struct NMPCState {
-        Eigen::Vector3d payload_position_enu;
-        Eigen::Vector3d payload_velocity_enu;
-        Eigen::Vector3d cable_direction;
-        Eigen::Vector3d cable_angular_velocity;
-        Eigen::Quaterniond quad_attitude_enu;
-    };
-
-    struct NMPCControl {
-        double thrust;
-        double body_rate_x;
-        double body_rate_y;
-        double body_rate_z;
-    };
-
     // ========== 数据成员 ==========
 
     // ROS2订阅者
@@ -1166,6 +1258,7 @@ private:
 
     // 定时器
     rclcpp::TimerBase::SharedPtr control_timer_;
+    rclcpp::TimerBase::SharedPtr solve_timer_;
     rclcpp::TimerBase::SharedPtr path_publish_timer_;
 
     // 状态变量 (ENU坐标系)
@@ -1180,6 +1273,12 @@ private:
     // NMPC状态和控制
     NMPCState current_state_;
     NMPCControl current_control_;
+    QuadKinematics desired_quad_kinematics_{
+        Eigen::Vector3d::Zero(),
+        Eigen::Vector3d::Zero(),
+        Eigen::Vector3d::Zero()
+    };
+    Eigen::Quaterniond desired_attitude_enu_ = Eigen::Quaterniond::Identity();
 
     // ESDF地图读取器
     std::shared_ptr<ESDFMapReader> esdf_reader_;
@@ -1213,6 +1312,7 @@ private:
     double payload_mass_;
     double gravity_;
     double control_frequency_;
+    double nmpc_frequency_;
     double offboard_delay_;
 
     // 圆形轨迹参数

@@ -36,7 +36,7 @@ def create_nmpc_solver():
     Q = np.eye(nx)
     Q[0, 0] = 150      # 负载x位置权重
     Q[1, 1] = 150      # 负载y位置权重
-    Q[2, 2] = 50      # 负载z位置权重
+    Q[2, 2] = 150      # 负载z位置权重
     Q[3, 3] = 50      # 负载vx速度权重
     Q[4, 4] = 50      # 负载vy速度权重
     Q[5, 5] = 50      # 负载vz速度权重
@@ -89,7 +89,7 @@ def create_nmpc_solver():
     W_e = np.eye(ny_e)
     W_e[0, 0] = 150      # 负载x位置权重
     W_e[1, 1] = 150      # 负载y位置权重
-    W_e[2, 2] = 50      # 负载z位置权重
+    W_e[2, 2] = 150      # 负载z位置权重
     W_e[3, 3] = 50      # 负载vx速度权重
     W_e[4, 4] = 50      # 负载vy速度权重
     W_e[5, 5] = 50      # 负载vz速度权重
@@ -111,7 +111,7 @@ def create_nmpc_solver():
     W_e[21, 21] = 1    # 角速度导数 Ωdot_y 状态权重
     W_e[22, 22] = 1    # 角速度导数 Ωdot_z 状态权重
 
-    ocp.cost.W_e = 20 * W_e
+    ocp.cost.W_e = 1 * W_e
 
     # 投影矩阵，使代价在 y = [x; u] 上为 J = (y - yref)^T W (y - yref)
     Vx = np.zeros((ny, nx))

@@ -492,7 +492,7 @@ void px4_payload_model_acados_setup_nlp_in(px4_payload_model_solver_capsule* cap
     // change only the non-zero elements:
     W_0[0+(NY0) * 0] = 150;
     W_0[1+(NY0) * 1] = 150;
-    W_0[2+(NY0) * 2] = 50;
+    W_0[2+(NY0) * 2] = 150;
     W_0[3+(NY0) * 3] = 50;
     W_0[4+(NY0) * 4] = 50;
     W_0[5+(NY0) * 5] = 50;
@@ -571,7 +571,7 @@ void px4_payload_model_acados_setup_nlp_in(px4_payload_model_solver_capsule* cap
     // change only the non-zero elements:
     W[0+(NY) * 0] = 150;
     W[1+(NY) * 1] = 150;
-    W[2+(NY) * 2] = 50;
+    W[2+(NY) * 2] = 150;
     W[3+(NY) * 3] = 50;
     W[4+(NY) * 4] = 50;
     W[5+(NY) * 5] = 50;
@@ -658,29 +658,29 @@ void px4_payload_model_acados_setup_nlp_in(px4_payload_model_solver_capsule* cap
 
     double* W_e = calloc(NYN*NYN, sizeof(double));
     // change only the non-zero elements:
-    W_e[0+(NYN) * 0] = 3000;
-    W_e[1+(NYN) * 1] = 3000;
-    W_e[2+(NYN) * 2] = 1000;
-    W_e[3+(NYN) * 3] = 1000;
-    W_e[4+(NYN) * 4] = 1000;
-    W_e[5+(NYN) * 5] = 1000;
-    W_e[6+(NYN) * 6] = 400;
-    W_e[7+(NYN) * 7] = 400;
-    W_e[8+(NYN) * 8] = 400;
-    W_e[9+(NYN) * 9] = 400;
-    W_e[10+(NYN) * 10] = 400;
-    W_e[11+(NYN) * 11] = 400;
-    W_e[12+(NYN) * 12] = 400;
-    W_e[13+(NYN) * 13] = 400;
-    W_e[14+(NYN) * 14] = 400;
-    W_e[15+(NYN) * 15] = 400;
-    W_e[16+(NYN) * 16] = 100;
-    W_e[17+(NYN) * 17] = 100;
-    W_e[18+(NYN) * 18] = 100;
-    W_e[19+(NYN) * 19] = 100;
-    W_e[20+(NYN) * 20] = 20;
-    W_e[21+(NYN) * 21] = 20;
-    W_e[22+(NYN) * 22] = 20;
+    W_e[0+(NYN) * 0] = 150;
+    W_e[1+(NYN) * 1] = 150;
+    W_e[2+(NYN) * 2] = 150;
+    W_e[3+(NYN) * 3] = 50;
+    W_e[4+(NYN) * 4] = 50;
+    W_e[5+(NYN) * 5] = 50;
+    W_e[6+(NYN) * 6] = 20;
+    W_e[7+(NYN) * 7] = 20;
+    W_e[8+(NYN) * 8] = 20;
+    W_e[9+(NYN) * 9] = 20;
+    W_e[10+(NYN) * 10] = 20;
+    W_e[11+(NYN) * 11] = 20;
+    W_e[12+(NYN) * 12] = 20;
+    W_e[13+(NYN) * 13] = 20;
+    W_e[14+(NYN) * 14] = 20;
+    W_e[15+(NYN) * 15] = 20;
+    W_e[16+(NYN) * 16] = 5;
+    W_e[17+(NYN) * 17] = 5;
+    W_e[18+(NYN) * 18] = 5;
+    W_e[19+(NYN) * 19] = 5;
+    W_e[20+(NYN) * 20] = 1;
+    W_e[21+(NYN) * 21] = 1;
+    W_e[22+(NYN) * 22] = 1;
     ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, N, "W", W_e);
     free(W_e);
     double* Vx_e = calloc(NYN*NX, sizeof(double));
