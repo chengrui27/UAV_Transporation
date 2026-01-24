@@ -17,6 +17,7 @@ find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(mavros_msgs REQUIRED)
+find_package(px4ctrl REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(eigen3_cmake_module REQUIRED)
 
@@ -76,6 +77,7 @@ ament_target_dependencies(nmpc_controller
   geometry_msgs
   std_msgs
   mavros_msgs
+  px4ctrl
   Eigen3
   plan_env
 )

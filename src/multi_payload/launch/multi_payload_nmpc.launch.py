@@ -48,7 +48,7 @@ def generate_launch_description():
 
     payload_mass_arg = DeclareLaunchArgument(
         'payload_mass',
-        default_value='1.0',
+        default_value='0.5',
         description='Payload mass in kg'
     )
 

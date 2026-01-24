@@ -184,7 +184,7 @@ def create_multi_payload_model():
         p_quad.append(x_L + r_i_inertial[i] - L_cable[i] * q_cables[i])
 
     # Pairwise collision avoidance constraints (soft constraints in OCP)
-    d_safe = 0.7
+    d_safe = 0.2
     h_list = []
     for i in range(n_quad):
         for j in range(i + 1, n_quad):

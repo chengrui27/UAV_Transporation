@@ -31,6 +31,8 @@
 #include <mavros_msgs/srv/command_bool.hpp>
 #include <mavros_msgs/srv/set_mode.hpp>
 
+#include "px4ctrl/msg/position_command.hpp"
+
 #include <Eigen/Dense>
 #include <memory>
 #include <chrono>
@@ -108,6 +110,8 @@ public:
         // 初始化发布者
         attitude_target_pub_ = this->create_publisher<mavros_msgs::msg::AttitudeTarget>(
             "/mavros/setpoint_raw/attitude", 10);
+        position_cmd_pub_ = this->create_publisher<px4ctrl::msg::PositionCommand>(
+            "cmd", 10);
         predicted_payload_path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
             "/payload_nmpc/payload_predicted_path", 10);
         predicted_quad_path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
@@ -360,7 +364,7 @@ private:
         }
 
         // 100Hz 发布控制指令
-        publishBodyRateControl();
+        // publishBodyRateControl();
     }
 
     /**
@@ -398,6 +402,8 @@ private:
             RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
                 "NMPC solver failed! Using previous control input.");
         }
+
+        publishPositionCommand();
     }
 
     // ========== 状态计算函数 ==========
@@ -936,6 +942,38 @@ private:
     /**
      * @brief 发布Attitude控制指令
      */
+    void publishPositionCommand() {
+        px4ctrl::msg::PositionCommand msg;
+        msg.header.stamp = this->now();
+        msg.header.frame_id = "map";
+
+        msg.position.x = desired_quad_kinematics_.position_enu.x();
+        msg.position.y = desired_quad_kinematics_.position_enu.y();
+        msg.position.z = desired_quad_kinematics_.position_enu.z();
+
+        msg.velocity.x = desired_quad_kinematics_.velocity_enu.x();
+        msg.velocity.y = desired_quad_kinematics_.velocity_enu.y();
+        msg.velocity.z = desired_quad_kinematics_.velocity_enu.z();
+
+        msg.acceleration.x = desired_quad_kinematics_.accel_enu.x();
+        msg.acceleration.y = desired_quad_kinematics_.accel_enu.y();
+        msg.acceleration.z = desired_quad_kinematics_.accel_enu.z();
+
+        Eigen::Matrix3d R_body_to_enu = desired_attitude_enu_.toRotationMatrix();
+        Eigen::Vector3d thrust_enu = R_body_to_enu * Eigen::Vector3d(0.0, 0.0, current_control_.thrust);
+        msg.thrust.x = thrust_enu.x();
+        msg.thrust.y = thrust_enu.y();
+        msg.thrust.z = thrust_enu.z();
+
+        msg.yaw = yawFromQuat(desired_attitude_enu_);
+        msg.yaw_rate = current_control_.body_rate_z;
+
+        position_cmd_pub_->publish(msg);
+    }
+
+    /**
+     * @brief 发布Attitude控制指令
+     */
     void publishBodyRateControl() {
         auto msg = mavros_msgs::msg::AttitudeTarget();
         msg.header.stamp = this->now();
@@ -968,6 +1006,12 @@ private:
         msg.thrust = thrust_normalized;
 
         attitude_target_pub_->publish(msg);
+    }
+
+    double yawFromQuat(const Eigen::Quaterniond &q) const {
+        double siny_cosp = 2.0 * (q.w() * q.z() + q.x() * q.y());
+        double cosy_cosp = 1.0 - 2.0 * (q.y() * q.y() + q.z() * q.z());
+        return std::atan2(siny_cosp, cosy_cosp);
     }
 
     double bodyratePID(double target, double current, double kp) {
@@ -1249,6 +1293,7 @@ private:
 
     // ROS2发布者
     rclcpp::Publisher<mavros_msgs::msg::AttitudeTarget>::SharedPtr attitude_target_pub_;
+    rclcpp::Publisher<px4ctrl::msg::PositionCommand>::SharedPtr position_cmd_pub_;
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr predicted_payload_path_pub_;
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr predicted_quad_path_pub_;
 

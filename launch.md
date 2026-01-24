@@ -19,6 +19,7 @@ ros2 launch px4_nmpc nmpc_controller.launch.py
 ros2 launch px4_offboard_control offboard_control.launch.py
 ros2 run multi_payload multi_offboard
 ros2 launch multi_payload multi_payload_nmpc.launch.py
+ros2 run px4ctrl px4ctrl_node
 
 # 终端4: 启动建图模块（构建ESDF地图，用于避障）
 cd px4_ws && source install/setup.bash
