@@ -25,3 +25,15 @@ bool CommandData::ready() const
 {
   return received;
 }
+
+void TrajectoryData::feed(const px4ctrl::msg::PositionCommandTrajectory::SharedPtr &m)
+{
+  msg = *m;
+  stamp = rclcpp::Time(msg.header.stamp);
+  received = true;
+}
+
+bool TrajectoryData::ready() const
+{
+  return received && !msg.points.empty();
+}

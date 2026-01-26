@@ -5,6 +5,7 @@
 #include <sensor_msgs/msg/imu.hpp>
 
 #include "px4ctrl/msg/position_command.hpp"
+#include "px4ctrl/msg/position_command_trajectory.hpp"
 
 struct OdomData
 {
@@ -31,5 +32,15 @@ struct CommandData
   bool received{false};
 
   void feed(const px4ctrl::msg::PositionCommand::SharedPtr &m);
+  bool ready() const;
+};
+
+struct TrajectoryData
+{
+  px4ctrl::msg::PositionCommandTrajectory msg;
+  rclcpp::Time stamp;
+  bool received{false};
+
+  void feed(const px4ctrl::msg::PositionCommandTrajectory::SharedPtr &m);
   bool ready() const;
 };

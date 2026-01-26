@@ -32,6 +32,7 @@
 #include <mavros_msgs/srv/set_mode.hpp>
 
 #include "px4ctrl/msg/position_command.hpp"
+#include "px4ctrl/msg/position_command_trajectory.hpp"
 
 #include <Eigen/Dense>
 #include <memory>
@@ -61,6 +62,7 @@ public:
         this->declare_parameter("payload_mass", 0.35);          // 负载质量 (kg)
         this->declare_parameter("control_frequency", 100.0);   // 控制频率 (Hz)
         this->declare_parameter("nmpc_frequency", 10.0);       // NMPC求解频率 (Hz)
+        this->declare_parameter("nmpc_horizon", 2.0);          // NMPC预测时域 (s)
         this->declare_parameter("offboard_delay", 2.0);        // Offboard延迟 (s)
 
         // 获取参数
@@ -69,6 +71,7 @@ public:
         payload_mass_ = this->get_parameter("payload_mass").as_double();
         control_frequency_ = this->get_parameter("control_frequency").as_double();
         nmpc_frequency_ = this->get_parameter("nmpc_frequency").as_double();
+        nmpc_horizon_ = this->get_parameter("nmpc_horizon").as_double();
         offboard_delay_ = this->get_parameter("offboard_delay").as_double();
         gravity_ = 9.81;
 
@@ -81,6 +84,7 @@ public:
         RCLCPP_INFO(this->get_logger(), "  Payload mass: %.2f kg", payload_mass_);
         RCLCPP_INFO(this->get_logger(), "  Control frequency: %.0f Hz", control_frequency_);
         RCLCPP_INFO(this->get_logger(), "  NMPC frequency: %.0f Hz", nmpc_frequency_);
+        RCLCPP_INFO(this->get_logger(), "  NMPC horizon: %.2f s", nmpc_horizon_);
         RCLCPP_INFO(this->get_logger(), "  Offboard delay: %.1f s", offboard_delay_);
 
         // 设置QoS为BEST_EFFORT以匹配MAVROS
@@ -110,8 +114,8 @@ public:
         // 初始化发布者
         attitude_target_pub_ = this->create_publisher<mavros_msgs::msg::AttitudeTarget>(
             "/mavros/setpoint_raw/attitude", 10);
-        position_cmd_pub_ = this->create_publisher<px4ctrl::msg::PositionCommand>(
-            "cmd", 10);
+        position_cmd_traj_pub_ = this->create_publisher<px4ctrl::msg::PositionCommandTrajectory>(
+            "/cmd_traj", 10);
         predicted_payload_path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
             "/payload_nmpc/payload_predicted_path", 10);
         predicted_quad_path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
@@ -273,6 +277,7 @@ private:
 
         // 重置ESDF相关状态：下次求解时从“干净”的参数开始
         first_solve_done_ = false;
+        traj_get_goal_ = false;
         resetAcadosStateForNewGoal();
     }
 
@@ -375,6 +380,34 @@ private:
             return;
         }
 
+        if(first_solve_done_){
+            double x_stageN[PX4_PAYLOAD_MODEL_NX];
+            ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, 20, "x", x_stageN);
+
+            Eigen::Vector3d payload_pos_N(x_stageN[0], x_stageN[1], x_stageN[2]);
+            Eigen::Vector3d ref_payload_pos(goal_payload_position_.x(), goal_payload_position_.y(), 0.8);
+            Eigen::Vector3d payload_error(0.03, 0.03, 0.03); // 3cm误差容限
+            Eigen::Vector3d diff_payload = ref_payload_pos - payload_pos_N;
+
+            Eigen::Vector3d rope_N(x_stageN[6], x_stageN[7], x_stageN[8]);
+            Eigen::Vector3d quad_pos_N = payload_pos_N - cable_length_ * rope_N;
+            Eigen::Vector3d ref_quad_pos = ref_payload_pos - cable_length_ * Eigen::Vector3d(0.0, 0.0, -1.0);
+            Eigen::Vector3d quad_error(0.05, 0.05, 0.05); // 5cm误差容限
+            Eigen::Vector3d diff_quad = ref_quad_pos - quad_pos_N;
+
+
+            if ((diff_payload.cwiseAbs().array() < payload_error.array()).all() &&
+                (diff_quad.cwiseAbs().array() < quad_error.array()).all()) {
+                traj_get_goal_ = true;
+            }else{
+                traj_get_goal_ = false;
+            }
+        }
+        
+        if(traj_get_goal_){
+            return;
+        }
+
         // 计算NMPC状态变量
         computeNMPCState();
 
@@ -403,7 +436,7 @@ private:
                 "NMPC solver failed! Using previous control input.");
         }
 
-        publishPositionCommand();
+        publishPositionCommandTrajectory(); 
     }
 
     // ========== 状态计算函数 ==========
@@ -942,33 +975,55 @@ private:
     /**
      * @brief 发布Attitude控制指令
      */
-    void publishPositionCommand() {
-        px4ctrl::msg::PositionCommand msg;
+    px4ctrl::msg::PositionCommand buildPositionCommandFromStage(const double* x) {
+        px4ctrl::msg::PositionCommand cmd;
+        QuadKinematics kin = computeQuadKinematicsFromState(x);
+        Eigen::Quaterniond att(x[12], x[13], x[14], x[15]);
+        att = normalizeQuaternionSign(att);
+
+        cmd.position.x = kin.position_enu.x();
+        cmd.position.y = kin.position_enu.y();
+        cmd.position.z = kin.position_enu.z();
+
+        cmd.velocity.x = kin.velocity_enu.x();
+        cmd.velocity.y = kin.velocity_enu.y();
+        cmd.velocity.z = kin.velocity_enu.z();
+
+        cmd.acceleration.x = kin.accel_enu.x();
+        cmd.acceleration.y = kin.accel_enu.y();
+        cmd.acceleration.z = kin.accel_enu.z();
+
+        Eigen::Matrix3d R_body_to_enu = att.toRotationMatrix();
+        Eigen::Vector3d thrust_enu = R_body_to_enu * Eigen::Vector3d(0.0, 0.0, x[16]);
+        cmd.thrust.x = thrust_enu.x();
+        cmd.thrust.y = thrust_enu.y();
+        cmd.thrust.z = thrust_enu.z();
+
+        cmd.yaw = yawFromQuat(att);
+        cmd.yaw_rate = x[19];
+
+        return cmd;
+    }
+
+    void publishPositionCommandTrajectory() {
+        const int N = PX4_PAYLOAD_MODEL_N;
+        if (N < 1) {
+            return;
+        }
+
+        px4ctrl::msg::PositionCommandTrajectory msg;
         msg.header.stamp = this->now();
         msg.header.frame_id = "map";
+        msg.dt = nmpc_horizon_  / static_cast<double>(N);
 
-        msg.position.x = desired_quad_kinematics_.position_enu.x();
-        msg.position.y = desired_quad_kinematics_.position_enu.y();
-        msg.position.z = desired_quad_kinematics_.position_enu.z();
+        msg.points.reserve(N + 1);
+        for (int i = 0; i <= N; ++i) {
+            double x_stage[PX4_PAYLOAD_MODEL_NX];
+            ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, i, "x", x_stage);
+            msg.points.push_back(buildPositionCommandFromStage(x_stage));
+        }
 
-        msg.velocity.x = desired_quad_kinematics_.velocity_enu.x();
-        msg.velocity.y = desired_quad_kinematics_.velocity_enu.y();
-        msg.velocity.z = desired_quad_kinematics_.velocity_enu.z();
-
-        msg.acceleration.x = desired_quad_kinematics_.accel_enu.x();
-        msg.acceleration.y = desired_quad_kinematics_.accel_enu.y();
-        msg.acceleration.z = desired_quad_kinematics_.accel_enu.z();
-
-        Eigen::Matrix3d R_body_to_enu = desired_attitude_enu_.toRotationMatrix();
-        Eigen::Vector3d thrust_enu = R_body_to_enu * Eigen::Vector3d(0.0, 0.0, current_control_.thrust);
-        msg.thrust.x = thrust_enu.x();
-        msg.thrust.y = thrust_enu.y();
-        msg.thrust.z = thrust_enu.z();
-
-        msg.yaw = yawFromQuat(desired_attitude_enu_);
-        msg.yaw_rate = current_control_.body_rate_z;
-
-        position_cmd_pub_->publish(msg);
+        position_cmd_traj_pub_->publish(msg);
     }
 
     /**
@@ -1293,7 +1348,7 @@ private:
 
     // ROS2发布者
     rclcpp::Publisher<mavros_msgs::msg::AttitudeTarget>::SharedPtr attitude_target_pub_;
-    rclcpp::Publisher<px4ctrl::msg::PositionCommand>::SharedPtr position_cmd_pub_;
+    rclcpp::Publisher<px4ctrl::msg::PositionCommandTrajectory>::SharedPtr position_cmd_traj_pub_;
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr predicted_payload_path_pub_;
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr predicted_quad_path_pub_;
 
@@ -1337,6 +1392,7 @@ private:
     bool payload_odom_received_ = false;
     bool all_data_ready_ = false;
     bool goal_pose_received_ = false;
+    bool traj_get_goal_ = false;
 
     // Offboard模式管理
     bool offboard_enabled_ = false;
@@ -1358,6 +1414,7 @@ private:
     double gravity_;
     double control_frequency_;
     double nmpc_frequency_;
+    double nmpc_horizon_;
     double offboard_delay_;
 
     // 圆形轨迹参数

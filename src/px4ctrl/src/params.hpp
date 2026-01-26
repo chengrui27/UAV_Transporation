@@ -12,10 +12,10 @@ struct Params
   double mass{1.535};
   double gra{9.81};
 
-  double kp_xy{0.5};
-  double kp_z{0.5};
-  double kv_xy{0.5};
-  double kv_z{0.5};
+  double kp_xy{1.0};
+  double kp_z{1.0};
+  double kv_xy{1.5};
+  double kv_z{1.5};
   double kvi_xy{0.1};
   double kvi_z{0.1};
   double ka{1.0};

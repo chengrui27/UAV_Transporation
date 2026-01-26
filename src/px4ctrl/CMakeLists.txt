@@ -19,6 +19,7 @@ find_package(eigen3_cmake_module REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/PositionCommand.msg"
+  "msg/PositionCommandTrajectory.msg"
   DEPENDENCIES std_msgs geometry_msgs
 )
 
