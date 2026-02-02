@@ -34,7 +34,7 @@
 #include "acados_c/sim_interface.h"
 #include "acados_c/external_function_interface.h"
 
-#define PX4_MODEL_NX     10
+#define PX4_MODEL_NX     17
 #define PX4_MODEL_NZ     0
 #define PX4_MODEL_NU     4
 #define PX4_MODEL_NP     7

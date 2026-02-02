@@ -923,7 +923,7 @@ void GridMap::cloudCallback(const sensor_msgs::msg::PointCloud2::ConstSharedPtr 
 
     // 步骤1: lidar_link -> base_link 坐标变换
     // 雷达安装在 base_link 上方 0.08m
-    Eigen::Vector3d lidar_offset(0.0, 0.0, 0.07);
+    Eigen::Vector3d lidar_offset(0.0, 0.0, 0.06);
     Eigen::Vector3d p3d_base = p3d_lidar + lidar_offset;
 
     // 步骤2: 机体点云过滤（在 base_link 坐标系下）

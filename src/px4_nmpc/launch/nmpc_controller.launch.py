@@ -15,13 +15,13 @@ def generate_launch_description():
     # 声明launch参数
     quad_mass_arg = DeclareLaunchArgument(
         'quad_mass',
-        default_value='1.585',
+        default_value='1.535',
         description='Quadrotor mass in kg'
     )
 
     control_frequency_arg = DeclareLaunchArgument(
         'control_frequency',
-        default_value='100.0',
+        default_value='10.0',
         description='Control frequency in Hz'
     )
 

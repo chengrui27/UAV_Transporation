@@ -1,6 +1,7 @@
 #pragma once
 
 #include <rclcpp/rclcpp.hpp>
+#include <geometry_msgs/msg/pose_stamped.hpp>
 #include <nav_msgs/msg/odometry.hpp>
 #include <sensor_msgs/msg/imu.hpp>
 
@@ -42,5 +43,15 @@ struct TrajectoryData
   bool received{false};
 
   void feed(const px4ctrl::msg::PositionCommandTrajectory::SharedPtr &m);
+  bool ready() const;
+};
+
+struct GoalPoseData
+{
+  geometry_msgs::msg::PoseStamped msg;
+  rclcpp::Time stamp;
+  bool received{false};
+
+  void feed(const geometry_msgs::msg::PoseStamped::SharedPtr &m);
   bool ready() const;
 };

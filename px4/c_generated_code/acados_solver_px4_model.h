@@ -36,17 +36,17 @@
 #include "acados_c/ocp_nlp_interface.h"
 #include "acados_c/external_function_interface.h"
 
-#define PX4_MODEL_NX     10
+#define PX4_MODEL_NX     17
 #define PX4_MODEL_NZ     0
 #define PX4_MODEL_NU     4
 #define PX4_MODEL_NP     7
 #define PX4_MODEL_NP_GLOBAL     0
 #define PX4_MODEL_NBX    0
-#define PX4_MODEL_NBX0   10
+#define PX4_MODEL_NBX0   17
 #define PX4_MODEL_NBU    4
 #define PX4_MODEL_NSBX   0
 #define PX4_MODEL_NSBU   0
-#define PX4_MODEL_NSH    1
+#define PX4_MODEL_NSH    0
 #define PX4_MODEL_NSH0   0
 #define PX4_MODEL_NSG    0
 #define PX4_MODEL_NSPHI  0
@@ -55,17 +55,17 @@
 #define PX4_MODEL_NSPHIN 0
 #define PX4_MODEL_NSPHI0 0
 #define PX4_MODEL_NSBXN  0
-#define PX4_MODEL_NS     1
+#define PX4_MODEL_NS     0
 #define PX4_MODEL_NS0    0
 #define PX4_MODEL_NSN    0
 #define PX4_MODEL_NG     0
 #define PX4_MODEL_NBXN   0
 #define PX4_MODEL_NGN    0
-#define PX4_MODEL_NY0    14
-#define PX4_MODEL_NY     14
-#define PX4_MODEL_NYN    10
-#define PX4_MODEL_N      20
-#define PX4_MODEL_NH     1
+#define PX4_MODEL_NY0    22
+#define PX4_MODEL_NY     22
+#define PX4_MODEL_NYN    17
+#define PX4_MODEL_N      40
+#define PX4_MODEL_NH     0
 #define PX4_MODEL_NHN    0
 #define PX4_MODEL_NH0    0
 #define PX4_MODEL_NPHI0  0
@@ -107,16 +107,21 @@ typedef struct px4_model_solver_capsule
 
     // cost
 
+    external_function_external_param_casadi *cost_y_fun;
+    external_function_external_param_casadi *cost_y_fun_jac_ut_xt;
 
 
 
+    external_function_external_param_casadi cost_y_0_fun;
+    external_function_external_param_casadi cost_y_0_fun_jac_ut_xt;
+
+
+
+    external_function_external_param_casadi cost_y_e_fun;
+    external_function_external_param_casadi cost_y_e_fun_jac_ut_xt;
 
 
     // constraints
-    external_function_external_param_casadi *nl_constr_h_fun_jac;
-    external_function_external_param_casadi *nl_constr_h_fun;
-
-
 
 
 

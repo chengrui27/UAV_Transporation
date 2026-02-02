@@ -93,7 +93,7 @@ def generate_launch_description():
             }],
             remappings=[
                 ('grid_map/odom', '/mavros/local_position/odom'),
-                ('grid_map/cloud', '/velodyne_points'),
+                ('grid_map/cloud', '/mid360/points'),
                 ('grid_map/depth', '/camera/depth/image_raw'),
             ]
         ),

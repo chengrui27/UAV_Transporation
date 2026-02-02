@@ -16,6 +16,7 @@
   <depend>eigen</depend>
   <depend>eigen3_cmake_module</depend>
   <depend>plan_env</depend>
+  <depend>px4ctrl</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

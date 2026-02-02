@@ -380,29 +380,29 @@ private:
             return;
         }
 
-        if(first_solve_done_){
-            double x_stageN[PX4_PAYLOAD_MODEL_NX];
-            ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, 20, "x", x_stageN);
+        // if(first_solve_done_){
+        //     double x_stageN[PX4_PAYLOAD_MODEL_NX];
+        //     ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, 20, "x", x_stageN);
 
-            Eigen::Vector3d payload_pos_N(x_stageN[0], x_stageN[1], x_stageN[2]);
-            Eigen::Vector3d ref_payload_pos(goal_payload_position_.x(), goal_payload_position_.y(), 0.8);
-            Eigen::Vector3d payload_error(0.03, 0.03, 0.03); // 3cm误差容限
-            Eigen::Vector3d diff_payload = ref_payload_pos - payload_pos_N;
+        //     Eigen::Vector3d payload_pos_N(x_stageN[0], x_stageN[1], x_stageN[2]);
+        //     Eigen::Vector3d ref_payload_pos(goal_payload_position_.x(), goal_payload_position_.y(), 0.8);
+        //     Eigen::Vector3d payload_error(0.3, 0.3, 0.3); // 3cm误差容限
+        //     Eigen::Vector3d diff_payload = ref_payload_pos - payload_pos_N;
 
-            Eigen::Vector3d rope_N(x_stageN[6], x_stageN[7], x_stageN[8]);
-            Eigen::Vector3d quad_pos_N = payload_pos_N - cable_length_ * rope_N;
-            Eigen::Vector3d ref_quad_pos = ref_payload_pos - cable_length_ * Eigen::Vector3d(0.0, 0.0, -1.0);
-            Eigen::Vector3d quad_error(0.05, 0.05, 0.05); // 5cm误差容限
-            Eigen::Vector3d diff_quad = ref_quad_pos - quad_pos_N;
+        //     Eigen::Vector3d rope_N(x_stageN[6], x_stageN[7], x_stageN[8]);
+        //     Eigen::Vector3d quad_pos_N = payload_pos_N - cable_length_ * rope_N;
+        //     Eigen::Vector3d ref_quad_pos = ref_payload_pos - cable_length_ * Eigen::Vector3d(0.0, 0.0, -1.0);
+        //     Eigen::Vector3d quad_error(0.5, 0.5, 0.5); // 5cm误差容限
+        //     Eigen::Vector3d diff_quad = ref_quad_pos - quad_pos_N;
 
 
-            if ((diff_payload.cwiseAbs().array() < payload_error.array()).all() &&
-                (diff_quad.cwiseAbs().array() < quad_error.array()).all()) {
-                traj_get_goal_ = true;
-            }else{
-                traj_get_goal_ = false;
-            }
-        }
+        //     if ((diff_payload.cwiseAbs().array() < payload_error.array()).all() &&
+        //         (diff_quad.cwiseAbs().array() < quad_error.array()).all()) {
+        //         traj_get_goal_ = true;
+        //     }else{
+        //         traj_get_goal_ = false;
+        //     }
+        // }
         
         if(traj_get_goal_){
             return;

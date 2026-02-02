@@ -23,6 +23,8 @@
 #include <mavros_msgs/msg/attitude_target.hpp>
 #include <mavros_msgs/srv/command_bool.hpp>
 #include <mavros_msgs/srv/set_mode.hpp>
+#include <px4ctrl/msg/position_command.hpp>
+#include <px4ctrl/msg/position_command_trajectory.hpp>
 
 #include <Eigen/Dense>
 #include <memory>
@@ -47,8 +49,8 @@ class NMPCController : public rclcpp::Node {
 public:
     NMPCController() : Node("nmpc_controller") {
         // 声明参数
-        this->declare_parameter("quad_mass", 1.585);           // 四旋翼质量 (kg)
-        this->declare_parameter("control_frequency", 100.0);   // 控制频率 (Hz)
+        this->declare_parameter("quad_mass", 1.535);           // 四旋翼质量 (kg)
+        this->declare_parameter("control_frequency", 10.0);   // 控制频率 (Hz)
         this->declare_parameter("offboard_delay", 2.0);        // Offboard延迟 (s)
 
         // 获取参数
@@ -94,6 +96,8 @@ public:
 
         predicted_path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
             "/nmpc/predicted_path", 10);
+        position_cmd_traj_pub_ = this->create_publisher<px4ctrl::msg::PositionCommandTrajectory>(
+            "/cmd_traj", 10);
 
         // 初始化服务客户端
         set_mode_client_ = this->create_client<mavros_msgs::srv::SetMode>(
@@ -191,11 +195,13 @@ private:
     /**
      * @brief 目标位置姿态回调 (从RViz)
      */
+    int  traj_cnt = 0;  //规划轨迹次数
     void goalPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg) {
         // 保存参考位置
         goal_position_ << msg->pose.position.x,
                           msg->pose.position.y,
                           msg->pose.position.z;
+        goal_position_(2) = 1.0; // 高度固定为1.0米
 
         // 保存参考姿态（四元数）
         goal_attitude_.w() = msg->pose.orientation.w;
@@ -206,7 +212,11 @@ private:
         // 归一化四元数
         goal_attitude_.normalize();
 
+        // 标记已接收到目标点,更新重规划相关标志位
         goal_pose_received_ = true;
+        first_solve_done_ = false;
+        traj_cnt = 0;
+        internal_state_initialized_ = false;
 
         RCLCPP_INFO(this->get_logger(), "New goal received:");
         RCLCPP_INFO(this->get_logger(), "  Position: [%.3f, %.3f, %.3f] m",
@@ -217,9 +227,8 @@ private:
 
         // 查询目标点在ESDF地图中的距离和梯度，方便调试避障行为
         if (esdf_reader_ && esdf_reader_->isMapValid()) {
-            Eigen::Vector3d goal_pos_enu(goal_position_(0), goal_position_(1), 1.5);
-            double esdf_dist = esdf_reader_->getDistance(goal_pos_enu);
-            Eigen::Vector3d esdf_grad = esdf_reader_->getGradient(goal_pos_enu);
+            double esdf_dist = esdf_reader_->getDistance(goal_position_);
+            Eigen::Vector3d esdf_grad = esdf_reader_->getGradient(goal_position_);
             RCLCPP_INFO(this->get_logger(),
                         "ESDF at goal: dist=%.3f m, grad=[%.3f, %.3f, %.3f]",
                         esdf_dist, esdf_grad.x(), esdf_grad.y(), esdf_grad.z());
@@ -228,8 +237,7 @@ private:
                         "ESDF map not valid when goal received, cannot query dist/grad");
         }
 
-        // 重置ESDF相关状态：下次求解时从“干净”的参数和内部状态开始
-        first_solve_done_ = false;
+        // 重置ESDF相关状态：下次求解时从“干净”的参数和内部状态开始    
         resetAcadosStateForNewGoal();
     }
 
@@ -239,26 +247,26 @@ private:
     void controlTimerCallback() {
         // 检查数据是否就绪
         if (!all_data_ready_) {
-            // 即使数据未就绪，也发送心跳以满足 PX4 Offboard 要求
-            publishHeartbeat();
             return;
         }
 
-        // 检查是否需要启用Offboard模式
-        if (!offboard_enabled_) {
-            auto elapsed = (this->now() - offboard_start_time_).seconds();
+        // // 检查是否需要启用Offboard模式
+        // if (!offboard_enabled_) {
+        //     auto elapsed = (this->now() - offboard_start_time_).seconds();
 
-            // 在启用 Offboard 之前持续发送心跳
-            publishHeartbeat();
+        //     if (elapsed >= offboard_delay_) {
+        //         enableOffboardMode();
+        //         armVehicle();
+        //         offboard_enabled_ = true;
+        //         RCLCPP_INFO(this->get_logger(), "========================================");
+        //         RCLCPP_INFO(this->get_logger(), "Offboard mode enabled! Starting NMPC control...");
+        //         RCLCPP_INFO(this->get_logger(), "========================================");
+        //     }
+        //     return;
+        // }
 
-            if (elapsed >= offboard_delay_) {
-                enableOffboardMode();
-                armVehicle();
-                offboard_enabled_ = true;
-                RCLCPP_INFO(this->get_logger(), "========================================");
-                RCLCPP_INFO(this->get_logger(), "Offboard mode enabled! Starting NMPC control...");
-                RCLCPP_INFO(this->get_logger(), "========================================");
-            }
+        // 接收到新的目标点后迭代求解10次MPC轨迹，轨迹收敛需要一定次数的迭代
+        if(traj_cnt > 10){
             return;
         }
 
@@ -275,10 +283,13 @@ private:
             solve_success_count_++;
             avg_solve_time_ms_ = (avg_solve_time_ms_ * (solve_count_ - 1) + solve_time) / solve_count_;
 
-            // 发布控制指令
-            publishBodyRateControl();
+            // 发布轨迹消息
+            if(traj_cnt == 10){
+                publishPositionCommandTrajectory();
+            }
+            traj_cnt++;        
 
-            // 每100次打印一次统计
+            // 计算MPC平均求解时间和成功率，每100次打印一次统计
             if (solve_count_ % 100 == 0) {
                 double success_rate = 100.0 * solve_success_count_ / solve_count_;
                 RCLCPP_INFO(this->get_logger(),
@@ -287,24 +298,20 @@ private:
             }
         } else {
             RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
-                "NMPC solver failed! Using previous control input.");
-            // 使用上次的控制输入
-            publishBodyRateControl();
+                "NMPC solver failed!");
         }
     }
 
-    // ========== NMPC求解函数 ==========
-
     /**
      * @brief 生成悬停参考轨迹
-     * @param yref 输出参考向量 (14维: 10维状态 + 4维控制)
-     * @param yref_e 输出终端参考向量 (10维: 仅状态)
+     * @param yref 输出参考向量 (22维: 17维状态 + 4维控制 + 1维避障代价项)
+     * @param yref_e 输出终端参考向量 (17维: 仅状态)
      */
     void generateHoverReference(double* yref, double* yref_e) {
         // 参考位置 (ENU坐标系) - 使用来自RViz的目标位置
         yref[0] = goal_position_(0);   // East (m)
         yref[1] = goal_position_(1);   // North (m)
-        yref[2] = 1.5;   // Up (m)
+        yref[2] = goal_position_(2);   // Up (m)
 
         // 参考速度 (ENU坐标系)
         yref[3] = 0.0;   // vE
@@ -317,17 +324,66 @@ private:
         yref[8] = goal_attitude_.y();  // qy
         yref[9] = goal_attitude_.z();  // qz
 
-        // 参考控制输入
+        // 参考扩展状态
         double hover_thrust = quad_mass_ * gravity_;  // 悬停推力
         yref[10] = hover_thrust;  // T (N)
         yref[11] = 0.0;           // ωx (rad/s)
         yref[12] = 0.0;           // ωy (rad/s)
         yref[13] = 0.0;           // ωz (rad/s)
+        yref[14] = 0.0;           // d_ωx
+        yref[15] = 0.0;           // d_ωy
+        yref[16] = 0.0;           // d_ωz
 
-        // 终端参考 (仅状态, 10维)
-        for (int i = 0; i < 10; i++) {
+        // 参考控制输入 (dT, ddωx, ddωy, ddωz)
+        yref[17] = 0.0;
+        yref[18] = 0.0;
+        yref[19] = 0.0;
+        yref[20] = 0.0;
+
+        // 避障代价项参考值
+        yref[21] = 0.0;
+
+        // 终端参考 (仅状态, 17维)
+        for (int i = 0; i < 17; i++) {
             yref_e[i] = yref[i];
         }
+    }
+
+    /**
+     * @brief 读取MPC每个stage的状态，构建PositionCommand消息
+     */
+    px4ctrl::msg::PositionCommand buildPositionCommandFromStage(const double* x) {
+        px4ctrl::msg::PositionCommand cmd;
+
+        Eigen::Quaterniond att(x[6], x[7], x[8], x[9]);
+        att = normalizeQuaternionSign(att);
+        Eigen::Matrix3d R_body_to_enu = att.toRotationMatrix();
+        Eigen::Vector3d r3 = R_body_to_enu.col(2);
+
+        double thrust = x[10];
+        Eigen::Vector3d accel_enu = (thrust / quad_mass_) * r3 - Eigen::Vector3d(0.0, 0.0, gravity_);
+        Eigen::Vector3d thrust_enu = thrust * r3;
+
+        cmd.position.x = x[0];
+        cmd.position.y = x[1];
+        cmd.position.z = x[2];
+
+        cmd.velocity.x = x[3];
+        cmd.velocity.y = x[4];
+        cmd.velocity.z = x[5];
+
+        cmd.acceleration.x = accel_enu.x();
+        cmd.acceleration.y = accel_enu.y();
+        cmd.acceleration.z = accel_enu.z();
+
+        cmd.thrust.x = thrust_enu.x();
+        cmd.thrust.y = thrust_enu.y();
+        cmd.thrust.z = thrust_enu.z();
+
+        cmd.yaw = yawFromQuat(att);
+        cmd.yaw_rate = x[13];
+
+        return cmd;
     }
 
     /**
@@ -343,8 +399,16 @@ private:
         // 归一化四元数
         Eigen::Quaterniond quad_attitude_normalized = normalizeQuaternionSign(quad_attitude_);
 
-        // 准备状态向量 (10维: px, py, pz, vx, vy, vz, qw, qx, qy, qz)
-        double x0[10];
+        // 首次求解时初始化部分内部状态
+        if (!internal_state_initialized_) {
+            thrust_state_ = quad_mass_ * gravity_;
+            body_rate_.setZero();
+            body_rate_dot_.setZero();
+            internal_state_initialized_ = true;
+        }
+
+        // 准备状态向量 (17维)
+        double x0[17];
         x0[0] = quad_position_(0);
         x0[1] = quad_position_(1);
         x0[2] = quad_position_(2);
@@ -355,6 +419,13 @@ private:
         x0[7] = quad_attitude_normalized.x();
         x0[8] = quad_attitude_normalized.y();
         x0[9] = quad_attitude_normalized.z();
+        x0[10] = thrust_state_;
+        x0[11] = body_rate_(0);
+        x0[12] = body_rate_(1);
+        x0[13] = body_rate_(2);
+        x0[14] = body_rate_dot_(0);
+        x0[15] = body_rate_dot_(1);
+        x0[16] = body_rate_dot_(2);
 
         // 设置初始状态约束
         ocp_nlp_constraints_model_set(nlp_config_, nlp_dims_, nlp_in_, nlp_out_,
@@ -363,8 +434,8 @@ private:
                                       0, "ubx", x0);
 
         // 生成参考轨迹
-        double yref[14];      // 状态(10) + 控制(4)
-        double yref_e[10];    // 终端状态
+        double yref[22];      // 状态(17) + 控制(4) + 避障代价项(1)
+        double yref_e[17];    // 终端状态
         generateHoverReference(yref, yref_e);
 
         // 设置所有预测阶段的参考轨迹 (0 到 N-1)
@@ -376,18 +447,18 @@ private:
         // 设置终端阶段的参考 (N)
         ocp_nlp_cost_model_set(nlp_config_, nlp_dims_, nlp_in_, N, "yref", yref_e);
 
-        // ========== ESDF避障约束参数更新（基于上一轮预测轨迹的初始线性化） ==========
-        if (esdf_reader_ && esdf_reader_->isMapValid()) {
-            Eigen::Vector3d current_pos(x0[0], x0[1], x0[2]);
-            double current_dist = esdf_reader_->getDistance(current_pos);
-            bool in_bound = esdf_reader_->isInLocalBound(current_pos);
+        // // ========== 打印当前位置的ESDF避障信息 ==========
+        // if (esdf_reader_ && esdf_reader_->isMapValid()) {
+        //     Eigen::Vector3d current_pos(x0[0], x0[1], x0[2]);
+        //     double current_dist = esdf_reader_->getDistance(current_pos);
+        //     bool in_bound = esdf_reader_->isInLocalBound(current_pos);
 
-            if (solve_count_ % 100 == 0) {
-                // RCLCPP_INFO(this->get_logger(),
-                //     "Current pos: [%.2f, %.2f, %.2f], ESDF dist: %.3f m, in_bound: %d",
-                //     current_pos.x(), current_pos.y(), current_pos.z(), current_dist, in_bound);
-            }
-        }
+        //     if (solve_count_ % 100 == 0) {
+        //         RCLCPP_INFO(this->get_logger(),
+        //             "Current pos: [%.2f, %.2f, %.2f], ESDF dist: %.3f m, in_bound: %d",
+        //             current_pos.x(), current_pos.y(), current_pos.z(), current_dist, in_bound);
+        //     }
+        // }
 
         // 第一次求解时跳过参数更新（使用默认参数）
         if (!first_solve_done_) {
@@ -395,11 +466,9 @@ private:
             first_solve_done_ = true;
         } else if (esdf_reader_ && esdf_reader_->isMapValid()) {
             // 从第二次求解开始，为每个预测阶段查询ESDF并更新参数（使用上一轮预测轨迹）
-            RCLCPP_DEBUG(this->get_logger(), "Updating ESDF parameters for %d stages", N);
-
             for (int i = 0; i < N; i++) {
                 // 1. 提取该阶段的猜测状态
-                double xi[10];  // [px, py, pz, vx, vy, vz, qw, qx, qy, qz]
+                double xi[17];
                 ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, i, "x", xi);
 
                 // 2. 查询ESDF距离和梯度
@@ -427,7 +496,7 @@ private:
         }
 
         // ========== 多次内层迭代：检查预测是否碰撞，必要时重新线性化ESDF并再次求解 ==========
-        const int max_inner_iters = 5;
+        const int max_inner_iters = 10;
         const double safety_distance_check = 0.4;  // 与px4_nmpc.py中的安全距离保持一致
 
         bool solver_ok = false;
@@ -436,12 +505,12 @@ private:
             // 调用求解器
             int status = px4_model_acados_solve(acados_ocp_capsule_);
             if (status != 0) {
-                // RCLCPP_WARN(this->get_logger(),
-                //             "Acados solve failed at inner iter %d with status %d", iter, status);
-                // return false;
+                internal_state_initialized_ = false;
+                RCLCPP_WARN(this->get_logger(),
+                            "Acados solve failed at inner iter %d with status %d", iter, status);
+            }else{
+                solver_ok = true;
             }
-
-            solver_ok = true;
 
             // 如果ESDF不可用，无法判断碰撞，直接使用当前解
             if (!(esdf_reader_ && esdf_reader_->isMapValid())) {
@@ -453,7 +522,7 @@ private:
             double min_dist = 1e9;
 
             for (int k = 0; k <= N; ++k) {
-                double x_pred[10];  // [px, py, pz, vx, vy, vz, qw, qx, qy, qz]
+                double x_pred[17];
                 ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, k, "x", x_pred);
 
                 Eigen::Vector3d pos(x_pred[0], x_pred[1], x_pred[2]);
@@ -466,25 +535,15 @@ private:
                 }
             }
 
+            // 预测轨迹在整个时域内均满足安全距离，结束内层迭代，跳出循环
             if (!has_collision) {
-                // 预测轨迹在整个时域内均满足安全距离，结束内层迭代
-                if (iter > 0) {
-                    // RCLCPP_INFO(this->get_logger(),
-                    //             "NMPC inner iter %d: collision-free trajectory found (min_dist=%.3f m)",
-                    //             iter, min_dist);
-                }
                 break;
             }
 
             // 若预测轨迹仍存在碰撞且未达到最大迭代次数：基于当前预测轨迹重新线性化ESDF并更新参数，进入下一轮求解
             if (iter < max_inner_iters - 1) {
-                // RCLCPP_WARN(this->get_logger(),
-                //             "NMPC predicted collision (min_dist=%.3f m) at inner iter %d, "
-                //             "relinearizing ESDF and resolving",
-                //             min_dist, iter);
-
                 for (int i = 0; i < N; ++i) {
-                    double xi[10];
+                    double xi[17];
                     ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, i, "x", xi);
 
                     Eigen::Vector3d pos(xi[0], xi[1], xi[2]);
@@ -502,19 +561,14 @@ private:
                     p[6] = pos.z();
 
                     int ret = px4_model_acados_update_params(acados_ocp_capsule_, i, p, 7);
-                    // if (ret != 0) {
-                    //     RCLCPP_ERROR(this->get_logger(),
-                    //                  "Failed to update params at stage %d in inner iter %d, ret=%d",
-                    //                  i, iter, ret);
-                    // }
                 }
                 // 进入下一轮 inner iter
             } else {
                 // 已达到最大迭代次数，使用当前解但发出警告
-                // RCLCPP_WARN(this->get_logger(),
-                //             "NMPC predicted trajectory still colliding after %d inner iters "
-                //             "(min_dist=%.3f m), using last solution",
-                //             max_inner_iters, min_dist);
+                RCLCPP_WARN(this->get_logger(),
+                            "NMPC predicted trajectory still colliding after %d inner iters "
+                            "(min_dist=%.3f m), using last solution",
+                            max_inner_iters, min_dist);
             }
         }
 
@@ -522,53 +576,81 @@ private:
             return false;
         }
 
-        // 提取控制输入 (4维: [T, ωx, ωy, ωz]) —— 使用最后一次求解得到的解
-        double u0[4];
-        ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, 0, "u", u0);
+        // 使用stage1状态作为下一时刻的初始值
+        double x_next[17];
+        ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, 1, "x", x_next);
+        thrust_state_ = x_next[10];
+        body_rate_(0) = x_next[11];
+        body_rate_(1) = x_next[12];
+        body_rate_(2) = x_next[13];
+        body_rate_dot_(0) = x_next[14];
+        body_rate_dot_(1) = x_next[15];
+        body_rate_dot_(2) = x_next[16];
 
-        // 保存控制输入
-        current_control_.thrust = u0[0];
-        current_control_.body_rate_x = u0[1];
-        current_control_.body_rate_y = u0[2];
-        current_control_.body_rate_z = u0[3];
+        // 保存控制输入用于发布
+        current_control_.thrust = thrust_state_;
+        current_control_.body_rate_x = body_rate_(0);
+        current_control_.body_rate_y = body_rate_(1);
+        current_control_.body_rate_z = body_rate_(2);
 
-        // 每10次打印一次，避免刷屏
-        print_counter_++;
-        if (print_counter_ % 10 == 0) {
-            // RCLCPP_INFO(this->get_logger(), "========== NMPC State & Control ==========");
-            // RCLCPP_INFO(this->get_logger(), "Position (ENU): [%.3f, %.3f, %.3f] m",
-            //     x0[0], x0[1], x0[2]);
-            // RCLCPP_INFO(this->get_logger(), "Velocity (ENU): [%.3f, %.3f, %.3f] m/s",
-            //     x0[3], x0[4], x0[5]);
-            // RCLCPP_INFO(this->get_logger(), "Quaternion (ENU): [%.3f, %.3f, %.3f, %.3f]",
-            //     x0[6], x0[7], x0[8], x0[9]);
+        // // 每10次打印一次，避免刷屏
+        // print_counter_++;
+        // if (print_counter_ % 10 == 0) {
+        //     RCLCPP_INFO(this->get_logger(), "========== NMPC State & Control ==========");
+        //     RCLCPP_INFO(this->get_logger(), "Position (ENU): [%.3f, %.3f, %.3f] m",
+        //         x0[0], x0[1], x0[2]);
+        //     RCLCPP_INFO(this->get_logger(), "Velocity (ENU): [%.3f, %.3f, %.3f] m/s",
+        //         x0[3], x0[4], x0[5]);
+        //     RCLCPP_INFO(this->get_logger(), "Quaternion (ENU): [%.3f, %.3f, %.3f, %.3f]",
+        //         x0[6], x0[7], x0[8], x0[9]);
 
-            // ESDF信息（暂时注释，避免段错误）
-            // if (esdf_reader_ && esdf_reader_->isMapValid()) {
-            //     Eigen::Vector3d current_pos(x0[0], x0[1], x0[2]);
-            //     double esdf_dist = esdf_reader_->getDistance(current_pos);
-            //     Eigen::Vector3d esdf_grad = esdf_reader_->getGradient(current_pos);
-            //     RCLCPP_INFO(this->get_logger(), "ESDF: dist=%.3f m, grad=[%.3f, %.3f, %.3f]",
-            //         esdf_dist, esdf_grad.x(), esdf_grad.y(), esdf_grad.z());
-            // } else {
-            //     RCLCPP_WARN(this->get_logger(), "ESDF map not available");
-            // }
+        //     ESDF信息（暂时注释，避免段错误）
+        //     if (esdf_reader_ && esdf_reader_->isMapValid()) {
+        //         Eigen::Vector3d current_pos(x0[0], x0[1], x0[2]);
+        //         double esdf_dist = esdf_reader_->getDistance(current_pos);
+        //         Eigen::Vector3d esdf_grad = esdf_reader_->getGradient(current_pos);
+        //         RCLCPP_INFO(this->get_logger(), "ESDF: dist=%.3f m, grad=[%.3f, %.3f, %.3f]",
+        //             esdf_dist, esdf_grad.x(), esdf_grad.y(), esdf_grad.z());
+        //     } else {
+        //         RCLCPP_WARN(this->get_logger(), "ESDF map not available");
+        //     }
 
-            // RCLCPP_INFO(this->get_logger(), "NMPC Output:");
-            // RCLCPP_INFO(this->get_logger(), "  Thrust: %.3f N", u0[0]);
-            // RCLCPP_INFO(this->get_logger(), "  Body Rate: [%.3f, %.3f, %.3f] rad/s",
-            //     u0[1], u0[2], u0[3]);
-            // RCLCPP_INFO(this->get_logger(), "Reference:");
-            // RCLCPP_INFO(this->get_logger(), "  Pos: [%.3f, %.3f, %.3f] m", yref[0], yref[1], yref[2]);
-            // RCLCPP_INFO(this->get_logger(), "  Thrust: %.3f N", yref[10]);
-            // RCLCPP_INFO(this->get_logger(), "==========================================");
-        }
+        //     RCLCPP_INFO(this->get_logger(), "NMPC Output:");
+        //     RCLCPP_INFO(this->get_logger(), "  Thrust: %.3f N", u0[0]);
+        //     RCLCPP_INFO(this->get_logger(), "  Body Rate: [%.3f, %.3f, %.3f] rad/s",
+        //         u0[1], u0[2], u0[3]);
+        //     RCLCPP_INFO(this->get_logger(), "Reference:");
+        //     RCLCPP_INFO(this->get_logger(), "  Pos: [%.3f, %.3f, %.3f] m", yref[0], yref[1], yref[2]);
+        //     RCLCPP_INFO(this->get_logger(), "  Thrust: %.3f N", yref[10]);
+        //     RCLCPP_INFO(this->get_logger(), "==========================================");
+        // }
 
         return true;
     }
 
     /**
-     * @brief 发布Body Rate控制指令
+     * @brief 发布PositionCommandTrajectory
+     */
+    void publishPositionCommandTrajectory() {
+
+        px4ctrl::msg::PositionCommandTrajectory msg;
+        msg.header.stamp = this->now();
+        msg.header.frame_id = "map";
+        msg.dt = 0.1;
+
+        int N = PX4_MODEL_N;
+        msg.points.reserve(N + 1);
+        for (int i = 0; i <= N; ++i) {
+            double x_stage[PX4_MODEL_NX];
+            ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, i, "x", x_stage);
+            msg.points.push_back(buildPositionCommandFromStage(x_stage));
+        }
+
+        position_cmd_traj_pub_->publish(msg);
+    }
+
+    /**
+     * @brief 发布Body Rate控制指令(已经将MPC控制器改为规划器，此函数已弃用)
      */
     void publishBodyRateControl() {
         auto msg = mavros_msgs::msg::AttitudeTarget();
@@ -584,7 +666,7 @@ private:
         msg.body_rate.z = current_control_.body_rate_z;
 
         // 设置推力 (归一化 0-1)
-        double max_thrust = 21.629;//23.298;  // 最大推力 (N)
+        double max_thrust = 22.629;//23.298;  // 最大推力 (N)
         double thrust_normalized = current_control_.thrust / max_thrust;
 
         // 限制范围
@@ -612,7 +694,7 @@ private:
 
         // 提取预测轨迹 (0到N共21个点)
         for (int i = 0; i <= N; i++) {
-            double x_pred[10];  // [px, py, pz, vx, vy, vz, qw, qx, qy, qz]
+            double x_pred[17];
             ocp_nlp_out_get(nlp_config_, nlp_dims_, nlp_out_, i, "x", x_pred);
 
             // 创建PoseStamped
@@ -638,25 +720,6 @@ private:
         predicted_path_pub_->publish(path_msg);
     }
 
-    /**
-     * @brief 发送心跳消息 (在等待Offboard期间)
-     */
-    void publishHeartbeat() {
-        auto msg = mavros_msgs::msg::AttitudeTarget();
-        msg.header.stamp = this->now();
-        msg.header.frame_id = "base_link";
-        msg.type_mask = mavros_msgs::msg::AttitudeTarget::IGNORE_ATTITUDE;
-        msg.body_rate.x = 0.0;
-        msg.body_rate.y = 0.0;
-        msg.body_rate.z = 0.0;
-
-        // 计算悬停推力（归一化）
-        double hover_thrust_normalized = (quad_mass_ * gravity_) / 21.629;
-        msg.thrust = std::max(0.0, std::min(1.0, hover_thrust_normalized));
-
-        attitude_target_pub_->publish(msg);
-    }
-
     // ========== 四元数工具函数 ==========
 
     /**
@@ -670,6 +733,12 @@ private:
             return q_normalized;
         }
         return q;
+    }
+
+    double yawFromQuat(const Eigen::Quaterniond& q) const {
+        double siny_cosp = 2.0 * (q.w() * q.z() + q.x() * q.y());
+        double cosy_cosp = 1.0 - 2.0 * (q.y() * q.y() + q.z() * q.z());
+        return std::atan2(siny_cosp, cosy_cosp);
     }
 
     // ========== Offboard控制 ==========
@@ -818,6 +887,7 @@ private:
     // ROS2发布者
     rclcpp::Publisher<mavros_msgs::msg::AttitudeTarget>::SharedPtr attitude_target_pub_;
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr predicted_path_pub_;
+    rclcpp::Publisher<px4ctrl::msg::PositionCommandTrajectory>::SharedPtr position_cmd_traj_pub_;
 
     // ROS2服务客户端
     rclcpp::Client<mavros_msgs::srv::SetMode>::SharedPtr set_mode_client_;
@@ -842,6 +912,10 @@ private:
 
     // NMPC控制
     NMPCControl current_control_;
+    double thrust_state_ = 0.0;
+    Eigen::Vector3d body_rate_ = Eigen::Vector3d::Zero();
+    Eigen::Vector3d body_rate_dot_ = Eigen::Vector3d::Zero();
+    bool internal_state_initialized_ = false;
 
     // MAVROS状态
     mavros_msgs::msg::State mavros_state_;

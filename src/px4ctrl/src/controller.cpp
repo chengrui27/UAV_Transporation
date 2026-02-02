@@ -3,6 +3,8 @@
 #include <cmath>
 #include <vector>
 
+#include <rclcpp/rclcpp.hpp>
+
 namespace
 {
 /* 
@@ -68,23 +70,26 @@ void Controller::update(const DesiredState &des, const OdomData &odom, const Imu
   const auto &p_msg = odom.msg.pose.pose.position;
   const auto &v_msg = odom.msg.twist.twist.linear;
   const auto &q_msg = odom.msg.pose.pose.orientation;
+  const auto &a_msg = imu.msg.linear_acceleration;
 
   Eigen::Vector3d p(p_msg.x, p_msg.y, p_msg.z);
   Eigen::Vector3d v(v_msg.x, v_msg.y, v_msg.z);
   Eigen::Quaterniond q(q_msg.w, q_msg.x, q_msg.y, q_msg.z);
   Eigen::Matrix3d R = q.toRotationMatrix(); 
 
+  v = R * v;  // convert velocity to world frame
+
   Eigen::Matrix3d Kp = Eigen::Matrix3d::Zero();
   Eigen::Matrix3d Kv = Eigen::Matrix3d::Zero();
   Eigen::Matrix3d Ki = Eigen::Matrix3d::Zero();
-  Kp(0, 0) = params_->kp_xy;
-  Kp(1, 1) = params_->kp_xy;
+  Kp(0, 0) = params_->kp_x;
+  Kp(1, 1) = params_->kp_y;
   Kp(2, 2) = params_->kp_z;
-  Kv(0, 0) = params_->kv_xy;
-  Kv(1, 1) = params_->kv_xy;
+  Kv(0, 0) = params_->kv_x;
+  Kv(1, 1) = params_->kv_y;
   Kv(2, 2) = params_->kv_z;
-  Ki(0, 0) = params_->kvi_xy;
-  Ki(1, 1) = params_->kvi_xy;
+  Ki(0, 0) = params_->kvi_x;
+  Ki(1, 1) = params_->kvi_y;
   Ki(2, 2) = params_->kvi_z;
 
   // Step1: use quaternion to get current yaw
@@ -105,7 +110,7 @@ void Controller::update(const DesiredState &des, const OdomData &odom, const Imu
     }  
   }
   const std::vector<double> integration_output_limits = {0.4, 0.4, 0.4};
-  Eigen::Vector3d u_v_i = wRc * Ki* cRw * int_e_v;  // integral term of velocity control
+  Eigen::Vector3d u_v_i = wRc * Ki * cRw * int_e_v;  // integral term of velocity control
   for(int i=0; i<3; i++){
     if(u_v_i[i] > integration_output_limits[i]){
       u_v_i[i] = integration_output_limits[i];
@@ -113,7 +118,11 @@ void Controller::update(const DesiredState &des, const OdomData &odom, const Imu
       u_v_i[i] = -integration_output_limits[i];
     }
   }
-  Eigen::Vector3d u_v = u_v_p + u_v_i;  
+  Eigen::Vector3d u_v = u_v_p + u_v_i;
+
+  // Eigen::Vector3d a_imu(a_msg.x, a_msg.y, a_msg.z);
+  // Eigen::Vector3d a_cur = R * a_imu - Eigen::Vector3d(0.0, 0.0, params_->gra);  // convert imu acceleration to world frame
+  // Eigen::Vector3d a_err = des.a - a_cur;
   
   // Step3: add feedforward force or acceleration to compute desired force
   Eigen::Vector3d F_des;
@@ -137,10 +146,32 @@ void Controller::update(const DesiredState &des, const OdomData &odom, const Imu
   double max_xy = max_tilt * F_des.z();
   if (std::fabs(F_des.x()) > max_xy){
     F_des.x() = (F_des.x() > 0.0 ? 1.0 : -1.0) * max_xy;
+    RCLCPP_WARN(rclcpp::get_logger("px4ctrl_controller"), "desired pitch angle is too large");
   }
   if (std::fabs(F_des.y()) > max_xy){
     F_des.y() = (F_des.y() > 0.0 ? 1.0 : -1.0) * max_xy;
+    RCLCPP_WARN(rclcpp::get_logger("px4ctrl_controller"), "desired roll angle is too large");
   }
+
+  // RCLCPP_INFO(rclcpp::get_logger("px4ctrl_controller"),
+  //             "des_p=[%.3f, %.3f, %.3f], cur_p=[%.3f, %.3f, %.3f], des_v=[%.3f, %.3f, %.3f], cur_v=[%.3f, %.3f, %.3f], des_T=[%.3f, %.3f, %.3f], cur_T=[%.3f, %.3f, %.3f], a_des=[%.3f, %.3f, %.3f], a_cur=[%.3f, %.3f, %.3f]",
+  //             des.p.x(), des.p.y(), des.p.z(),
+  //             odom.msg.pose.pose.position.x, odom.msg.pose.pose.position.y, odom.msg.pose.pose.position.z,
+  //             des.v.x(), des.v.y(), des.v.z(),
+  //             odom.msg.twist.twist.linear.x, odom.msg.twist.twist.linear.y, odom.msg.twist.twist.linear.z,
+  //             des.T.x(), des.T.y(), des.T.z(),
+  //             F_des.x(), F_des.y(), F_des.z(),
+  //             des.a.x(), des.a.y(), des.a.z(),
+  //             a_cur.x(), a_cur.y(), a_cur.z());
+
+  RCLCPP_INFO(rclcpp::get_logger("px4ctrl_controller"),
+              "des_p=[%.3f, %.3f, %.3f], cur_p=[%.3f, %.3f, %.3f], des_v=[%.3f, %.3f, %.3f], cur_v=[%.3f, %.3f, %.3f], des_T=[%.3f, %.3f, %.3f], cur_T=[%.3f, %.3f, %.3f]",
+              des.p.x(), des.p.y(), des.p.z(),
+              odom.msg.pose.pose.position.x, odom.msg.pose.pose.position.y, odom.msg.pose.pose.position.z,
+              des.v.x(), des.v.y(), des.v.z(),
+              odom.msg.twist.twist.linear.x, odom.msg.twist.twist.linear.y, odom.msg.twist.twist.linear.z,
+              des.T.x(), des.T.y(), des.T.z(),
+              F_des.x(), F_des.y(), F_des.z());
 
   // Step5: compute desired attitude and thrust
   Eigen::Vector3d z_b_des = F_des / F_des.norm();
@@ -155,16 +186,18 @@ void Controller::update(const DesiredState &des, const OdomData &odom, const Imu
   Eigen::Matrix3d R_des2;
   R_des2 << -x_b_des, -y_b_des, z_b_des;
 
-  Eigen::Vector3d e1 = R_to_ypr(R_des1.transpose() * R);
-  Eigen::Vector3d e2 = R_to_ypr(R_des2.transpose() * R);
+  // Eigen::Vector3d e1 = R_to_ypr(R_des1.transpose() * R);
+  // Eigen::Vector3d e2 = R_to_ypr(R_des2.transpose() * R);
 
   Eigen::Matrix3d R_des;
 
-  if (e1.norm() < e2.norm()){
-    R_des = R_des1;
-  }else{
-    R_des = R_des2;
-  }
+  // if (e1.norm() < e2.norm()){
+  //   R_des = R_des1;
+  // }else{
+  //   R_des = R_des2;
+  // }
+
+  R_des = R_des1;
 
   if(params_->use_bodyrate){
     Eigen::Matrix3d R_err = 0.5 * (R_des.transpose() * R - R.transpose() * R_des);  // define attitude error

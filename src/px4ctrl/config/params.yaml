@@ -4,16 +4,20 @@ px4ctrl:
     feedforward_thrust: true
     use_bodyrate: false
     publish_enabled: true
+    use_goal_pose: false
 
     ctrl_rate: 100.0
     mass: 1.0
     gra: 9.81
 
-    kp_xy: 6.0
+    kp_x: 6.0
+    kp_y: 6.0
     kp_z: 6.0
-    kv_xy: 4.0
+    kv_x: 4.0
+    kv_y: 4.0
     kv_z: 4.0
-    kvi_xy: 0.1
+    kvi_x: 0.1
+    kvi_y: 0.1
     kvi_z: 0.2
     ka: 1.0
     kT: 1.0

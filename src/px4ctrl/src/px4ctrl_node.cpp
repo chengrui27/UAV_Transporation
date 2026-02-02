@@ -1,6 +1,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <mavros_msgs/msg/attitude_target.hpp>
 #include <functional>
+#include <cmath>
 
 #include "params.hpp"
 #include "input.hpp"
@@ -33,6 +34,9 @@ public:
     cmd_traj_sub_ = create_subscription<px4ctrl::msg::PositionCommandTrajectory>(
         "/cmd_traj", 10, std::bind(&Px4CtrlNode::cmd_traj_cb, this, _1));
 
+    goal_pose_sub_ = create_subscription<geometry_msgs::msg::PoseStamped>(
+        "/goal_pose", 10, std::bind(&Px4CtrlNode::goal_pose_cb, this, _1));
+
     auto period = std::chrono::duration<double>(1.0 / params_.ctrl_rate);
     timer_ = create_wall_timer(period, std::bind(&Px4CtrlNode::on_timer, this));
   }
@@ -42,6 +46,14 @@ private:
   void imu_cb(const sensor_msgs::msg::Imu::SharedPtr msg) { imu_.feed(msg); }
   void cmd_cb(const px4ctrl::msg::PositionCommand::SharedPtr msg) { cmd_.feed(msg); }
   void cmd_traj_cb(const px4ctrl::msg::PositionCommandTrajectory::SharedPtr msg) { traj_.feed(msg); }
+  void goal_pose_cb(const geometry_msgs::msg::PoseStamped::SharedPtr msg) { goal_pose_.feed(msg); }
+
+  static double yaw_from_quaternion(const geometry_msgs::msg::Quaternion &q)
+  {
+    const double siny_cosp = 2.0 * (q.w * q.z + q.x * q.y);
+    const double cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z);
+    return std::atan2(siny_cosp, cosy_cosp);
+  }
 
   /*
    * Fill desired state from trajectory based on current time
@@ -55,6 +67,7 @@ private:
 
     double dt = traj_.msg.dt;
     double t = (odom_.stamp.seconds() - traj_.stamp.seconds()) + (odom_.stamp.nanoseconds() - traj_.stamp.nanoseconds()) / 1000000000.0;
+    t = t / 2.0;  // ros::Timer is two times faster than real time
     if (t < 0.0)
     {
       t = 0.0;
@@ -69,6 +82,7 @@ private:
       idx = static_cast<size_t>(idx_f);
       prop = idx_f - static_cast<double>(idx);
       idx = idx + 1;
+      RCLCPP_INFO(get_logger(), "traj idx = %zu, traj idx_f = %f, timer_cnt = %d", idx, idx_f, timer_cnt_);
     }
     if (idx >= traj_.msg.points.size())
     {
@@ -120,15 +134,51 @@ private:
     return true;
   }
 
+  int timer_cnt_{0};
   void on_timer()
   {
+    // 用于检查定时器调用频率
+    // timer_cnt_++;
+    // RCLCPP_INFO_THROTTLE(
+    //     get_logger(),
+    //     *get_clock(),
+    //     1000,
+    //     "Px4CtrlNode on_timer called, cnt=%d",
+    //     timer_cnt_);
+
     if (!odom_.received || !imu_.received)
     {
       return;
     }
 
     DesiredState des;
-    if (!fillDesiredFromTrajectory(des))
+    if (params_.use_goal_pose)
+    {
+      if (!goal_pose_.ready())
+      {
+        return;
+      }
+
+      des.p.x() = goal_pose_.msg.pose.position.x;
+      des.p.y() = goal_pose_.msg.pose.position.y;
+      des.p.z() = 1.5;
+
+      des.v.x() = 0.0;
+      des.v.y() = 0.0;
+      des.v.z() = 0.0;
+
+      des.a.x() = 0.0;
+      des.a.y() = 0.0;
+      des.a.z() = 0.0;
+
+      des.T.x() = 0.0;
+      des.T.y() = 0.0;
+      des.T.z() = 0.0;
+
+      des.yaw = yaw_from_quaternion(goal_pose_.msg.pose.orientation);
+      des.yaw_rate = 0.0;
+    }
+    else if (!fillDesiredFromTrajectory(des))
     {
       if (!cmd_.ready())
       {
@@ -158,25 +208,25 @@ private:
     ControllerOutput out;
     controller_.update(des, odom_, imu_, out);
 
-    RCLCPP_INFO_THROTTLE(
-        get_logger(),
-        *get_clock(),
-        500,
-        "ctrl out: des=[%.3f, %.3f, %.3f], cur=[%.3f, %.3f, %.3f], thrust=%.3f, bodyrate=[%.3f, %.3f, %.3f], q=[%.3f, %.3f, %.3f, %.3f]",
-        des.p.x(),
-        des.p.y(),
-        des.p.z(),
-        odom_.msg.pose.pose.position.x,
-        odom_.msg.pose.pose.position.y,
-        odom_.msg.pose.pose.position.z,
-        out.thrust,
-        out.bodyrates.x(),
-        out.bodyrates.y(),
-        out.bodyrates.z(),
-        out.q.w(),
-        out.q.x(),
-        out.q.y(),
-        out.q.z());
+    // RCLCPP_INFO_THROTTLE(
+    //     get_logger(),
+    //     *get_clock(),
+    //     500,
+    //     "ctrl out: des=[%.3f, %.3f, %.3f], cur=[%.3f, %.3f, %.3f], thrust=%.3f, bodyrate=[%.3f, %.3f, %.3f], q=[%.3f, %.3f, %.3f, %.3f]",
+    //     des.p.x(),
+    //     des.p.y(),
+    //     des.p.z(),
+    //     odom_.msg.pose.pose.position.x,
+    //     odom_.msg.pose.pose.position.y,
+    //     odom_.msg.pose.pose.position.z,
+    //     out.thrust,
+    //     out.bodyrates.x(),
+    //     out.bodyrates.y(),
+    //     out.bodyrates.z(),
+    //     out.q.w(),
+    //     out.q.x(),
+    //     out.q.y(),
+    //     out.q.z());
 
     if (!params_.publish_enabled)
     {
@@ -220,12 +270,14 @@ private:
   ImuData imu_;
   CommandData cmd_;
   TrajectoryData traj_;
+  GoalPoseData goal_pose_;
 
   rclcpp::Publisher<mavros_msgs::msg::AttitudeTarget>::SharedPtr ctrl_pub_;
   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
   rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
   rclcpp::Subscription<px4ctrl::msg::PositionCommand>::SharedPtr cmd_sub_;
   rclcpp::Subscription<px4ctrl::msg::PositionCommandTrajectory>::SharedPtr cmd_traj_sub_;
+  rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr goal_pose_sub_;
   rclcpp::TimerBase::SharedPtr timer_;
 };
 

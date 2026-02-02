@@ -37,3 +37,15 @@ bool TrajectoryData::ready() const
 {
   return received && !msg.points.empty();
 }
+
+void GoalPoseData::feed(const geometry_msgs::msg::PoseStamped::SharedPtr &m)
+{
+  msg = *m;
+  stamp = rclcpp::Time(msg.header.stamp);
+  received = true;
+}
+
+bool GoalPoseData::ready() const
+{
+  return received;
+}
