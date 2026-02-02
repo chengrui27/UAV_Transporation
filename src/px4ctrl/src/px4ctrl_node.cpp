@@ -1,5 +1,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <mavros_msgs/msg/attitude_target.hpp>
+#include <mavros_msgs/msg/state.hpp>
+#include <mavros_msgs/srv/set_mode.hpp>
 #include <functional>
 #include <cmath>
 
@@ -28,6 +30,9 @@ public:
     imu_sub_ = create_subscription<sensor_msgs::msg::Imu>(
         "/mavros/imu/data", sensor_qos, std::bind(&Px4CtrlNode::imu_cb, this, _1));
 
+    state_sub_ = create_subscription<mavros_msgs::msg::State>(
+        "/mavros/state", 10, std::bind(&Px4CtrlNode::state_cb, this, _1));
+
     cmd_sub_ = create_subscription<px4ctrl::msg::PositionCommand>(
         "/cmd", 10, std::bind(&Px4CtrlNode::cmd_cb, this, _1));
 
@@ -37,6 +42,8 @@ public:
     goal_pose_sub_ = create_subscription<geometry_msgs::msg::PoseStamped>(
         "/goal_pose", 10, std::bind(&Px4CtrlNode::goal_pose_cb, this, _1));
 
+    set_mode_client_ = create_client<mavros_msgs::srv::SetMode>("/mavros/set_mode");
+
     auto period = std::chrono::duration<double>(1.0 / params_.ctrl_rate);
     timer_ = create_wall_timer(period, std::bind(&Px4CtrlNode::on_timer, this));
   }
@@ -44,6 +51,11 @@ public:
 private:
   void odom_cb(const nav_msgs::msg::Odometry::SharedPtr msg) { odom_.feed(msg); }
   void imu_cb(const sensor_msgs::msg::Imu::SharedPtr msg) { imu_.feed(msg); }
+  void state_cb(const mavros_msgs::msg::State::SharedPtr msg)
+  {
+    mavros_state_ = *msg;
+    mavros_state_received_ = true;
+  }
   void cmd_cb(const px4ctrl::msg::PositionCommand::SharedPtr msg) { cmd_.feed(msg); }
   void cmd_traj_cb(const px4ctrl::msg::PositionCommandTrajectory::SharedPtr msg) { traj_.feed(msg); }
   void goal_pose_cb(const geometry_msgs::msg::PoseStamped::SharedPtr msg) { goal_pose_.feed(msg); }
@@ -260,6 +272,37 @@ private:
     }
 
     ctrl_pub_->publish(msg);
+    published_setpoint_count_++;
+
+    // 自动切换offboard模式
+    constexpr size_t kOffboardSetpointCount = 100;
+    if (!mavros_state_received_)
+    {
+      return;
+    }
+    if (mavros_state_.mode == "OFFBOARD")
+    {
+      return;
+    }
+    if (published_setpoint_count_ < kOffboardSetpointCount)
+    {
+      return;
+    }
+    if (!set_mode_client_->service_is_ready())
+    {
+      RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000, "SetMode service not available");
+      return;
+    }
+    auto now_time = now();
+    if ((now_time - last_offboard_request_).seconds() < 1.0)
+    {
+      return;
+    }
+
+    auto request = std::make_shared<mavros_msgs::srv::SetMode::Request>();
+    request->custom_mode = "OFFBOARD";
+    set_mode_client_->async_send_request(request);
+    last_offboard_request_ = now_time;
   }
 
 private:
@@ -275,10 +318,17 @@ private:
   rclcpp::Publisher<mavros_msgs::msg::AttitudeTarget>::SharedPtr ctrl_pub_;
   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
   rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
+  rclcpp::Subscription<mavros_msgs::msg::State>::SharedPtr state_sub_;
   rclcpp::Subscription<px4ctrl::msg::PositionCommand>::SharedPtr cmd_sub_;
   rclcpp::Subscription<px4ctrl::msg::PositionCommandTrajectory>::SharedPtr cmd_traj_sub_;
   rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr goal_pose_sub_;
+  rclcpp::Client<mavros_msgs::srv::SetMode>::SharedPtr set_mode_client_;
   rclcpp::TimerBase::SharedPtr timer_;
+
+  mavros_msgs::msg::State mavros_state_;
+  bool mavros_state_received_{false};
+  size_t published_setpoint_count_{0};
+  rclcpp::Time last_offboard_request_{0, 0, RCL_ROS_TIME};
 };
 
 int main(int argc, char **argv)

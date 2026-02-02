@@ -7,7 +7,7 @@ struct Params
   bool feedforward_thrust{false};
   bool publish_enabled{true};
   bool use_bodyrate{false};
-  bool use_goal_pose{true};
+  bool use_goal_pose{false};
   
   double ctrl_rate{100.0};
   double mass{1.535};

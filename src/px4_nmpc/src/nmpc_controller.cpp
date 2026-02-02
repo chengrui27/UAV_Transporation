@@ -350,6 +350,58 @@ private:
     }
 
     /**
+     * @brief 新目标触发后的初始猜测（线性插值位置 + 悬停推力）
+     */
+    void initializeGuessForNewGoal(const Eigen::Quaterniond& current_attitude) {
+        if (acados_ocp_capsule_ == nullptr) {
+            return;
+        }
+
+        int N = PX4_MODEL_N;
+        double hover_thrust = quad_mass_ * gravity_;
+
+        for (int i = 0; i <= N; ++i) {
+            double alpha = static_cast<double>(i) / static_cast<double>(N);
+
+            double x_guess[PX4_MODEL_NX];
+            for (int k = 0; k < PX4_MODEL_NX; ++k) {
+                x_guess[k] = 0.0;
+            }
+
+            x_guess[0] = (1.0 - alpha) * quad_position_(0) + alpha * goal_position_(0);
+            x_guess[1] = (1.0 - alpha) * quad_position_(1) + alpha * goal_position_(1);
+            x_guess[2] = (1.0 - alpha) * quad_position_(2) + alpha * goal_position_(2);
+
+            x_guess[3] = 0.0;
+            x_guess[4] = 0.0;
+            x_guess[5] = 0.0;
+
+            x_guess[6] = current_attitude.w();
+            x_guess[7] = current_attitude.x();
+            x_guess[8] = current_attitude.y();
+            x_guess[9] = current_attitude.z();
+
+            x_guess[10] = hover_thrust;
+            x_guess[11] = 0.0;
+            x_guess[12] = 0.0;
+            x_guess[13] = 0.0;
+            x_guess[14] = 0.0;
+            x_guess[15] = 0.0;
+            x_guess[16] = 0.0;
+
+            ocp_nlp_out_set(nlp_config_, nlp_dims_, nlp_out_, nlp_in_, i, "x", x_guess);
+
+            if (i < N) {
+                double u_guess[PX4_MODEL_NU];
+                for (int k = 0; k < PX4_MODEL_NU; ++k) {
+                    u_guess[k] = 0.0;
+                }
+                ocp_nlp_out_set(nlp_config_, nlp_dims_, nlp_out_, nlp_in_, i, "u", u_guess);
+            }
+        }
+    }
+
+    /**
      * @brief 读取MPC每个stage的状态，构建PositionCommand消息
      */
     px4ctrl::msg::PositionCommand buildPositionCommandFromStage(const double* x) {
@@ -404,6 +456,7 @@ private:
             thrust_state_ = quad_mass_ * gravity_;
             body_rate_.setZero();
             body_rate_dot_.setZero();
+            initializeGuessForNewGoal(quad_attitude_normalized);
             internal_state_initialized_ = true;
         }
 
