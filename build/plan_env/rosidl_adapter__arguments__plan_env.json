@@ -1,6 +1,0 @@
-{
-  "package_name": "plan_env",
-  "non_idl_tuples": [
-    "/home/chen/px4_ws/src/plan_env:msg/ESDFMap.msg"
-  ]
-}

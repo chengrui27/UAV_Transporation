@@ -1,6 +1,0 @@
-[ 16%] [32mBuilding CXX object CMakeFiles/payload_odom_from_vrpn.dir/src/payload_odom_from_vrpn.cpp.o[0m
-[ 50%] Built target esdf_map_reader_payload
-[35m[1mConsolidate compiler generated dependencies of target nmpc_controller[0m
-[ 83%] Built target nmpc_controller
-[100%] [32m[1mLinking CXX executable payload_odom_from_vrpn[0m
-[100%] Built target payload_odom_from_vrpn
