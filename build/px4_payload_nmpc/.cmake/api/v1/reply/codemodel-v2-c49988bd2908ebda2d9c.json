@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-24c05d80a7f0308323eb.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "px4_payload_nmpc",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "esdf_map_reader_payload::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-esdf_map_reader_payload-4adcfed6f27d12e0dc9f.json",
+					"name" : "esdf_map_reader_payload",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "nmpc_controller::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-nmpc_controller-5d162a4dfb5d53c3a98f.json",
+					"name" : "nmpc_controller",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "payload_odom_from_vrpn::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-payload_odom_from_vrpn-f7073d968c15ee0b2c15.json",
+					"name" : "payload_odom_from_vrpn",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "px4_payload_nmpc_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-px4_payload_nmpc_uninstall-7b6d82df75ecfa498d32.json",
+					"name" : "px4_payload_nmpc_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-db61f20c918f69cafa0e.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/chen/px4_ws/build/px4_payload_nmpc",
+		"source" : "/home/chen/px4_ws/src/px4_payload_nmpc"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

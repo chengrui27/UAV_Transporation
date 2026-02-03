@@ -1,0 +1,36 @@
+[0.015s] Invoking command in '/home/chen/px4_ws/build/px4_nmpc': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/tf:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/chen/px4_ws/build/px4_nmpc -- -j16 -l16
+[0.076s] [ 25%] [32m[1mLinking CXX shared library libesdf_map_reader.so[0m
+[0.783s] [ 50%] Built target esdf_map_reader
+[0.817s] [ 75%] [32m[1mLinking CXX executable nmpc_controller[0m
+[3.020s] [100%] Built target nmpc_controller
+[3.030s] Invoked command in '/home/chen/px4_ws/build/px4_nmpc' returned '0': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/tf:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/chen/px4_ws/build/px4_nmpc -- -j16 -l16
+[3.032s] Invoking command in '/home/chen/px4_ws/build/px4_nmpc': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/tf:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/chen/px4_ws/build/px4_nmpc
+[3.038s] -- Install configuration: ""
+[3.038s] -- Installing: /home/chen/px4_ws/install/px4_nmpc/lib/libesdf_map_reader.so
+[3.043s] -- Set runtime path of "/home/chen/px4_ws/install/px4_nmpc/lib/libesdf_map_reader.so" to ""
+[3.043s] -- Installing: /home/chen/px4_ws/install/px4_nmpc/lib/px4_nmpc/nmpc_controller
+[3.056s] -- Set runtime path of "/home/chen/px4_ws/install/px4_nmpc/lib/px4_nmpc/nmpc_controller" to ""
+[3.056s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/include
+[3.057s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/include/px4_nmpc
+[3.057s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/include/px4_nmpc/esdf_map_reader.h
+[3.057s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/lib/libacados_ocp_solver_px4_model.so
+[3.057s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/launch
+[3.057s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/launch/nmpc_controller.launch.py
+[3.057s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/launch/__pycache__
+[3.057s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/launch/__pycache__/nmpc_controller.launch.cpython-310.pyc
+[3.057s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/ament_index/resource_index/package_run_dependencies/px4_nmpc
+[3.057s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/ament_index/resource_index/parent_prefix_path/px4_nmpc
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/environment/ament_prefix_path.sh
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/environment/ament_prefix_path.dsv
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/environment/path.sh
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/environment/path.dsv
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/local_setup.bash
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/local_setup.sh
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/local_setup.zsh
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/local_setup.dsv
+[3.058s] -- Installing: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/package.dsv
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/ament_index/resource_index/packages/px4_nmpc
+[3.058s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/cmake/px4_nmpcConfig.cmake
+[3.059s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/cmake/px4_nmpcConfig-version.cmake
+[3.059s] -- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/package.xml
+[3.060s] Invoked command in '/home/chen/px4_ws/build/px4_nmpc' returned '0': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/tf:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/chen/px4_ws/build/px4_nmpc

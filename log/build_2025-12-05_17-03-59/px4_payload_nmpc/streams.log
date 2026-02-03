@@ -1,0 +1,125 @@
+[0.009s] Invoking command in '/home/chen/px4_ws/build/px4_payload_nmpc': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/chen/px4_ws/src/px4_payload_nmpc -DCMAKE_INSTALL_PREFIX=/home/chen/px4_ws/install/px4_payload_nmpc
+[0.018s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.130s] -- Found rclcpp: 16.0.15 (/opt/ros/humble/share/rclcpp/cmake)
+[0.149s] -- Found rosidl_generator_c: 3.1.7 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.150s] -- Found rosidl_adapter: 3.1.7 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.154s] -- Found rosidl_generator_cpp: 3.1.7 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.161s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.169s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.189s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.191s] -- Found rmw_fastrtps_cpp: 6.2.8 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.275s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.313s] -- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+[0.332s] -- Found mavros_msgs: 2.12.0 (/opt/ros/humble/share/mavros_msgs/cmake)
+[0.377s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[0.378s] -- Found plan_env: 1.0.0 (/home/chen/px4_ws/src/px4_payload_nmpc/../../install/plan_env/share/plan_env/cmake)
+[0.464s] -- Checking for module 'eigen3'
+[0.478s] --   Found eigen3, version 3.3.4
+[0.510s] -- Found Eigen: /usr/include/eigen3 (Required is at least version "3.1") 
+[0.510s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[0.538s] -- Checking for module 'flann'
+[0.549s] --   Found flann, version 1.9.1
+[0.587s] -- Found FLANN: /usr/lib/x86_64-linux-gnu/libflann_cpp.so  
+[0.587s] -- FLANN found (include: /usr/include, lib: /usr/lib/x86_64-linux-gnu/libflann_cpp.so)
+[1.545s] -- Checking for module 'libusb-1.0'
+[1.560s] --   Found libusb-1.0, version 1.0.25
+[1.607s] -- Found libusb: /usr/lib/x86_64-linux-gnu/libusb-1.0.so  
+[1.608s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[1.693s] -- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)
+[1.823s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[1.829s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[1.836s] -- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)
+[1.961s] -- Found Qhull version 8.0.2
+[2.076s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[2.186s] -- Found PCL_COMMON: /usr/lib/x86_64-linux-gnu/libpcl_common.so  
+[2.186s] -- Found PCL_KDTREE: /usr/lib/x86_64-linux-gnu/libpcl_kdtree.so  
+[2.187s] -- Found PCL_OCTREE: /usr/lib/x86_64-linux-gnu/libpcl_octree.so  
+[2.187s] -- Found PCL_SEARCH: /usr/lib/x86_64-linux-gnu/libpcl_search.so  
+[2.188s] -- Found PCL_SAMPLE_CONSENSUS: /usr/lib/x86_64-linux-gnu/libpcl_sample_consensus.so  
+[2.188s] -- Found PCL_FILTERS: /usr/lib/x86_64-linux-gnu/libpcl_filters.so  
+[2.189s] -- Found PCL_2D: /usr/include/pcl-1.12  
+[2.189s] -- Found PCL_GEOMETRY: /usr/include/pcl-1.12  
+[2.190s] -- Found PCL_IO: /usr/lib/x86_64-linux-gnu/libpcl_io.so  
+[2.190s] -- Found PCL_FEATURES: /usr/lib/x86_64-linux-gnu/libpcl_features.so  
+[2.191s] -- Found PCL_ML: /usr/lib/x86_64-linux-gnu/libpcl_ml.so  
+[2.191s] -- Found PCL_SEGMENTATION: /usr/lib/x86_64-linux-gnu/libpcl_segmentation.so  
+[2.192s] -- Found PCL_VISUALIZATION: /usr/lib/x86_64-linux-gnu/libpcl_visualization.so  
+[2.193s] -- Found PCL_SURFACE: /usr/lib/x86_64-linux-gnu/libpcl_surface.so  
+[2.193s] -- Found PCL_REGISTRATION: /usr/lib/x86_64-linux-gnu/libpcl_registration.so  
+[2.194s] -- Found PCL_KEYPOINTS: /usr/lib/x86_64-linux-gnu/libpcl_keypoints.so  
+[2.195s] -- Found PCL_TRACKING: /usr/lib/x86_64-linux-gnu/libpcl_tracking.so  
+[2.195s] -- Found PCL_RECOGNITION: /usr/lib/x86_64-linux-gnu/libpcl_recognition.so  
+[2.196s] -- Found PCL_STEREO: /usr/lib/x86_64-linux-gnu/libpcl_stereo.so  
+[2.197s] -- Found PCL_APPS: /usr/lib/x86_64-linux-gnu/libpcl_apps.so  
+[2.197s] -- Found PCL_IN_HAND_SCANNER: /usr/include/pcl-1.12  
+[2.198s] -- Found PCL_MODELER: /usr/include/pcl-1.12  
+[2.198s] -- Found PCL_POINT_CLOUD_EDITOR: /usr/include/pcl-1.12  
+[2.199s] -- Found PCL_OUTOFCORE: /usr/lib/x86_64-linux-gnu/libpcl_outofcore.so  
+[2.200s] -- Found PCL_PEOPLE: /usr/lib/x86_64-linux-gnu/libpcl_people.so  
+[2.223s] -- Found Eigen3: TRUE (found version "3.3.4") 
+[2.223s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[2.292s] -- Found acados generated solver
+[2.294s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[2.360s] -- Added test 'copyright' to check source files copyright and LICENSE
+[2.361s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.361s] -- Configured cppcheck include dirs: /home/chen/px4_ws/src/px4_payload_nmpc/include;/home/chen/px4_ws/src/px4_payload_nmpc/../../px4_payload/c_generated_code
+[2.361s] -- Configured cppcheck exclude dirs and/or files: 
+[2.362s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[2.362s] -- Configured cpplint exclude dirs and/or files: 
+[2.363s] -- Added test 'flake8' to check Python code syntax and style conventions
+[2.363s] -- Added test 'lint_cmake' to check CMake code style
+[2.363s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[2.364s] -- Added test 'uncrustify' to check C / C++ code style
+[2.364s] -- Configured uncrustify additional arguments: 
+[2.364s] -- Added test 'xmllint' to check XML markup files
+[2.365s] -- Configuring done
+[2.419s] -- Generating done
+[2.432s] -- Build files have been written to: /home/chen/px4_ws/build/px4_payload_nmpc
+[2.443s] Invoked command in '/home/chen/px4_ws/build/px4_payload_nmpc' returned '0': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/chen/px4_ws/src/px4_payload_nmpc -DCMAKE_INSTALL_PREFIX=/home/chen/px4_ws/install/px4_payload_nmpc
+[2.445s] Invoking command in '/home/chen/px4_ws/build/px4_payload_nmpc': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/chen/px4_ws/build/px4_payload_nmpc -- -j16 -l16
+[2.498s] [ 25%] [32mBuilding CXX object CMakeFiles/esdf_map_reader_payload.dir/src/esdf_map_reader.cpp.o[0m
+[4.460s] In file included from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/esdf_map_reader.cpp:1[m[K:
+[4.460s] [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/include/px4_payload_nmpc/esdf_map_reader.h:[m[K In constructor ‘[01m[KESDFMapReader::ESDFMapReader(rclcpp::Node::SharedPtr)[m[K’:
+[4.460s] [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/include/px4_payload_nmpc/esdf_map_reader.h:60:8:[m[K [01;35m[Kwarning: [m[K‘[01m[KESDFMapReader::map_valid_[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[4.460s]    60 |   bool [01;35m[Kmap_valid_[m[K;
+[4.460s]       |        [01;35m[K^~~~~~~~~~[m[K
+[4.460s] [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/include/px4_payload_nmpc/esdf_map_reader.h:48:10:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kdouble ESDFMapReader::resolution_[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[4.460s]    48 |   double [01;35m[Kresolution_[m[K;
+[4.460s]       |          [01;35m[K^~~~~~~~~~~[m[K
+[4.460s] [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/esdf_map_reader.cpp:4:1:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+[4.460s]     4 | [01;35m[KESDFMapReader[m[K::ESDFMapReader(rclcpp::Node::SharedPtr node)
+[4.460s]       | [01;35m[K^~~~~~~~~~~~~[m[K
+[8.441s] [ 50%] [32m[1mLinking CXX shared library libesdf_map_reader_payload.so[0m
+[9.034s] [ 50%] Built target esdf_map_reader_payload
+[9.056s] [ 75%] [32mBuilding CXX object CMakeFiles/nmpc_controller.dir/src/nmpc_controller.cpp.o[0m
+[22.570s] [100%] [32m[1mLinking CXX executable nmpc_controller[0m
+[24.031s] [100%] Built target nmpc_controller
+[24.043s] Invoked command in '/home/chen/px4_ws/build/px4_payload_nmpc' returned '0': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/chen/px4_ws/build/px4_payload_nmpc -- -j16 -l16
+[24.044s] Invoking command in '/home/chen/px4_ws/build/px4_payload_nmpc': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/chen/px4_ws/build/px4_payload_nmpc
+[24.050s] -- Install configuration: ""
+[24.050s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/lib/libesdf_map_reader_payload.so
+[24.055s] -- Set runtime path of "/home/chen/px4_ws/install/px4_payload_nmpc/lib/libesdf_map_reader_payload.so" to ""
+[24.055s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/lib/px4_payload_nmpc/nmpc_controller
+[24.060s] -- Set runtime path of "/home/chen/px4_ws/install/px4_payload_nmpc/lib/px4_payload_nmpc/nmpc_controller" to ""
+[24.060s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/include
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/include/px4_payload_nmpc
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/include/px4_payload_nmpc/esdf_map_reader.h
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/lib/libacados_ocp_solver_px4_payload_model.so
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/launch
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/launch/nmpc_controller.launch.py
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/ament_index/resource_index/package_run_dependencies/px4_payload_nmpc
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/ament_index/resource_index/parent_prefix_path/px4_payload_nmpc
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/environment/ament_prefix_path.sh
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/environment/ament_prefix_path.dsv
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/environment/path.sh
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/environment/path.dsv
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/local_setup.bash
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/local_setup.sh
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/local_setup.zsh
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/local_setup.dsv
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/package.dsv
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/ament_index/resource_index/packages/px4_payload_nmpc
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/cmake/px4_payload_nmpcConfig.cmake
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/cmake/px4_payload_nmpcConfig-version.cmake
+[24.061s] -- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/package.xml
+[24.063s] Invoked command in '/home/chen/px4_ws/build/px4_payload_nmpc' returned '0': AMENT_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble LD_LIBRARY_PATH=/home/chen/px4_ws/install/plan_env/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/chen/px4_ws/build/px4_payload_nmpc

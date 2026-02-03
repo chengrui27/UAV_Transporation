@@ -1,0 +1,33 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from plan_env/msg/ESDFMap.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module plan_env {
+  module msg {
+    typedef double double__3[3];
+    typedef int32 int32__3[3];
+    struct ESDFMap {
+      std_msgs::msg::Header header;
+
+      @verbatim (language="comment", text=
+        "Map parameters")
+      double__3 map_origin;
+
+      double resolution;
+
+      int32__3 map_voxel_num;
+
+      @verbatim (language="comment", text=
+        "Local bound (valid data range)")
+      int32__3 local_bound_min;
+
+      int32__3 local_bound_max;
+
+      @verbatim (language="comment", text=
+        "Shared memory name")
+      string shm_name;
+    };
+  };
+};

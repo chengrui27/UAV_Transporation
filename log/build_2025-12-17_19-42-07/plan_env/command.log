@@ -1,0 +1,2 @@
+Invoking command in '/home/chen/px4_ws/build/plan_env': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/plan_env -- -j16 -l16
+Invoked command in '/home/chen/px4_ws/build/plan_env' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/plan_env -- -j16 -l16

@@ -1,0 +1,4 @@
+Invoking command in '/home/chen/px4_ws/build/px4_payload_estimator': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/chen/px4_ws/src/px4_payload_estimator -DCMAKE_INSTALL_PREFIX=/home/chen/px4_ws/install/px4_payload_estimator
+Invoked command in '/home/chen/px4_ws/build/px4_payload_estimator' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/chen/px4_ws/src/px4_payload_estimator -DCMAKE_INSTALL_PREFIX=/home/chen/px4_ws/install/px4_payload_estimator
+Invoking command in '/home/chen/px4_ws/build/px4_payload_estimator': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/px4_payload_estimator -- -j16 -l16
+Invoked command in '/home/chen/px4_ws/build/px4_payload_estimator' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/px4_payload_estimator -- -j16 -l16

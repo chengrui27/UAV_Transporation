@@ -1,0 +1,2 @@
+Invoking command in '/home/chen/px4_ws/build/px4_payload_nmpc': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/chen/px4_ws/src/px4_payload_nmpc -DCMAKE_INSTALL_PREFIX=/home/chen/px4_ws/install/px4_payload_nmpc
+Invoked command in '/home/chen/px4_ws/build/px4_payload_nmpc' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/chen/px4_ws/src/px4_payload_nmpc -DCMAKE_INSTALL_PREFIX=/home/chen/px4_ws/install/px4_payload_nmpc

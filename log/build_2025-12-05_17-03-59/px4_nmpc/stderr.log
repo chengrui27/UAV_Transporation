@@ -1,0 +1,21 @@
+In file included from [01m[K/home/chen/px4_ws/src/px4_nmpc/src/esdf_map_reader.cpp:1[m[K:
+[01m[K/home/chen/px4_ws/src/px4_nmpc/include/px4_nmpc/esdf_map_reader.h:[m[K In constructor ‘[01m[KESDFMapReader::ESDFMapReader(rclcpp::Node::SharedPtr)[m[K’:
+[01m[K/home/chen/px4_ws/src/px4_nmpc/include/px4_nmpc/esdf_map_reader.h:60:8:[m[K [01;35m[Kwarning: [m[K‘[01m[KESDFMapReader::map_valid_[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   60 |   bool [01;35m[Kmap_valid_[m[K;
+      |        [01;35m[K^~~~~~~~~~[m[K
+[01m[K/home/chen/px4_ws/src/px4_nmpc/include/px4_nmpc/esdf_map_reader.h:48:10:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kdouble ESDFMapReader::resolution_[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   48 |   double [01;35m[Kresolution_[m[K;
+      |          [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/chen/px4_ws/src/px4_nmpc/src/esdf_map_reader.cpp:4:1:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+    4 | [01;35m[KESDFMapReader[m[K::ESDFMapReader(rclcpp::Node::SharedPtr node)
+      | [01;35m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/chen/px4_ws/src/px4_nmpc/src/nmpc_controller.cpp:[m[K In member function ‘[01m[Kbool NMPCController::solveNMPC()[m[K’:
+[01m[K/home/chen/px4_ws/src/px4_nmpc/src/nmpc_controller.cpp:382:20:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kcurrent_dist[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  382 |             double [01;35m[Kcurrent_dist[m[K = esdf_reader_->getDistance(current_pos);
+      |                    [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/chen/px4_ws/src/px4_nmpc/src/nmpc_controller.cpp:383:18:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kin_bound[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  383 |             bool [01;35m[Kin_bound[m[K = esdf_reader_->isInLocalBound(current_pos);
+      |                  [01;35m[K^~~~~~~~[m[K
+[01m[K/home/chen/px4_ws/src/px4_nmpc/src/nmpc_controller.cpp:504:25:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kret[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  504 |                     int [01;35m[Kret[m[K = px4_model_acados_update_params(acados_ocp_capsule_, i, p, 7);
+      |                         [01;35m[K^~~[m[K

@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include/eigen3",
+                "/home/rei/acados/include",
+                "/home/rei/acados/include/blasfeo/include",
+                "/home/rei/acados/include/hpipm/include",
+                "/home/rei/px4_ws/px4_payload/c_generated_code",
+                "/opt/ros/humble/include/**",
+                "/usr/include"
+            ],
+            "defines": [
+                "DEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp",
+                "RCUTILS_ENABLE_FAULT_INJECTION"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compileCommands": "${workspaceFolder}/compile_commands.json"
+        }
+    ],
+    "version": 4
+}

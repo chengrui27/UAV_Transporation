@@ -1,0 +1,28 @@
+[ 50%] Built target esdf_map_reader
+[100%] Built target nmpc_controller
+-- Install configuration: ""
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/lib/libesdf_map_reader.so
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/lib/px4_nmpc/nmpc_controller
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/include
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/include/px4_nmpc
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/include/px4_nmpc/esdf_map_reader.h
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/lib/libacados_ocp_solver_px4_model.so
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/launch
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/launch/nmpc_controller.launch.py
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/launch/__pycache__
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/launch/__pycache__/nmpc_controller.launch.cpython-310.pyc
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/ament_index/resource_index/package_run_dependencies/px4_nmpc
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/ament_index/resource_index/parent_prefix_path/px4_nmpc
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/environment/ament_prefix_path.sh
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/environment/path.sh
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/environment/path.dsv
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/local_setup.bash
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/local_setup.sh
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/local_setup.zsh
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/local_setup.dsv
+-- Installing: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/package.dsv
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/ament_index/resource_index/packages/px4_nmpc
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/cmake/px4_nmpcConfig.cmake
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/cmake/px4_nmpcConfig-version.cmake
+-- Up-to-date: /home/chen/px4_ws/install/px4_nmpc/share/px4_nmpc/package.xml

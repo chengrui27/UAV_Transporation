@@ -1,0 +1,4 @@
+[01m[K/home/chen/px4_ws/src/px4_offboard_control/src/offboard_control.cpp:[m[K In member function ‘[01m[Kvoid OffboardControl::timer_callback()[m[K’:
+[01m[K/home/chen/px4_ws/src/px4_offboard_control/src/offboard_control.cpp:95:20:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kt[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   95 |             double [01;35m[Kt[m[K = (this->now() - trajectory_start_time_).seconds();
+      |                    [01;35m[K^[m[K

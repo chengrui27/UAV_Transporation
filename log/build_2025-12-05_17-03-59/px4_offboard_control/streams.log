@@ -1,0 +1,33 @@
+[0.008s] Invoking command in '/home/chen/px4_ws/build/px4_offboard_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/px4_offboard_control -- -j16 -l16
+[0.052s] [ 50%] [32mBuilding CXX object CMakeFiles/offboard_control.dir/src/offboard_control.cpp.o[0m
+[1.977s] [01m[K/home/chen/px4_ws/src/px4_offboard_control/src/offboard_control.cpp:[m[K In member function ‘[01m[Kvoid OffboardControl::timer_callback()[m[K’:
+[1.977s] [01m[K/home/chen/px4_ws/src/px4_offboard_control/src/offboard_control.cpp:95:20:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kt[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+[1.978s]    95 |             double [01;35m[Kt[m[K = (this->now() - trajectory_start_time_).seconds();
+[1.978s]       |                    [01;35m[K^[m[K
+[7.055s] [100%] [32m[1mLinking CXX executable offboard_control[0m
+[7.426s] [100%] Built target offboard_control
+[7.438s] Invoked command in '/home/chen/px4_ws/build/px4_offboard_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/px4_offboard_control -- -j16 -l16
+[7.446s] Invoking command in '/home/chen/px4_ws/build/px4_offboard_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/chen/px4_ws/build/px4_offboard_control
+[7.452s] -- Install configuration: ""
+[7.452s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/lib/px4_offboard_control/offboard_control
+[7.455s] -- Set runtime path of "/home/chen/px4_ws/install/px4_offboard_control/lib/px4_offboard_control/offboard_control" to ""
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control//launch
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control//launch/offboard_control.launch.py
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control//config
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control//config/px4_pluginlists.yaml
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/ament_index/resource_index/package_run_dependencies/px4_offboard_control
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/ament_index/resource_index/parent_prefix_path/px4_offboard_control
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/environment/ament_prefix_path.sh
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/environment/ament_prefix_path.dsv
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/environment/path.sh
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/environment/path.dsv
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/local_setup.bash
+[7.455s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/local_setup.sh
+[7.456s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/local_setup.zsh
+[7.456s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/local_setup.dsv
+[7.456s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/package.dsv
+[7.456s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/ament_index/resource_index/packages/px4_offboard_control
+[7.456s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/cmake/px4_offboard_controlConfig.cmake
+[7.456s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/cmake/px4_offboard_controlConfig-version.cmake
+[7.456s] -- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/package.xml
+[7.458s] Invoked command in '/home/chen/px4_ws/build/px4_offboard_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/chen/px4_ws/build/px4_offboard_control

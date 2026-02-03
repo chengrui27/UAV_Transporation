@@ -1,0 +1,10 @@
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/uninstall.dir
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/px4_offboard_control_uninstall.dir
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/offboard_control.dir
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/test.dir
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/edit_cache.dir
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/rebuild_cache.dir
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/list_install_components.dir
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/install.dir
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/install/local.dir
+/home/chen/px4_ws/build/px4_offboard_control/CMakeFiles/install/strip.dir

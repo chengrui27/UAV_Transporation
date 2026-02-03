@@ -1,0 +1,172 @@
+[0.009s] Invoking command in '/home/chen/px4_ws/build/plan_env': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/plan_env -- -j16 -l16
+[0.086s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_generator_c[0m
+[0.097s] [  2%] Built target plan_env__cpp
+[0.102s] [ 11%] Built target plan_env__rosidl_generator_c
+[0.110s] [ 11%] Built target ament_cmake_python_copy_plan_env
+[0.114s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_typesupport_cpp[0m
+[0.117s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_typesupport_introspection_cpp[0m
+[0.117s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_typesupport_fastrtps_cpp[0m
+[0.126s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_typesupport_c[0m
+[0.127s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_typesupport_fastrtps_c[0m
+[0.129s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_typesupport_introspection_c[0m
+[0.145s] [ 19%] Built target plan_env__rosidl_typesupport_cpp
+[0.149s] [ 27%] Built target plan_env__rosidl_typesupport_fastrtps_cpp
+[0.154s] [ 36%] Built target plan_env__rosidl_typesupport_introspection_cpp
+[0.155s] [ 44%] Built target plan_env__rosidl_typesupport_c
+[0.155s] [ 61%] Built target plan_env__rosidl_typesupport_fastrtps_c
+[0.156s] [ 61%] Built target plan_env__rosidl_typesupport_introspection_c
+[0.181s] [ 61%] Built target plan_env
+[0.196s] [35m[1mConsolidate compiler generated dependencies of target plan_env_lib[0m
+[0.202s] [ 63%] Built target plan_env__py
+[0.212s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_generator_py[0m
+[0.221s] [ 72%] Built target plan_env_lib
+[0.224s] [ 77%] Built target plan_env__rosidl_generator_py
+[0.235s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_typesupport_introspection_c__pyext[0m
+[0.235s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_typesupport_fastrtps_c__pyext[0m
+[0.235s] [35m[1mConsolidate compiler generated dependencies of target plan_env__rosidl_typesupport_c__pyext[0m
+[0.237s] [35m[1mConsolidate compiler generated dependencies of target grid_map_node[0m
+[0.247s] [ 83%] Built target plan_env__rosidl_typesupport_introspection_c__pyext
+[0.247s] [ 88%] Built target plan_env__rosidl_typesupport_c__pyext
+[0.249s] [ 94%] Built target plan_env__rosidl_typesupport_fastrtps_c__pyext
+[0.266s] [100%] Built target grid_map_node
+[0.309s] running egg_info
+[0.309s] writing plan_env.egg-info/PKG-INFO
+[0.309s] writing dependency_links to plan_env.egg-info/dependency_links.txt
+[0.309s] writing top-level names to plan_env.egg-info/top_level.txt
+[0.312s] reading manifest file 'plan_env.egg-info/SOURCES.txt'
+[0.312s] writing manifest file 'plan_env.egg-info/SOURCES.txt'
+[0.332s] [100%] Built target ament_cmake_python_build_plan_env_egg
+[0.345s] Invoked command in '/home/chen/px4_ws/build/plan_env' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/plan_env -- -j16 -l16
+[0.357s] Invoking command in '/home/chen/px4_ws/build/plan_env': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/chen/px4_ws/build/plan_env
+[0.365s] -- Install configuration: "Release"
+[0.365s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/ament_index/resource_index/rosidl_interfaces/plan_env
+[0.365s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env
+[0.365s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg
+[0.365s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/rosidl_generator_c__visibility_control.h
+[0.365s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail
+[0.365s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__struct.h
+[0.365s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__functions.c
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__functions.h
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__type_support.h
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/esdf_map.h
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/environment/library_path.sh
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/environment/library_path.dsv
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/libplan_env__rosidl_generator_c.so
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail
+[0.366s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__rosidl_typesupport_fastrtps_c.h
+[0.367s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[0.367s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/libplan_env__rosidl_typesupport_fastrtps_c.so
+[0.367s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env
+[0.367s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg
+[0.367s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail
+[0.367s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__type_support.c
+[0.367s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__rosidl_typesupport_introspection_c.h
+[0.367s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[0.368s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/libplan_env__rosidl_typesupport_introspection_c.so
+[0.368s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/libplan_env__rosidl_typesupport_c.so
+[0.368s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env
+[0.368s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg
+[0.368s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/esdf_map.hpp
+[0.368s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail
+[0.368s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__type_support.hpp
+[0.368s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__builder.hpp
+[0.368s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__traits.hpp
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__struct.hpp
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/rosidl_generator_cpp__visibility_control.hpp
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__rosidl_typesupport_fastrtps_cpp.hpp
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/dds_fastrtps
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/libplan_env__rosidl_typesupport_fastrtps_cpp.so
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg
+[0.369s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail
+[0.370s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__rosidl_typesupport_introspection_cpp.hpp
+[0.370s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/plan_env/msg/detail/esdf_map__type_support.cpp
+[0.370s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/libplan_env__rosidl_typesupport_introspection_cpp.so
+[0.370s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/libplan_env__rosidl_typesupport_cpp.so
+[0.370s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/environment/pythonpath.sh
+[0.370s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/environment/pythonpath.dsv
+[0.370s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env-1.0.0-py3.10.egg-info
+[0.370s] -- Installing: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env-1.0.0-py3.10.egg-info/top_level.txt
+[0.370s] -- Installing: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env-1.0.0-py3.10.egg-info/PKG-INFO
+[0.370s] -- Installing: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env-1.0.0-py3.10.egg-info/dependency_links.txt
+[0.370s] -- Installing: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env-1.0.0-py3.10.egg-info/SOURCES.txt
+[0.370s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/_plan_env_s.ep.rosidl_typesupport_c.c
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/libplan_env__rosidl_generator_py.so
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/_plan_env_s.ep.rosidl_typesupport_fastrtps_c.c
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/__init__.py
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/_plan_env_s.ep.rosidl_typesupport_introspection_c.c
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/plan_env_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/msg
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/msg/_esdf_map.py
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/msg/__init__.py
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/msg/_esdf_map_s.c
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/plan_env_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[0.371s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/plan_env_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[0.397s] Listing '/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env'...
+[0.397s] Listing '/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/msg'...
+[0.400s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/plan_env_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[0.401s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/plan_env_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[0.401s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages/plan_env/plan_env_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[0.401s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/libplan_env__rosidl_generator_py.so
+[0.401s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/msg/ESDFMap.idl
+[0.401s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/msg/ESDFMap.msg
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/libplan_env_lib.so
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/plan_env/grid_map_node
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/raycast.h
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/include/plan_env/grid_map.h
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/launch
+[0.402s] -- Installing: /home/chen/px4_ws/install/plan_env/share/plan_env/launch/grid_map.launch.py
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/launch/setup_tf.launch.py
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/plan_env/pointcloud_transformer.py
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/lib/plan_env/odom_to_tf.py
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/ament_index/resource_index/package_run_dependencies/plan_env
+[0.402s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/ament_index/resource_index/parent_prefix_path/plan_env
+[0.403s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/environment/ament_prefix_path.sh
+[0.403s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/environment/ament_prefix_path.dsv
+[0.403s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/environment/path.sh
+[0.403s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/environment/path.dsv
+[0.403s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/local_setup.bash
+[0.403s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/local_setup.sh
+[0.403s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/local_setup.zsh
+[0.404s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/local_setup.dsv
+[0.404s] -- Installing: /home/chen/px4_ws/install/plan_env/share/plan_env/package.dsv
+[0.404s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/ament_index/resource_index/packages/plan_env
+[0.404s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_env__rosidl_generator_cExport.cmake
+[0.404s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_env__rosidl_generator_cExport-release.cmake
+[0.404s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_env__rosidl_typesupport_fastrtps_cExport.cmake
+[0.404s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_env__rosidl_typesupport_fastrtps_cExport-release.cmake
+[0.404s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_env__rosidl_typesupport_introspection_cExport.cmake
+[0.405s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_env__rosidl_typesupport_introspection_cExport-release.cmake
+[0.405s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_env__rosidl_typesupport_cExport.cmake
+[0.405s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_env__rosidl_typesupport_cExport-release.cmake
+[0.405s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_env__rosidl_generator_cppExport.cmake
+[0.405s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_env__rosidl_typesupport_fastrtps_cppExport.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_env__rosidl_typesupport_fastrtps_cppExport-release.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_env__rosidl_typesupport_introspection_cppExport.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_env__rosidl_typesupport_introspection_cppExport-release.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_env__rosidl_typesupport_cppExport.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_env__rosidl_typesupport_cppExport-release.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_env__rosidl_generator_pyExport.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_env__rosidl_generator_pyExport-release.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_envExport.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/export_plan_envExport-release.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/rosidl_cmake-extras.cmake
+[0.406s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.407s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.407s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/ament_cmake_export_libraries-extras.cmake
+[0.407s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/ament_cmake_export_targets-extras.cmake
+[0.407s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[0.407s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[0.407s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_envConfig.cmake
+[0.407s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/cmake/plan_envConfig-version.cmake
+[0.407s] -- Up-to-date: /home/chen/px4_ws/install/plan_env/share/plan_env/package.xml
+[0.408s] Invoked command in '/home/chen/px4_ws/build/plan_env' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/chen/px4_ws/build/plan_env

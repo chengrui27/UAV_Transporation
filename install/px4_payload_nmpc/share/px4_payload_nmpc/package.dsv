@@ -1,0 +1,17 @@
+source;share/px4_payload_nmpc/hook/cmake_prefix_path.ps1
+source;share/px4_payload_nmpc/hook/cmake_prefix_path.dsv
+source;share/px4_payload_nmpc/hook/cmake_prefix_path.sh
+source;share/px4_payload_nmpc/hook/ld_library_path_lib.ps1
+source;share/px4_payload_nmpc/hook/ld_library_path_lib.dsv
+source;share/px4_payload_nmpc/hook/ld_library_path_lib.sh
+source;share/px4_payload_nmpc/hook/path.ps1
+source;share/px4_payload_nmpc/hook/path.dsv
+source;share/px4_payload_nmpc/hook/path.sh
+source;share/px4_payload_nmpc/hook/pythonscriptspath.ps1
+source;share/px4_payload_nmpc/hook/pythonscriptspath.dsv
+source;share/px4_payload_nmpc/hook/pythonscriptspath.sh
+source;share/px4_payload_nmpc/local_setup.bash
+source;share/px4_payload_nmpc/local_setup.dsv
+source;share/px4_payload_nmpc/local_setup.ps1
+source;share/px4_payload_nmpc/local_setup.sh
+source;share/px4_payload_nmpc/local_setup.zsh

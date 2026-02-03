@@ -1,0 +1,191 @@
+from acados_template import AcadosOcp, AcadosOcpSolver, AcadosModel, AcadosSimSolver
+from casadi import vertcat
+from px4_model import *
+import numpy as np
+import scipy.linalg
+
+np.set_printoptions(suppress=True)  # 禁用科学输入法输出
+
+# 创建nmpc求解器
+def create_nmpc_solver():
+    # 创建一个acados最优控制问题的对象
+    ocp = AcadosOcp()
+
+    # 设置模型
+    model = px4_model()
+    ocp.model = model
+
+    #读取状态变量、输入的维数
+    nx = model.x.rows()
+    nu = model.u.rows()
+    ny = nx + nu
+    ny_e = nx
+
+    # 设置代价函数类型
+    ocp.cost.cost_type = 'LINEAR_LS'
+    ocp.cost.cost_type_e = 'LINEAR_LS'
+
+    # 状态变量权重矩阵
+    Q = np.eye(nx)
+    Q[0, 0] = 50    # x位置权重降低
+    Q[1, 1] = 50    # y位置权重降低
+    Q[2, 2] = 50    # z位置权重降低
+    Q[3, 3] = 10    # vx速度权重降低
+    Q[4, 4] = 10    # vy速度权重降低
+    Q[5, 5] = 10    # vz速度权重降低
+    Q[6, 6] = 20    # qw四元数权重增加
+    Q[7, 7] = 20    # qx四元数权重增加
+    Q[8, 8] = 20    # qy四元数权重增加
+    Q[9, 9] = 20    # qz四元数权重增加
+
+    # 输入权重矩阵（增加以抑制控制饱和）
+    R = np.eye(nu)
+    R[0, 0] = 5.0   # 推力权重增加
+    R[1, 1] = 20.0   # roll角速度权重增加
+    R[2, 2] = 20.0   # pitch角速度权重增加
+    R[3, 3] = 20.0   # yaw角速度权重增加
+
+    # 设置过程和末端的权重矩阵
+    ocp.cost.W = scipy.linalg.block_diag(Q, R)
+    ocp.cost.W_e = 50 * np.eye(ny_e)
+
+    # 投影矩阵
+    Vx = np.zeros((ny, nx))
+    Vx[0, 0] = 1.0
+    Vx[1, 1] = 1.0
+    Vx[2, 2] = 1.0
+    Vx[3, 3] = 1.0
+    Vx[4, 4] = 1.0
+    Vx[5, 5] = 1.0
+    Vx[6, 6] = 1.0
+    Vx[7, 7] = 1.0
+    Vx[8, 8] = 1.0
+    Vx[9, 9] = 1.0
+    ocp.cost.Vx = Vx
+
+    Vu = np.zeros((ny, nu))
+    Vu[10, 0] = 1.0
+    Vu[11, 1] = 1.0
+    Vu[12, 2] = 1.0
+    Vu[13, 3] = 1.0
+    ocp.cost.Vu = Vu
+
+    Vx_e = np.zeros((ny_e, nx))
+    Vx_e[0, 0] = 1.0
+    Vx_e[1, 1] = 1.0
+    Vx_e[2, 2] = 1.0
+    Vx_e[3, 3] = 1.0
+    Vx_e[4, 4] = 1.0
+    Vx_e[5, 5] = 1.0
+    Vx_e[6, 6] = 1.0
+    Vx_e[7, 7] = 1.0
+    Vx_e[8, 8] = 1.0
+    Vx_e[9, 9] = 1.0
+    ocp.cost.Vx_e = Vx_e
+
+    # 设置参考向量（状态+输入）
+    thrust = 1.585 * 9.81
+    ocp.cost.yref = np.array([0.0, 1.0, 3.0, 
+                              0.0, 0.0, 0.0, 
+                              1.0, 0.0, 0.0, 0.0, 
+                              thrust, 0.0, 0.0, 0.0])
+    ocp.cost.yref_e = np.array([0.0, 1.0, 3.0, 
+                                0.0, 0.0, 0.0, 
+                                1.0, 0.0, 0.0, 0.0])
+    
+    # 构建约束
+    ocp.constraints.lbu = np.array([0.0, -2.0, -2.0, -2.0])
+    ocp.constraints.ubu = np.array([23.0, 2.0, 2.0, 2.0])
+    ocp.constraints.idxbu = np.array([0, 1, 2, 3])
+    ocp.constraints.x0 = np.array([0.0, 0.0, 2.0, 
+                                   0.0, 0.0, 0.0, 
+                                   1.0, 0.0, 0.0, 0.0])
+    
+    # 设置求解器
+    ocp.solver_options.qp_solver = 'FULL_CONDENSING_QPOASES'   # PARTIAL_CONDENSING_HPIPM
+    ocp.solver_options.hessian_approx = 'GAUSS_NEWTON'
+    ocp.solver_options.integrator_type = 'ERK'
+    ocp.solver_options.nlp_solver_type = "SQP_RTI"
+    ocp.solver_options.qp_solver_warm_start = 1
+    ocp.solver_options.print_level = 0
+
+    # 设置预测时域
+    N = 20
+    T = 1
+    ocp.dims.N = N
+    ocp.solver_options.tf = T
+
+    # 创建求解器
+    acados_ocp = AcadosOcpSolver(ocp, json_file = 'quadrotor_ocp.json')
+    acados_sim = AcadosSimSolver(ocp, json_file = 'quadrotor_ocp.json')
+
+    return acados_ocp, acados_sim
+
+
+def nmpc_sim():
+
+    # 设置初始状态
+    x0 = np.array([0, 0, 2, 
+                   0, 0, 0, 
+                   1, 0, 0, 0])
+    
+    # 创建求解器和仿真器
+    ocp_solver, integrator = create_nmpc_solver()
+
+    nx = ocp_solver.acados_ocp.dims.nx
+    nu = ocp_solver.acados_ocp.dims.nu
+
+    # 设置仿真循环次数
+    Nsim = 100
+    simX = np.zeros((Nsim+1, nx))
+    simU = np.zeros((Nsim, nu))
+
+    t_preparation = np.zeros(Nsim)
+    t_feedback = np.zeros(Nsim)
+
+    simX[0, :] = x0
+
+    # 仿真循环
+    for i in range(Nsim):
+
+        # Phase 1: 准备阶段 - 基于先前状态进行线性化
+        ocp_solver.options_set('rti_phase', 1)
+        status = ocp_solver.solve()
+        t_preparation[i] = ocp_solver.get_stats('time_tot')
+
+        if status not in [0, 2, 5]:
+            raise Exception(f'acados returned status {status}. Exiting.')
+        
+        # 更新初始状态
+        ocp_solver.set(0, "lbx", simX[i, :])
+        ocp_solver.set(0, "ubx", simX[i, :])
+
+        # Phase 2: 反馈阶段 - 求解QP问题
+        ocp_solver.options_set('rti_phase', 2)
+        status = ocp_solver.solve()
+        t_feedback[i] = ocp_solver.get_stats('time_tot')
+
+        # 读取求解的第一个输入
+        simU[i, :] = ocp_solver.get(0, "u")
+
+        if status not in [0, 2, 5]:
+            raise Exception(f'acados returned status {status}. Exiting.')
+        
+        # 仿真器求解下一时刻状态
+        simX[i+1, :] = integrator.simulate(x=simX[i, :], u=simU[i, :])
+
+    # 将求解时间换算到ms打印
+    t_feedback *= 1000
+    t_preparation *= 1000
+    print(f'Computation time in preparation phase in ms: \
+            min {np.min(t_preparation):.3f} median {np.median(t_preparation):.3f} max {np.max(t_preparation):.3f}')
+    print(f'Computation time in feedback phase in ms:    \
+            min {np.min(t_feedback):.3f} median {np.median(t_feedback):.3f} max {np.max(t_feedback):.3f}')
+    
+    # 打印最终状态
+    x_terminal = simX[-1, :]
+    print(x_terminal)
+    
+
+if __name__ == '__main__':
+    nmpc_sim()

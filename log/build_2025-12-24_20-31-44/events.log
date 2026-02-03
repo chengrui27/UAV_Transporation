@@ -1,0 +1,207 @@
+[0.000000] (-) TimerEvent: {}
+[0.000515] (-) JobUnselected: {'identifier': 'plan_env'}
+[0.000556] (-) JobUnselected: {'identifier': 'px4_nmpc'}
+[0.000591] (-) JobUnselected: {'identifier': 'px4_offboard_control'}
+[0.000656] (px4_payload_nmpc) JobQueued: {'identifier': 'px4_payload_nmpc', 'dependencies': OrderedDict([('plan_env', '/home/chen/px4_ws/install/plan_env')])}
+[0.000690] (px4_payload_nmpc) JobStarted: {'identifier': 'px4_payload_nmpc'}
+[0.015110] (px4_payload_nmpc) JobProgress: {'identifier': 'px4_payload_nmpc', 'progress': 'cmake'}
+[0.016156] (px4_payload_nmpc) JobProgress: {'identifier': 'px4_payload_nmpc', 'progress': 'build'}
+[0.017946] (px4_payload_nmpc) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/chen/px4_ws/build/px4_payload_nmpc', '--', '-j16', '-l16'], 'cwd': '/home/chen/px4_ws/build/px4_payload_nmpc', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('HTTPS_PROXY', 'http://127.0.0.1:7890/'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('LANGUAGE', 'zh_CN:zh'), ('USER', 'chen'), ('all_proxy', 'socks://127.0.0.1:7890/'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/chen/px4_ws/install/plan_env/lib:/home/chen/ws_livox/install/realsense2_camera/lib:/home/chen/ws_livox/install/realsense2_camera_msgs/lib:/home/chen/ws_livox/install/fast_lio/lib:/home/chen/ws_livox/install/livox_ros_driver2/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/home/chen/acados/lib'), ('ACADOS_SOURCE_DIR', '/home/chen/acados'), ('HOME', '/home/chen'), ('OLDPWD', '/home/chen/px4_ws/px4_payload'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('NVM_BIN', '/home/chen/.nvm/versions/node/v18.20.8/bin'), ('NVM_INC', '/home/chen/.nvm/versions/node/v18.20.8/include/node'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('ROS_IP', '10.28.188.133'), ('SYSTEMD_EXEC_PID', '8577'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('NVM_DIR', '/home/chen/.nvm'), ('https_proxy', 'http://127.0.0.1:7890/'), ('COLCON_PREFIX_PATH', '/home/chen/ws_livox/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'chen'), ('ALL_PROXY', 'socks://127.0.0.1:7890/'), ('http_proxy', 'http://127.0.0.1:7890/'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'chen'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/chen/.nvm/versions/node/v18.20.8/bin:/home/chen/.local/bin:/opt/ros/humble/bin:/home/chen/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/chen-NUC13ANK-B:@/tmp/.ICE-unix/1288,unix/chen-NUC13ANK-B:/tmp/.ICE-unix/1288'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/462a01f4_e0cb_4c8b_b658_19ca82471fc1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'zh_CN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.148'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/tf:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/chen/px4_ws/build/px4_payload_nmpc'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:/home/chen/ws_livox/install/realsense2_camera_msgs/local/lib/python3.10/dist-packages:/home/chen/ws_livox/install/fast_lio/local/lib/python3.10/dist-packages:/home/chen/ws_livox/install/livox_ros_driver2/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('HTTP_PROXY', 'http://127.0.0.1:7890/'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/tf:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble')]), 'shell': False}
+[0.099786] (-) TimerEvent: {}
+[0.110096] (px4_payload_nmpc) StdoutLine: {'line': b'[ 33%] Built target esdf_map_reader_payload\n'}
+[0.114319] (px4_payload_nmpc) StdoutLine: {'line': b'[ 66%] Built target payload_odom_from_vrpn\n'}
+[0.133842] (px4_payload_nmpc) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target nmpc_controller\x1b[0m\n'}
+[0.157763] (px4_payload_nmpc) StdoutLine: {'line': b'[ 83%] \x1b[32mBuilding CXX object CMakeFiles/nmpc_controller.dir/src/nmpc_controller.cpp.o\x1b[0m\n'}
+[0.199893] (-) TimerEvent: {}
+[0.300225] (-) TimerEvent: {}
+[0.400520] (-) TimerEvent: {}
+[0.500774] (-) TimerEvent: {}
+[0.601023] (-) TimerEvent: {}
+[0.701331] (-) TimerEvent: {}
+[0.801615] (-) TimerEvent: {}
+[0.901891] (-) TimerEvent: {}
+[1.002158] (-) TimerEvent: {}
+[1.102436] (-) TimerEvent: {}
+[1.202675] (-) TimerEvent: {}
+[1.302932] (-) TimerEvent: {}
+[1.403198] (-) TimerEvent: {}
+[1.503452] (-) TimerEvent: {}
+[1.603707] (-) TimerEvent: {}
+[1.703967] (-) TimerEvent: {}
+[1.804282] (-) TimerEvent: {}
+[1.904638] (-) TimerEvent: {}
+[2.004939] (-) TimerEvent: {}
+[2.105253] (-) TimerEvent: {}
+[2.205583] (-) TimerEvent: {}
+[2.306006] (-) TimerEvent: {}
+[2.406529] (-) TimerEvent: {}
+[2.506840] (-) TimerEvent: {}
+[2.514002] (px4_payload_nmpc) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chen/px4_ws/src/px4_payload_nmpc/src/nmpc_controller.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kbool NMPCController::solveNMPC()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[2.514221] (px4_payload_nmpc) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chen/px4_ws/src/px4_payload_nmpc/src/nmpc_controller.cpp:548:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kvariable \xe2\x80\x98\x1b[01m\x1b[Kp\x1b[m\x1b[K\xe2\x80\x99 set but not used [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable\x07-Wunused-but-set-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[2.514323] (px4_payload_nmpc) StderrLine: {'line': b'  548 |                 double \x1b[01;35m\x1b[Kp\x1b[m\x1b[K[14];\n'}
+[2.514410] (px4_payload_nmpc) StderrLine: {'line': b'      |                        \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[2.514826] (px4_payload_nmpc) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chen/px4_ws/src/px4_payload_nmpc/src/nmpc_controller.cpp:652:28:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kvariable \xe2\x80\x98\x1b[01m\x1b[Kp\x1b[m\x1b[K\xe2\x80\x99 set but not used [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable\x07-Wunused-but-set-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[2.514974] (px4_payload_nmpc) StderrLine: {'line': b'  652 |                     double \x1b[01;35m\x1b[Kp\x1b[m\x1b[K[14];\n'}
+[2.515069] (px4_payload_nmpc) StderrLine: {'line': b'      |                            \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[2.606942] (-) TimerEvent: {}
+[2.707278] (-) TimerEvent: {}
+[2.807622] (-) TimerEvent: {}
+[2.907907] (-) TimerEvent: {}
+[3.008210] (-) TimerEvent: {}
+[3.108565] (-) TimerEvent: {}
+[3.208911] (-) TimerEvent: {}
+[3.309272] (-) TimerEvent: {}
+[3.409578] (-) TimerEvent: {}
+[3.509882] (-) TimerEvent: {}
+[3.610183] (-) TimerEvent: {}
+[3.710486] (-) TimerEvent: {}
+[3.810788] (-) TimerEvent: {}
+[3.911103] (-) TimerEvent: {}
+[4.011420] (-) TimerEvent: {}
+[4.111738] (-) TimerEvent: {}
+[4.212025] (-) TimerEvent: {}
+[4.312330] (-) TimerEvent: {}
+[4.412649] (-) TimerEvent: {}
+[4.512991] (-) TimerEvent: {}
+[4.613303] (-) TimerEvent: {}
+[4.713624] (-) TimerEvent: {}
+[4.813935] (-) TimerEvent: {}
+[4.914252] (-) TimerEvent: {}
+[5.014557] (-) TimerEvent: {}
+[5.114875] (-) TimerEvent: {}
+[5.215349] (-) TimerEvent: {}
+[5.315889] (-) TimerEvent: {}
+[5.416197] (-) TimerEvent: {}
+[5.516510] (-) TimerEvent: {}
+[5.616840] (-) TimerEvent: {}
+[5.717188] (-) TimerEvent: {}
+[5.817514] (-) TimerEvent: {}
+[5.917828] (-) TimerEvent: {}
+[6.018224] (-) TimerEvent: {}
+[6.118531] (-) TimerEvent: {}
+[6.218835] (-) TimerEvent: {}
+[6.319132] (-) TimerEvent: {}
+[6.419543] (-) TimerEvent: {}
+[6.519855] (-) TimerEvent: {}
+[6.620192] (-) TimerEvent: {}
+[6.720562] (-) TimerEvent: {}
+[6.820877] (-) TimerEvent: {}
+[6.921198] (-) TimerEvent: {}
+[7.021505] (-) TimerEvent: {}
+[7.121849] (-) TimerEvent: {}
+[7.222127] (-) TimerEvent: {}
+[7.322391] (-) TimerEvent: {}
+[7.422649] (-) TimerEvent: {}
+[7.522886] (-) TimerEvent: {}
+[7.623160] (-) TimerEvent: {}
+[7.723527] (-) TimerEvent: {}
+[7.823795] (-) TimerEvent: {}
+[7.924049] (-) TimerEvent: {}
+[8.024309] (-) TimerEvent: {}
+[8.124523] (-) TimerEvent: {}
+[8.224768] (-) TimerEvent: {}
+[8.325035] (-) TimerEvent: {}
+[8.425361] (-) TimerEvent: {}
+[8.525648] (-) TimerEvent: {}
+[8.625886] (-) TimerEvent: {}
+[8.726122] (-) TimerEvent: {}
+[8.826352] (-) TimerEvent: {}
+[8.926576] (-) TimerEvent: {}
+[9.026803] (-) TimerEvent: {}
+[9.127135] (-) TimerEvent: {}
+[9.227505] (-) TimerEvent: {}
+[9.327750] (-) TimerEvent: {}
+[9.428020] (-) TimerEvent: {}
+[9.528277] (-) TimerEvent: {}
+[9.628553] (-) TimerEvent: {}
+[9.728820] (-) TimerEvent: {}
+[9.829075] (-) TimerEvent: {}
+[9.929336] (-) TimerEvent: {}
+[10.029623] (-) TimerEvent: {}
+[10.129931] (-) TimerEvent: {}
+[10.230186] (-) TimerEvent: {}
+[10.330414] (-) TimerEvent: {}
+[10.430661] (-) TimerEvent: {}
+[10.530878] (-) TimerEvent: {}
+[10.631133] (-) TimerEvent: {}
+[10.731504] (-) TimerEvent: {}
+[10.831739] (-) TimerEvent: {}
+[10.932002] (-) TimerEvent: {}
+[11.032219] (-) TimerEvent: {}
+[11.132501] (-) TimerEvent: {}
+[11.232764] (-) TimerEvent: {}
+[11.333021] (-) TimerEvent: {}
+[11.433243] (-) TimerEvent: {}
+[11.533510] (-) TimerEvent: {}
+[11.633725] (-) TimerEvent: {}
+[11.733957] (-) TimerEvent: {}
+[11.834251] (-) TimerEvent: {}
+[11.934479] (-) TimerEvent: {}
+[12.034723] (-) TimerEvent: {}
+[12.134948] (-) TimerEvent: {}
+[12.235173] (-) TimerEvent: {}
+[12.335401] (-) TimerEvent: {}
+[12.435750] (-) TimerEvent: {}
+[12.536009] (-) TimerEvent: {}
+[12.636288] (-) TimerEvent: {}
+[12.736642] (-) TimerEvent: {}
+[12.836872] (-) TimerEvent: {}
+[12.937112] (-) TimerEvent: {}
+[13.037443] (-) TimerEvent: {}
+[13.137727] (-) TimerEvent: {}
+[13.237961] (-) TimerEvent: {}
+[13.338237] (-) TimerEvent: {}
+[13.438541] (-) TimerEvent: {}
+[13.538767] (-) TimerEvent: {}
+[13.639052] (-) TimerEvent: {}
+[13.719311] (px4_payload_nmpc) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable nmpc_controller\x1b[0m\n'}
+[13.739174] (-) TimerEvent: {}
+[13.839483] (-) TimerEvent: {}
+[13.939870] (-) TimerEvent: {}
+[14.040122] (-) TimerEvent: {}
+[14.140362] (-) TimerEvent: {}
+[14.240720] (-) TimerEvent: {}
+[14.341022] (-) TimerEvent: {}
+[14.441296] (-) TimerEvent: {}
+[14.541663] (-) TimerEvent: {}
+[14.641996] (-) TimerEvent: {}
+[14.742360] (-) TimerEvent: {}
+[14.842638] (-) TimerEvent: {}
+[14.942959] (-) TimerEvent: {}
+[15.043296] (-) TimerEvent: {}
+[15.143704] (-) TimerEvent: {}
+[15.244001] (-) TimerEvent: {}
+[15.344324] (-) TimerEvent: {}
+[15.357703] (px4_payload_nmpc) StdoutLine: {'line': b'[100%] Built target nmpc_controller\n'}
+[15.366603] (px4_payload_nmpc) CommandEnded: {'returncode': 0}
+[15.367387] (px4_payload_nmpc) JobProgress: {'identifier': 'px4_payload_nmpc', 'progress': 'install'}
+[15.376474] (px4_payload_nmpc) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/chen/px4_ws/build/px4_payload_nmpc'], 'cwd': '/home/chen/px4_ws/build/px4_payload_nmpc', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('HTTPS_PROXY', 'http://127.0.0.1:7890/'), ('no_proxy', 'localhost,127.0.0.0/8,::1'), ('LANGUAGE', 'zh_CN:zh'), ('USER', 'chen'), ('all_proxy', 'socks://127.0.0.1:7890/'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/chen/px4_ws/install/plan_env/lib:/home/chen/ws_livox/install/realsense2_camera/lib:/home/chen/ws_livox/install/realsense2_camera_msgs/lib:/home/chen/ws_livox/install/fast_lio/lib:/home/chen/ws_livox/install/livox_ros_driver2/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/home/chen/acados/lib'), ('ACADOS_SOURCE_DIR', '/home/chen/acados'), ('HOME', '/home/chen'), ('OLDPWD', '/home/chen/px4_ws/px4_payload'), ('DESKTOP_SESSION', 'ubuntu'), ('NO_PROXY', 'localhost,127.0.0.0/8,::1'), ('NVM_BIN', '/home/chen/.nvm/versions/node/v18.20.8/bin'), ('NVM_INC', '/home/chen/.nvm/versions/node/v18.20.8/include/node'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('ROS_IP', '10.28.188.133'), ('SYSTEMD_EXEC_PID', '8577'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('NVM_DIR', '/home/chen/.nvm'), ('https_proxy', 'http://127.0.0.1:7890/'), ('COLCON_PREFIX_PATH', '/home/chen/ws_livox/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'chen'), ('ALL_PROXY', 'socks://127.0.0.1:7890/'), ('http_proxy', 'http://127.0.0.1:7890/'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'chen'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/chen/.nvm/versions/node/v18.20.8/bin:/home/chen/.local/bin:/opt/ros/humble/bin:/home/chen/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/chen-NUC13ANK-B:@/tmp/.ICE-unix/1288,unix/chen-NUC13ANK-B:/tmp/.ICE-unix/1288'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/462a01f4_e0cb_4c8b_b658_19ca82471fc1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'zh_CN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.148'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '0'), ('AMENT_PREFIX_PATH', '/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/tf:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/chen/px4_ws/build/px4_payload_nmpc'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/chen/px4_ws/install/plan_env/local/lib/python3.10/dist-packages:/home/chen/ws_livox/install/realsense2_camera_msgs/local/lib/python3.10/dist-packages:/home/chen/ws_livox/install/fast_lio/local/lib/python3.10/dist-packages:/home/chen/ws_livox/install/livox_ros_driver2/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('HTTP_PROXY', 'http://127.0.0.1:7890/'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/chen/px4_ws/install/plan_env:/home/chen/ws_livox/install/vrpn_relative_pose:/home/chen/ws_livox/install/vrpn_listener:/home/chen/ws_livox/install/vins_fusion_ros2:/home/chen/ws_livox/install/tf:/home/chen/ws_livox/install/realsense2_description:/home/chen/ws_livox/install/realsense2_camera:/home/chen/ws_livox/install/realsense2_camera_msgs:/home/chen/ws_livox/install/pose_send:/home/chen/ws_livox/install/point_cloud_filter:/home/chen/ws_livox/install/orbslam3:/home/chen/ws_livox/install/offboard_test:/home/chen/ws_livox/install/fast_lio:/home/chen/ws_livox/install/livox_ros_driver2:/home/chen/ws_livox/install/cluster_detection:/opt/ros/humble')]), 'shell': False}
+[15.390762] (px4_payload_nmpc) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[15.391134] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/lib/libesdf_map_reader_payload.so\n'}
+[15.391672] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/lib/px4_payload_nmpc/payload_odom_from_vrpn\n'}
+[15.392163] (px4_payload_nmpc) StdoutLine: {'line': b'-- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/lib/px4_payload_nmpc/nmpc_controller\n'}
+[15.406657] (px4_payload_nmpc) StdoutLine: {'line': b'-- Set runtime path of "/home/chen/px4_ws/install/px4_payload_nmpc/lib/px4_payload_nmpc/nmpc_controller" to ""\n'}
+[15.406975] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/include\n'}
+[15.407054] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/include/px4_payload_nmpc\n'}
+[15.407118] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/include/px4_payload_nmpc/esdf_map_reader.h\n'}
+[15.407178] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/lib/libacados_ocp_solver_px4_payload_model.so\n'}
+[15.407237] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/launch\n'}
+[15.407294] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/launch/nmpc_controller.launch.py\n'}
+[15.407350] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/ament_index/resource_index/package_run_dependencies/px4_payload_nmpc\n'}
+[15.407407] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/ament_index/resource_index/parent_prefix_path/px4_payload_nmpc\n'}
+[15.407465] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/environment/ament_prefix_path.sh\n'}
+[15.407523] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/environment/ament_prefix_path.dsv\n'}
+[15.407588] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/environment/path.sh\n'}
+[15.407714] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/environment/path.dsv\n'}
+[15.407863] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/local_setup.bash\n'}
+[15.407922] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/local_setup.sh\n'}
+[15.407976] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/local_setup.zsh\n'}
+[15.408027] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/local_setup.dsv\n'}
+[15.408101] (px4_payload_nmpc) StdoutLine: {'line': b'-- Installing: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/package.dsv\n'}
+[15.408170] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/ament_index/resource_index/packages/px4_payload_nmpc\n'}
+[15.408224] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/cmake/px4_payload_nmpcConfig.cmake\n'}
+[15.408276] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/cmake/px4_payload_nmpcConfig-version.cmake\n'}
+[15.408351] (px4_payload_nmpc) StdoutLine: {'line': b'-- Up-to-date: /home/chen/px4_ws/install/px4_payload_nmpc/share/px4_payload_nmpc/package.xml\n'}
+[15.410355] (px4_payload_nmpc) CommandEnded: {'returncode': 0}
+[15.432018] (px4_payload_nmpc) JobEnded: {'identifier': 'px4_payload_nmpc', 'rc': 0}
+[15.432606] (-) EventReactorShutdown: {}

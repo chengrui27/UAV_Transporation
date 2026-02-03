@@ -1,0 +1,85 @@
+[  8%] Built target plan_env__rosidl_generator_c
+[ 11%] Built target plan_env__cpp
+[ 11%] Built target ament_cmake_python_copy_plan_env
+[ 19%] Built target plan_env__rosidl_typesupport_cpp
+[ 27%] Built target plan_env__rosidl_typesupport_introspection_c
+[ 36%] Built target plan_env__rosidl_typesupport_fastrtps_c
+[ 44%] Built target plan_env__rosidl_typesupport_introspection_cpp
+[ 52%] Built target plan_env__rosidl_typesupport_c
+[ 61%] Built target plan_env__rosidl_typesupport_fastrtps_cpp
+[ 61%] Built target plan_env
+[ 63%] Built target plan_env__py
+[ 66%] [32mBuilding CXX object CMakeFiles/plan_env_lib.dir/src/grid_map.cpp.o[0m
+[ 72%] Built target plan_env__rosidl_generator_py
+[ 77%] Built target plan_env__rosidl_typesupport_introspection_c__pyext
+[ 83%] Built target plan_env__rosidl_typesupport_c__pyext
+[ 88%] Built target plan_env__rosidl_typesupport_fastrtps_c__pyext
+running egg_info
+writing plan_env.egg-info/PKG-INFO
+writing dependency_links to plan_env.egg-info/dependency_links.txt
+writing top-level names to plan_env.egg-info/top_level.txt
+reading manifest file 'plan_env.egg-info/SOURCES.txt'
+writing manifest file 'plan_env.egg-info/SOURCES.txt'
+[ 88%] Built target ament_cmake_python_build_plan_env_egg
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:[m[K In member function ‘[01m[Kvoid GridMap::cloudCallback(const ConstSharedPtr&)[m[K’:
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:938:58:[m[K [01;31m[Kerror: [m[Kconversion from ‘[01m[KEigen::AngleAxis<double>::QuaternionType[m[K’ {aka ‘[01m[KEigen::Quaternion<double>[m[K’} to non-scalar type ‘[01m[KEigen::Matrix3d[m[K’ {aka ‘[01m[KEigen::Matrix<double, 3, 3>[m[K’} requested
+  938 |     Eigen::Matrix3d R_base_lidar = [01;31m[KyawAngle * pitchAngle * rollAngle[m[K;
+      |                                    [01;31m[K~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:[m[K In member function ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int)[m[K’:
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array ‘[01m[Kv[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+      |       [01;35m[K^[m[K
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array ‘[01m[Kz[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+      |          [01;35m[K^[m[K
+/home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1239:15:[m[K   required from here
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+      |       [01;35m[K^[m[K
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+      |          [01;35m[K^[m[K
+/home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1252:15:[m[K   required from here
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+      |       [01;35m[K^[m[K
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+      |          [01;35m[K^[m[K
+/home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1260:15:[m[K   required from here
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+      |       [01;35m[K^[m[K
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+      |          [01;35m[K^[m[K
+/home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1291:15:[m[K   required from here
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+      |       [01;35m[K^[m[K
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+      |          [01;35m[K^[m[K
+/home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1305:15:[m[K   required from here
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+      |       [01;35m[K^[m[K
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+      |          [01;35m[K^[m[K
+/home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1313:15:[m[K   required from here
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+      |       [01;35m[K^[m[K
+[01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+ 1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+      |          [01;35m[K^[m[K
+gmake[2]: *** [CMakeFiles/plan_env_lib.dir/build.make:76：CMakeFiles/plan_env_lib.dir/src/grid_map.cpp.o] 错误 1
+gmake[1]: *** [CMakeFiles/Makefile2:596：CMakeFiles/plan_env_lib.dir/all] 错误 2
+gmake: *** [Makefile:146：all] 错误 2

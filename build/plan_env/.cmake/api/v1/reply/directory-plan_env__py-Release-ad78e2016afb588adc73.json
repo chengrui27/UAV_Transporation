@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "plan_env__py",
+		"source" : "/home/chen/px4_ws/build/plan_env/plan_env__py"
+	}
+}

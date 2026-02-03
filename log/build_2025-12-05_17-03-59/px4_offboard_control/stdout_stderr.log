@@ -1,0 +1,29 @@
+[ 50%] [32mBuilding CXX object CMakeFiles/offboard_control.dir/src/offboard_control.cpp.o[0m
+[01m[K/home/chen/px4_ws/src/px4_offboard_control/src/offboard_control.cpp:[m[K In member function ‘[01m[Kvoid OffboardControl::timer_callback()[m[K’:
+[01m[K/home/chen/px4_ws/src/px4_offboard_control/src/offboard_control.cpp:95:20:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kt[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   95 |             double [01;35m[Kt[m[K = (this->now() - trajectory_start_time_).seconds();
+      |                    [01;35m[K^[m[K
+[100%] [32m[1mLinking CXX executable offboard_control[0m
+[100%] Built target offboard_control
+-- Install configuration: ""
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/lib/px4_offboard_control/offboard_control
+-- Set runtime path of "/home/chen/px4_ws/install/px4_offboard_control/lib/px4_offboard_control/offboard_control" to ""
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control//launch
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control//launch/offboard_control.launch.py
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control//config
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control//config/px4_pluginlists.yaml
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/ament_index/resource_index/package_run_dependencies/px4_offboard_control
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/ament_index/resource_index/parent_prefix_path/px4_offboard_control
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/environment/ament_prefix_path.sh
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/environment/ament_prefix_path.dsv
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/environment/path.sh
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/environment/path.dsv
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/local_setup.bash
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/local_setup.sh
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/local_setup.zsh
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/local_setup.dsv
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/package.dsv
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/ament_index/resource_index/packages/px4_offboard_control
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/cmake/px4_offboard_controlConfig.cmake
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/cmake/px4_offboard_controlConfig-version.cmake
+-- Installing: /home/chen/px4_ws/install/px4_offboard_control/share/px4_offboard_control/package.xml

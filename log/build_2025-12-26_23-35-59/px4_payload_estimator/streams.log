@@ -1,0 +1,28 @@
+[0.011s] Invoking command in '/home/chen/px4_ws/build/px4_payload_estimator': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/px4_payload_estimator -- -j16 -l16
+[0.067s] [35m[1mConsolidate compiler generated dependencies of target payload_observer[0m
+[0.117s] [ 50%] [32mBuilding CXX object CMakeFiles/payload_observer.dir/src/payload_observer.cpp.o[0m
+[9.806s] [100%] [32m[1mLinking CXX executable payload_observer[0m
+[10.342s] [100%] Built target payload_observer
+[10.354s] Invoked command in '/home/chen/px4_ws/build/px4_payload_estimator' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/px4_payload_estimator -- -j16 -l16
+[10.355s] Invoking command in '/home/chen/px4_ws/build/px4_payload_estimator': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/chen/px4_ws/build/px4_payload_estimator
+[10.361s] -- Install configuration: ""
+[10.362s] -- Installing: /home/chen/px4_ws/install/px4_payload_estimator/lib/px4_payload_estimator/payload_observer
+[10.374s] -- Set runtime path of "/home/chen/px4_ws/install/px4_payload_estimator/lib/px4_payload_estimator/payload_observer" to ""
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/launch
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/launch/payload_observer.launch.py
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/ament_index/resource_index/package_run_dependencies/px4_payload_estimator
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/ament_index/resource_index/parent_prefix_path/px4_payload_estimator
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/environment/ament_prefix_path.sh
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/environment/ament_prefix_path.dsv
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/environment/path.sh
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/environment/path.dsv
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/local_setup.bash
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/local_setup.sh
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/local_setup.zsh
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/local_setup.dsv
+[10.374s] -- Installing: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/package.dsv
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/ament_index/resource_index/packages/px4_payload_estimator
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/cmake/px4_payload_estimatorConfig.cmake
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/cmake/px4_payload_estimatorConfig-version.cmake
+[10.374s] -- Up-to-date: /home/chen/px4_ws/install/px4_payload_estimator/share/px4_payload_estimator/package.xml
+[10.375s] Invoked command in '/home/chen/px4_ws/build/px4_payload_estimator' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/chen/px4_ws/build/px4_payload_estimator

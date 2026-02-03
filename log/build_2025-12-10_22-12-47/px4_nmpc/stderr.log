@@ -1,0 +1,10 @@
+[01m[K/home/chen/px4_ws/src/px4_nmpc/src/nmpc_controller.cpp:[m[K In member function ‘[01m[Kbool NMPCController::solveNMPC()[m[K’:
+[01m[K/home/chen/px4_ws/src/px4_nmpc/src/nmpc_controller.cpp:382:20:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kcurrent_dist[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  382 |             double [01;35m[Kcurrent_dist[m[K = esdf_reader_->getDistance(current_pos);
+      |                    [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/chen/px4_ws/src/px4_nmpc/src/nmpc_controller.cpp:383:18:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kin_bound[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  383 |             bool [01;35m[Kin_bound[m[K = esdf_reader_->isInLocalBound(current_pos);
+      |                  [01;35m[K^~~~~~~~[m[K
+[01m[K/home/chen/px4_ws/src/px4_nmpc/src/nmpc_controller.cpp:495:28:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kp[m[K’ set but not used [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable-Wunused-but-set-variable]8;;[m[K]
+  495 |                     double [01;35m[Kp[m[K[7];
+      |                            [01;35m[K^[m[K

@@ -1,0 +1,87 @@
+[0.011s] Invoking command in '/home/chen/px4_ws/build/plan_env': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/plan_env -- -j16 -l16
+[0.117s] [  8%] Built target plan_env__rosidl_generator_c
+[0.123s] [ 11%] Built target plan_env__cpp
+[0.145s] [ 11%] Built target ament_cmake_python_copy_plan_env
+[0.161s] [ 19%] Built target plan_env__rosidl_typesupport_cpp
+[0.162s] [ 27%] Built target plan_env__rosidl_typesupport_introspection_c
+[0.164s] [ 36%] Built target plan_env__rosidl_typesupport_fastrtps_c
+[0.165s] [ 44%] Built target plan_env__rosidl_typesupport_introspection_cpp
+[0.165s] [ 52%] Built target plan_env__rosidl_typesupport_c
+[0.174s] [ 61%] Built target plan_env__rosidl_typesupport_fastrtps_cpp
+[0.200s] [ 61%] Built target plan_env
+[0.223s] [ 63%] Built target plan_env__py
+[0.244s] [ 66%] [32mBuilding CXX object CMakeFiles/plan_env_lib.dir/src/grid_map.cpp.o[0m
+[0.247s] [ 72%] Built target plan_env__rosidl_generator_py
+[0.269s] [ 77%] Built target plan_env__rosidl_typesupport_introspection_c__pyext
+[0.271s] [ 83%] Built target plan_env__rosidl_typesupport_c__pyext
+[0.272s] [ 88%] Built target plan_env__rosidl_typesupport_fastrtps_c__pyext
+[0.333s] running egg_info
+[0.334s] writing plan_env.egg-info/PKG-INFO
+[0.334s] writing dependency_links to plan_env.egg-info/dependency_links.txt
+[0.334s] writing top-level names to plan_env.egg-info/top_level.txt
+[0.337s] reading manifest file 'plan_env.egg-info/SOURCES.txt'
+[0.337s] writing manifest file 'plan_env.egg-info/SOURCES.txt'
+[0.361s] [ 88%] Built target ament_cmake_python_build_plan_env_egg
+[6.110s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:[m[K In member function ‘[01m[Kvoid GridMap::cloudCallback(const ConstSharedPtr&)[m[K’:
+[6.110s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:938:58:[m[K [01;31m[Kerror: [m[Kconversion from ‘[01m[KEigen::AngleAxis<double>::QuaternionType[m[K’ {aka ‘[01m[KEigen::Quaternion<double>[m[K’} to non-scalar type ‘[01m[KEigen::Matrix3d[m[K’ {aka ‘[01m[KEigen::Matrix<double, 3, 3>[m[K’} requested
+[6.110s]   938 |     Eigen::Matrix3d R_base_lidar = [01;31m[KyawAngle * pitchAngle * rollAngle[m[K;
+[6.110s]       |                                    [01;31m[K~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+[6.138s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:[m[K In member function ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int)[m[K’:
+[6.138s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array ‘[01m[Kv[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.138s]  1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+[6.138s]       |       [01;35m[K^[m[K
+[6.138s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array ‘[01m[Kz[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.138s]  1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+[6.138s]       |          [01;35m[K^[m[K
+[6.347s] /home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[6.347s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1239:15:[m[K   required from here
+[6.348s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.348s]  1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+[6.348s]       |       [01;35m[K^[m[K
+[6.348s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.348s]  1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+[6.348s]       |          [01;35m[K^[m[K
+[6.348s] /home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[6.348s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1252:15:[m[K   required from here
+[6.348s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.348s]  1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+[6.348s]       |       [01;35m[K^[m[K
+[6.348s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.348s]  1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+[6.348s]       |          [01;35m[K^[m[K
+[6.348s] /home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[6.348s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1260:15:[m[K   required from here
+[6.348s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.348s]  1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+[6.348s]       |       [01;35m[K^[m[K
+[6.348s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.348s]  1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+[6.348s]       |          [01;35m[K^[m[K
+[6.348s] /home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[6.348s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1291:15:[m[K   required from here
+[6.349s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.349s]  1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+[6.349s]       |       [01;35m[K^[m[K
+[6.349s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.349s]  1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+[6.349s]       |          [01;35m[K^[m[K
+[6.349s] /home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[6.349s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1305:15:[m[K   required from here
+[6.349s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.349s]  1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+[6.349s]       |       [01;35m[K^[m[K
+[6.349s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.349s]  1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+[6.349s]       |          [01;35m[K^[m[K
+[6.349s] /home/chen/px4_ws/src/plan_env/src/grid_map.cpp: In instantiation of ‘[01m[Kvoid GridMap::fillESDF(F_get_val, F_set_val, int, int, int) [with F_get_val = GridMap::updateESDF3d()::<lambda(int)>; F_set_val = GridMap::updateESDF3d()::<lambda(int, double)>][m[K’:
+[6.349s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1313:15:[m[K   required from here
+[6.349s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1198:7:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.349s]  1198 |   int [01;35m[Kv[m[K[mp_.map_voxel_num_(dim)];
+[6.349s]       |       [01;35m[K^[m[K
+[6.349s] [01m[K/home/chen/px4_ws/src/plan_env/src/grid_map.cpp:1199:10:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wvla-Wvla]8;;[m[K]
+[6.349s]  1199 |   double [01;35m[Kz[m[K[mp_.map_voxel_num_(dim) + 1];
+[6.349s]       |          [01;35m[K^[m[K
+[11.995s] gmake[2]: *** [CMakeFiles/plan_env_lib.dir/build.make:76：CMakeFiles/plan_env_lib.dir/src/grid_map.cpp.o] 错误 1
+[11.996s] gmake[1]: *** [CMakeFiles/Makefile2:596：CMakeFiles/plan_env_lib.dir/all] 错误 2
+[11.996s] gmake: *** [Makefile:146：all] 错误 2
+[11.998s] Invoked command in '/home/chen/px4_ws/build/plan_env' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/chen/px4_ws/build/plan_env -- -j16 -l16

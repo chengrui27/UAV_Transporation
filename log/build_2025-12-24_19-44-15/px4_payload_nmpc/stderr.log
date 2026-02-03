@@ -1,0 +1,359 @@
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h: In instantiation of ‘[01m[Kstruct Eigen::internal::copy_using_evaluator_traits<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >, Eigen::internal::evaluator<Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<double>, Eigen::Matrix<double, 3, 1> > >, Eigen::internal::assign_op<double, double> >[m[K’:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:607:49:[m[K   required from ‘[01m[Kclass Eigen::internal::generic_dense_assignment_kernel<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >, Eigen::internal::evaluator<Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<double>, Eigen::Matrix<double, 3, 1> > >, Eigen::internal::assign_op<double, double>, 0>[m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:739:10:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_dense_assignment_loop(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 1>; SrcXprType = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<double>, Eigen::Matrix<double, 3, 1> >; Functor = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:879:31:[m[K   required from ‘[01m[Kstatic void Eigen::internal::Assignment<DstXprType, SrcXprType, Functor, Eigen::internal::Dense2Dense, Weak>::run(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 1>; SrcXprType = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<double>, Eigen::Matrix<double, 3, 1> >; Functor = Eigen::internal::assign_op<double, double>; Weak = void][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:836:49:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_assignment_no_alias(Dst&, const Src&, const Func&) [with Dst = Eigen::Matrix<double, 3, 1>; Src = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<double>, Eigen::Matrix<double, 3, 1> >; Func = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:728:41:[m[K   required from ‘[01m[KDerived& Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<double>, Eigen::Matrix<double, 3, 1> >; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:537:19:[m[K   required from ‘[01m[KEigen::PlainObjectBase<Derived>::PlainObjectBase(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<double>, Eigen::Matrix<double, 3, 1> >; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Matrix.h:379:29:[m[K   required from ‘[01m[KEigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::EigenBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<double>, Eigen::Matrix<double, 3, 1> >; _Scalar = double; int _Rows = 3; int _Cols = 1; int _Options = 0; int _MaxRows = 3; int _MaxCols = 1][m[K’
+[01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:133:60:[m[K   required from here
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:86:63:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   86 |     MayLinearVectorize = [01;35m[Kbool(MightVectorize) && MayLinearize && DstHasDirectAccess[m[K
+      |                          [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:90:55:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   90 |     MaySliceVectorize  = bool(MightVectorize) && bool([01;35m[KDstHasDirectAccess[m[K)
+      |                                                       [01;35m[K^~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h: In instantiation of ‘[01m[Kstruct Eigen::internal::copy_using_evaluator_traits<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 3> >, Eigen::internal::evaluator<Eigen::Matrix<double, 3, 3> >, Eigen::internal::assign_op<double, double> >[m[K’:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:607:49:[m[K   required from ‘[01m[Kclass Eigen::internal::generic_dense_assignment_kernel<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 3> >, Eigen::internal::evaluator<Eigen::Matrix<double, 3, 3> >, Eigen::internal::assign_op<double, double>, 0>[m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:739:10:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_dense_assignment_loop(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 3>; SrcXprType = Eigen::Matrix<double, 3, 3>; Functor = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:879:31:[m[K   required from ‘[01m[Kstatic void Eigen::internal::Assignment<DstXprType, SrcXprType, Functor, Eigen::internal::Dense2Dense, Weak>::run(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 3>; SrcXprType = Eigen::Matrix<double, 3, 3>; Functor = Eigen::internal::assign_op<double, double>; Weak = void][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:836:49:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_assignment_no_alias(Dst&, const Src&, const Func&) [with Dst = Eigen::Matrix<double, 3, 3>; Src = Eigen::Matrix<double, 3, 3>; Func = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:728:41:[m[K   required from ‘[01m[KDerived& Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<double, 3, 3>; Derived = Eigen::Matrix<double, 3, 3>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Matrix.h:278:27:[m[K   required from ‘[01m[KEigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>&&) [with _Scalar = double; int _Rows = 3; int _Cols = 3; int _Options = 0; int _MaxRows = 3; int _MaxCols = 3][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Geometry/Quaternion.h:562:10:[m[K   required from ‘[01m[KEigen::QuaternionBase<Derived>::Matrix3 Eigen::QuaternionBase<Derived>::toRotationMatrix() const [with Derived = Eigen::Quaternion<double>; Eigen::QuaternionBase<Derived>::Matrix3 = Eigen::Matrix<double, 3, 3>][m[K’
+[01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:93:77:[m[K   required from here
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:86:63:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   86 |     MayLinearVectorize = [01;35m[Kbool(MightVectorize) && MayLinearize && DstHasDirectAccess[m[K
+      |                          [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:90:55:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   90 |     MaySliceVectorize  = bool(MightVectorize) && bool([01;35m[KDstHasDirectAccess[m[K)
+      |                                                       [01;35m[K^~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h: In instantiation of ‘[01m[Kstruct Eigen::internal::copy_using_evaluator_traits<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 3> >, Eigen::internal::evaluator<Eigen::Transpose<Eigen::Matrix<double, 3, 3> > >, Eigen::internal::assign_op<double, double> >[m[K’:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:607:49:[m[K   required from ‘[01m[Kclass Eigen::internal::generic_dense_assignment_kernel<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 3> >, Eigen::internal::evaluator<Eigen::Transpose<Eigen::Matrix<double, 3, 3> > >, Eigen::internal::assign_op<double, double>, 0>[m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:739:10:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_dense_assignment_loop(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 3>; SrcXprType = Eigen::Transpose<Eigen::Matrix<double, 3, 3> >; Functor = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:879:31:[m[K   required from ‘[01m[Kstatic void Eigen::internal::Assignment<DstXprType, SrcXprType, Functor, Eigen::internal::Dense2Dense, Weak>::run(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 3>; SrcXprType = Eigen::Transpose<Eigen::Matrix<double, 3, 3> >; Functor = Eigen::internal::assign_op<double, double>; Weak = void][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:836:49:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_assignment_no_alias(Dst&, const Src&, const Func&) [with Dst = Eigen::Matrix<double, 3, 3>; Src = Eigen::Transpose<Eigen::Matrix<double, 3, 3> >; Func = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:728:41:[m[K   required from ‘[01m[KDerived& Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Transpose<Eigen::Matrix<double, 3, 3> >; Derived = Eigen::Matrix<double, 3, 3>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:537:19:[m[K   required from ‘[01m[KEigen::PlainObjectBase<Derived>::PlainObjectBase(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Transpose<Eigen::Matrix<double, 3, 3> >; Derived = Eigen::Matrix<double, 3, 3>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Matrix.h:379:29:[m[K   required from ‘[01m[KEigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::EigenBase<OtherDerived>&) [with OtherDerived = Eigen::Transpose<Eigen::Matrix<double, 3, 3> >; _Scalar = double; int _Rows = 3; int _Cols = 3; int _Options = 0; int _MaxRows = 3; int _MaxCols = 3][m[K’
+[01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:93:90:[m[K   required from here
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:86:63:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   86 |     MayLinearVectorize = [01;35m[Kbool(MightVectorize) && MayLinearize && DstHasDirectAccess[m[K
+      |                          [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:90:55:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   90 |     MaySliceVectorize  = bool(MightVectorize) && bool([01;35m[KDstHasDirectAccess[m[K)
+      |                                                       [01;35m[K^~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h: In instantiation of ‘[01m[Kstruct Eigen::internal::copy_using_evaluator_traits<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >, Eigen::internal::evaluator<Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double, double>, const Eigen::Matrix<double, 3, 1>, const Eigen::Matrix<double, 3, 1> > >, Eigen::internal::assign_op<double, double> >[m[K’:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:607:49:[m[K   required from ‘[01m[Kclass Eigen::internal::generic_dense_assignment_kernel<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >, Eigen::internal::evaluator<Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double, double>, const Eigen::Matrix<double, 3, 1>, const Eigen::Matrix<double, 3, 1> > >, Eigen::internal::assign_op<double, double>, 0>[m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:739:10:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_dense_assignment_loop(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 1>; SrcXprType = Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double, double>, const Eigen::Matrix<double, 3, 1>, const Eigen::Matrix<double, 3, 1> >; Functor = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:879:31:[m[K   required from ‘[01m[Kstatic void Eigen::internal::Assignment<DstXprType, SrcXprType, Functor, Eigen::internal::Dense2Dense, Weak>::run(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 1>; SrcXprType = Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double, double>, const Eigen::Matrix<double, 3, 1>, const Eigen::Matrix<double, 3, 1> >; Functor = Eigen::internal::assign_op<double, double>; Weak = void][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:836:49:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_assignment_no_alias(Dst&, const Src&, const Func&) [with Dst = Eigen::Matrix<double, 3, 1>; Src = Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double, double>, const Eigen::Matrix<double, 3, 1>, const Eigen::Matrix<double, 3, 1> >; Func = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:728:41:[m[K   required from ‘[01m[KDerived& Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double, double>, const Eigen::Matrix<double, 3, 1>, const Eigen::Matrix<double, 3, 1> >; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:537:19:[m[K   required from ‘[01m[KEigen::PlainObjectBase<Derived>::PlainObjectBase(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double, double>, const Eigen::Matrix<double, 3, 1>, const Eigen::Matrix<double, 3, 1> >; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Matrix.h:379:29:[m[K   required from ‘[01m[KEigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::EigenBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double, double>, const Eigen::Matrix<double, 3, 1>, const Eigen::Matrix<double, 3, 1> >; _Scalar = double; int _Rows = 3; int _Cols = 1; int _Options = 0; int _MaxRows = 3; int _MaxCols = 1][m[K’
+[01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:95:61:[m[K   required from here
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:86:63:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   86 |     MayLinearVectorize = [01;35m[Kbool(MightVectorize) && MayLinearize && DstHasDirectAccess[m[K
+      |                          [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:90:55:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   90 |     MaySliceVectorize  = bool(MightVectorize) && bool([01;35m[KDstHasDirectAccess[m[K)
+      |                                                       [01;35m[K^~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h: In instantiation of ‘[01m[Kstruct Eigen::internal::copy_using_evaluator_traits<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >, Eigen::internal::evaluator<Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1> >, Eigen::internal::assign_op<double, double> >[m[K’:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:607:49:[m[K   required from ‘[01m[Kclass Eigen::internal::generic_dense_assignment_kernel<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >, Eigen::internal::evaluator<Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1> >, Eigen::internal::assign_op<double, double>, 0>[m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:739:10:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_dense_assignment_loop(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 1>; SrcXprType = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1>; Functor = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:879:31:[m[K   required from ‘[01m[Kstatic void Eigen::internal::Assignment<DstXprType, SrcXprType, Functor, Eigen::internal::Dense2Dense, Weak>::run(DstXprType&, const SrcXprType&, const Functor&) [with DstXprType = Eigen::Matrix<double, 3, 1>; SrcXprType = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1>; Functor = Eigen::internal::assign_op<double, double>; Weak = void][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:836:49:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_assignment_no_alias(Dst&, const Src&, const Func&) [with Dst = Eigen::Matrix<double, 3, 1>; Src = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1>; Func = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/ProductEvaluators.h:397:29:[m[K   required from ‘[01m[Kstatic void Eigen::internal::generic_product_impl<Lhs, Rhs, Eigen::DenseShape, Eigen::DenseShape, 3>::evalTo(Dst&, const Lhs&, const Rhs&) [with Dst = Eigen::Matrix<double, 3, 1>; Lhs = Eigen::Matrix<double, 3, 3>; Rhs = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/ProductEvaluators.h:148:43:[m[K   required from ‘[01m[Kstatic void Eigen::internal::Assignment<DstXprType, Eigen::Product<Lhs, Rhs, Options>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, typename Eigen::internal::enable_if<((Options == Eigen::DefaultProduct) || (Options == Eigen::AliasFreeProduct))>::type>::run(DstXprType&, const SrcXprType&, const Eigen::internal::assign_op<Scalar, Scalar>&) [with DstXprType = Eigen::Matrix<double, 3, 1>; Lhs = Eigen::Matrix<double, 3, 3>; Rhs = Eigen::Matrix<double, 3, 1>; int Options = 0; Scalar = double; Eigen::internal::Assignment<DstXprType, Eigen::Product<Lhs, Rhs, Options>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, typename Eigen::internal::enable_if<((Options == Eigen::DefaultProduct) || (Options == Eigen::AliasFreeProduct))>::type>::SrcXprType = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:836:49:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_assignment_no_alias(Dst&, const Src&, const Func&) [with Dst = Eigen::Matrix<double, 3, 1>; Src = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; Func = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:728:41:[m[K   required from ‘[01m[KDerived& Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:537:19:[m[K   required from ‘[01m[KEigen::PlainObjectBase<Derived>::PlainObjectBase(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Matrix.h:379:29:[m[K   required from ‘[01m[KEigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::EigenBase<OtherDerived>&) [with OtherDerived = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; _Scalar = double; int _Rows = 3; int _Cols = 1; int _Options = 0; int _MaxRows = 3; int _MaxCols = 1][m[K’
+[01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:96:58:[m[K   required from here
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:86:63:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   86 |     MayLinearVectorize = [01;35m[Kbool(MightVectorize) && MayLinearize && DstHasDirectAccess[m[K
+      |                          [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:420[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:90:55:[m[K [01;35m[Kwarning: [m[Kenum constant in boolean context [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-in-bool-context-Wint-in-bool-context]8;;[m[K]
+   90 |     MaySliceVectorize  = bool(MightVectorize) && bool([01;35m[KDstHasDirectAccess[m[K)
+      |                                                       [01;35m[K^~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:453[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+/usr/local/include/eigen3/Eigen/src/Core/Transpose.h: In instantiation of ‘[01m[KEigen::Transpose<MatrixType>::Transpose(MatrixType&) [with MatrixType = const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>][m[K’:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Transpose.h:186:10:[m[K   required from ‘[01m[KEigen::DenseBase<Derived>::ConstTransposeReturnType Eigen::DenseBase<Derived>::transpose() const [with Derived = Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>; Eigen::DenseBase<Derived>::ConstTransposeReturnType = const Eigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/ProductEvaluators.h:552:37:[m[K   required from ‘[01m[Kconst CoeffReturnType Eigen::internal::product_evaluator<Eigen::Product<Lhs, Rhs, 1>, ProductTag, Eigen::DenseShape, Eigen::DenseShape>::coeff(Eigen::Index, Eigen::Index) const [with Lhs = Eigen::Matrix<double, 3, 3>; Rhs = Eigen::Matrix<double, 3, 1>; int ProductTag = 3; typename Eigen::internal::traits<typename Eigen::Product<Lhs, Rhs, 1>::Rhs>::Scalar = double; typename Eigen::Product<Lhs, Rhs, 1>::Rhs = Eigen::Matrix<double, 3, 1>; typename Eigen::internal::traits<typename Eigen::Product<Lhs, Rhs, 1>::Lhs>::Scalar = double; typename Eigen::Product<Lhs, Rhs, 1>::Lhs = Eigen::Matrix<double, 3, 3>; Eigen::internal::product_evaluator<Eigen::Product<Lhs, Rhs, 1>, ProductTag, Eigen::DenseShape, Eigen::DenseShape>::CoeffReturnType = double; Eigen::Index = long int][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:631:63:[m[K   required from ‘[01m[Kvoid Eigen::internal::generic_dense_assignment_kernel<DstEvaluatorTypeT, SrcEvaluatorTypeT, Functor, Version>::assignCoeff(Eigen::Index, Eigen::Index) [with DstEvaluatorTypeT = Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >; SrcEvaluatorTypeT = Eigen::internal::evaluator<Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1> >; Functor = Eigen::internal::assign_op<double, double>; int Version = 0; Eigen::Index = long int][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:645:16:[m[K   required from ‘[01m[Kvoid Eigen::internal::generic_dense_assignment_kernel<DstEvaluatorTypeT, SrcEvaluatorTypeT, Functor, Version>::assignCoeffByOuterInner(Eigen::Index, Eigen::Index) [with DstEvaluatorTypeT = Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >; SrcEvaluatorTypeT = Eigen::internal::evaluator<Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1> >; Functor = Eigen::internal::assign_op<double, double>; int Version = 0; Eigen::Index = long int][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:206:35:[m[K   required from ‘[01m[Kstatic void Eigen::internal::copy_using_evaluator_DefaultTraversal_CompleteUnrolling<Kernel, Index, Stop>::run(Kernel&) [with Kernel = Eigen::internal::generic_dense_assignment_kernel<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >, Eigen::internal::evaluator<Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1> >, Eigen::internal::assign_op<double, double>, 0>; int Index = 2; int Stop = 3][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:435:92:[m[K   [ skipping 5 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/ProductEvaluators.h:148:43:[m[K   required from ‘[01m[Kstatic void Eigen::internal::Assignment<DstXprType, Eigen::Product<Lhs, Rhs, Options>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, typename Eigen::internal::enable_if<((Options == Eigen::DefaultProduct) || (Options == Eigen::AliasFreeProduct))>::type>::run(DstXprType&, const SrcXprType&, const Eigen::internal::assign_op<Scalar, Scalar>&) [with DstXprType = Eigen::Matrix<double, 3, 1>; Lhs = Eigen::Matrix<double, 3, 3>; Rhs = Eigen::Matrix<double, 3, 1>; int Options = 0; Scalar = double; Eigen::internal::Assignment<DstXprType, Eigen::Product<Lhs, Rhs, Options>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, typename Eigen::internal::enable_if<((Options == Eigen::DefaultProduct) || (Options == Eigen::AliasFreeProduct))>::type>::SrcXprType = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:836:49:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_assignment_no_alias(Dst&, const Src&, const Func&) [with Dst = Eigen::Matrix<double, 3, 1>; Src = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; Func = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:728:41:[m[K   required from ‘[01m[KDerived& Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:537:19:[m[K   required from ‘[01m[KEigen::PlainObjectBase<Derived>::PlainObjectBase(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Matrix.h:379:29:[m[K   required from ‘[01m[KEigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::EigenBase<OtherDerived>&) [with OtherDerived = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; _Scalar = double; int _Rows = 3; int _Cols = 1; int _Options = 0; int _MaxRows = 3; int _MaxCols = 1][m[K’
+[01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:96:58:[m[K   required from here
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Transpose.h:64:53:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>::Block(const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+   64 |     explicit inline Transpose(MatrixType& matrix) : [01;35m[Km_matrix(matrix)[m[K {}
+      |                                                     [01;35m[K^~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:72[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:827:52:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>[m[K’ has user-provided ‘[01m[KEigen::BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Eigen::Dense>& Eigen::BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Eigen::Dense>::operator=(const Eigen::BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Eigen::Dense>&) [with XprType = const Eigen::Matrix<double, 3, 3>; int BlockRows = 1; int BlockCols = 3; bool InnerPanel = false][m[K’
+  827 |     EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& [01;36m[Koperator[m[K=(const Derived& other) \
+      |                                                    [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:839:53:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K’
+  839 | #define EIGEN_INHERIT_ASSIGNMENT_OPERATORS(Derived) [01;36m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K(Derived)
+      |                                                     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:161:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K’
+  161 |     [01;36m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K(BlockImpl)
+      |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:451[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:103:81:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::BlockImpl<const Eigen::Matrix<double, 3, 3>, 1, 3, false, Eigen::Dense>::BlockImpl(const Eigen::BlockImpl<const Eigen::Matrix<double, 3, 3>, 1, 3, false, Eigen::Dense>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+  103 | template<typename XprType, int BlockRows, int BlockCols, bool InnerPanel> class [01;35m[KBlock[m[K
+      |                                                                                 [01;35m[K^~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:72[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:827:52:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::BlockImpl<const Eigen::Matrix<double, 3, 3>, 1, 3, false, Eigen::Dense>[m[K’ has user-provided ‘[01m[KEigen::internal::BlockImpl_dense<XprType, BlockRows, BlockCols, InnerPanel, true>& Eigen::internal::BlockImpl_dense<XprType, BlockRows, BlockCols, InnerPanel, true>::operator=(const Eigen::internal::BlockImpl_dense<XprType, BlockRows, BlockCols, InnerPanel, true>&) [with XprType = const Eigen::Matrix<double, 3, 3>; int BlockRows = 1; int BlockCols = 3; bool InnerPanel = false][m[K’
+  827 |     EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& [01;36m[Koperator[m[K=(const Derived& other) \
+      |                                                    [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:839:53:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K’
+  839 | #define EIGEN_INHERIT_ASSIGNMENT_OPERATORS(Derived) [01;36m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K(Derived)
+      |                                                     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:341:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K’
+  341 |     [01;36m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K(BlockImpl_dense)
+      |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:451[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:154:7:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 3>, 1, 3, false, true>::BlockImpl_dense(const Eigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 3>, 1, 3, false, true>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+  154 | class [01;35m[KBlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Dense>[m[K
+      |       [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:424[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Assign.h:55:30:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 3>, 1, 3, false, true>[m[K’ has user-provided ‘[01m[KDerived& Eigen::MatrixBase<Derived>::operator=(const Eigen::MatrixBase<Derived>&) [with Derived = Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>][m[K’
+   55 | EIGEN_STRONG_INLINE Derived& [01;36m[KMatrixBase<Derived>[m[K::operator=(const MatrixBase& other)
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:451[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:329:7:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>, 0>::MapBase(const Eigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>, 0>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+  329 | class [01;35m[KBlockImpl_dense<XprType,BlockRows,BlockCols, InnerPanel,true>[m[K
+      |       [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:424[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Assign.h:55:30:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>, 0>[m[K’ has user-provided ‘[01m[KDerived& Eigen::MatrixBase<Derived>::operator=(const Eigen::MatrixBase<Derived>&) [with Derived = Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>][m[K’
+   55 | EIGEN_STRONG_INLINE Derived& [01;36m[KMatrixBase<Derived>[m[K::operator=(const MatrixBase& other)
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:448[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/MapBase.h:37:34:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[Kconstexpr Eigen::MatrixBase<Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >::MatrixBase(const Eigen::MatrixBase<Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+   37 | template<typename Derived> class [01;35m[KMapBase<Derived, ReadOnlyAccessors>[m[K
+      |                                  [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:424[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Assign.h:55:30:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::MatrixBase<Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >[m[K’ has user-provided ‘[01m[KDerived& Eigen::MatrixBase<Derived>::operator=(const Eigen::MatrixBase<Derived>&) [with Derived = Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>][m[K’
+   55 | EIGEN_STRONG_INLINE Derived& [01;36m[KMatrixBase<Derived>[m[K::operator=(const MatrixBase& other)
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:451[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:329:7:[m[K [01;36m[Knote: [m[Ksynthesized method ‘[01m[KEigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>, 0>::MapBase(const Eigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>, 0>&)[m[K’ first required here
+  329 | class [01;36m[KBlockImpl_dense<XprType,BlockRows,BlockCols, InnerPanel,true>[m[K
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:154:7:[m[K [01;36m[Knote: [m[Ksynthesized method ‘[01m[KEigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 3>, 1, 3, false, true>::BlockImpl_dense(const Eigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 3>, 1, 3, false, true>&)[m[K’ first required here
+  154 | class [01;36m[KBlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Dense>[m[K
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:103:81:[m[K [01;36m[Knote: [m[Ksynthesized method ‘[01m[KEigen::BlockImpl<const Eigen::Matrix<double, 3, 3>, 1, 3, false, Eigen::Dense>::BlockImpl(const Eigen::BlockImpl<const Eigen::Matrix<double, 3, 3>, 1, 3, false, Eigen::Dense>&)[m[K’ first required here
+  103 | template<typename XprType, int BlockRows, int BlockCols, bool InnerPanel> class [01;36m[KBlock[m[K
+      |                                                                                 [01;36m[K^~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:453[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Transpose.h:64:53:[m[K [01;36m[Knote: [m[Ksynthesized method ‘[01m[KEigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>::Block(const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>&)[m[K’ first required here
+   64 |     explicit inline Transpose(MatrixType& matrix) : [01;36m[Km_matrix(matrix)[m[K {}
+      |                                                     [01;36m[K^~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:440[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+/usr/local/include/eigen3/Eigen/src/Core/CwiseBinaryOp.h: In instantiation of ‘[01m[KEigen::CwiseBinaryOp<BinaryOp, Lhs, Rhs>::CwiseBinaryOp(const Lhs&, const Rhs&, const BinaryOp&) [with BinaryOp = Eigen::internal::scalar_product_op<double, double>; LhsType = const Eigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >; RhsType = const Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>; Eigen::CwiseBinaryOp<BinaryOp, Lhs, Rhs>::Lhs = Eigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >; Eigen::CwiseBinaryOp<BinaryOp, Lhs, Rhs>::Rhs = Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>][m[K’:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/../plugins/MatrixCwiseBinaryOps.h:25:10:[m[K   required from ‘[01m[Kconst Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<typename Eigen::internal::traits<T>::Scalar, typename Eigen::internal::traits<OtherDerived>::Scalar>, const Derived, const OtherDerived> Eigen::MatrixBase<Derived>::cwiseProduct(const Eigen::MatrixBase<OtherDerived>&) const [with OtherDerived = Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>; Derived = Eigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >; typename Eigen::internal::traits<OtherDerived>::Scalar = double; typename Eigen::internal::traits<T>::Scalar = double][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/ProductEvaluators.h:552:52:[m[K   required from ‘[01m[Kconst CoeffReturnType Eigen::internal::product_evaluator<Eigen::Product<Lhs, Rhs, 1>, ProductTag, Eigen::DenseShape, Eigen::DenseShape>::coeff(Eigen::Index, Eigen::Index) const [with Lhs = Eigen::Matrix<double, 3, 3>; Rhs = Eigen::Matrix<double, 3, 1>; int ProductTag = 3; typename Eigen::internal::traits<typename Eigen::Product<Lhs, Rhs, 1>::Rhs>::Scalar = double; typename Eigen::Product<Lhs, Rhs, 1>::Rhs = Eigen::Matrix<double, 3, 1>; typename Eigen::internal::traits<typename Eigen::Product<Lhs, Rhs, 1>::Lhs>::Scalar = double; typename Eigen::Product<Lhs, Rhs, 1>::Lhs = Eigen::Matrix<double, 3, 3>; Eigen::internal::product_evaluator<Eigen::Product<Lhs, Rhs, 1>, ProductTag, Eigen::DenseShape, Eigen::DenseShape>::CoeffReturnType = double; Eigen::Index = long int][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:631:63:[m[K   required from ‘[01m[Kvoid Eigen::internal::generic_dense_assignment_kernel<DstEvaluatorTypeT, SrcEvaluatorTypeT, Functor, Version>::assignCoeff(Eigen::Index, Eigen::Index) [with DstEvaluatorTypeT = Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >; SrcEvaluatorTypeT = Eigen::internal::evaluator<Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1> >; Functor = Eigen::internal::assign_op<double, double>; int Version = 0; Eigen::Index = long int][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:645:16:[m[K   required from ‘[01m[Kvoid Eigen::internal::generic_dense_assignment_kernel<DstEvaluatorTypeT, SrcEvaluatorTypeT, Functor, Version>::assignCoeffByOuterInner(Eigen::Index, Eigen::Index) [with DstEvaluatorTypeT = Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >; SrcEvaluatorTypeT = Eigen::internal::evaluator<Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1> >; Functor = Eigen::internal::assign_op<double, double>; int Version = 0; Eigen::Index = long int][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:206:35:[m[K   required from ‘[01m[Kstatic void Eigen::internal::copy_using_evaluator_DefaultTraversal_CompleteUnrolling<Kernel, Index, Stop>::run(Kernel&) [with Kernel = Eigen::internal::generic_dense_assignment_kernel<Eigen::internal::evaluator<Eigen::Matrix<double, 3, 1> >, Eigen::internal::evaluator<Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 1> >, Eigen::internal::assign_op<double, double>, 0>; int Index = 2; int Stop = 3][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:435:92:[m[K   [ skipping 5 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/ProductEvaluators.h:148:43:[m[K   required from ‘[01m[Kstatic void Eigen::internal::Assignment<DstXprType, Eigen::Product<Lhs, Rhs, Options>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, typename Eigen::internal::enable_if<((Options == Eigen::DefaultProduct) || (Options == Eigen::AliasFreeProduct))>::type>::run(DstXprType&, const SrcXprType&, const Eigen::internal::assign_op<Scalar, Scalar>&) [with DstXprType = Eigen::Matrix<double, 3, 1>; Lhs = Eigen::Matrix<double, 3, 3>; Rhs = Eigen::Matrix<double, 3, 1>; int Options = 0; Scalar = double; Eigen::internal::Assignment<DstXprType, Eigen::Product<Lhs, Rhs, Options>, Eigen::internal::assign_op<Scalar, Scalar>, Eigen::internal::Dense2Dense, typename Eigen::internal::enable_if<((Options == Eigen::DefaultProduct) || (Options == Eigen::AliasFreeProduct))>::type>::SrcXprType = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/AssignEvaluator.h:836:49:[m[K   required from ‘[01m[Kvoid Eigen::internal::call_assignment_no_alias(Dst&, const Src&, const Func&) [with Dst = Eigen::Matrix<double, 3, 1>; Src = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; Func = Eigen::internal::assign_op<double, double>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:728:41:[m[K   required from ‘[01m[KDerived& Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/PlainObjectBase.h:537:19:[m[K   required from ‘[01m[KEigen::PlainObjectBase<Derived>::PlainObjectBase(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; Derived = Eigen::Matrix<double, 3, 1>][m[K’
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Matrix.h:379:29:[m[K   required from ‘[01m[KEigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::EigenBase<OtherDerived>&) [with OtherDerived = Eigen::Product<Eigen::Matrix<double, 3, 3>, Eigen::Matrix<double, 3, 1>, 0>; _Scalar = double; int _Rows = 3; int _Cols = 1; int _Options = 0; int _MaxRows = 3; int _MaxCols = 1][m[K’
+[01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:96:58:[m[K   required from here
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/CwiseBinaryOp.h:105:9:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >::Transpose(const Eigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+  105 |       : [01;35m[Km_lhs(aLhs)[m[K, m_rhs(aRhs), m_functor(func)
+      |         [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:424[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Assign.h:55:30:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >[m[K’ has user-provided ‘[01m[KDerived& Eigen::MatrixBase<Derived>::operator=(const Eigen::MatrixBase<Derived>&) [with Derived = Eigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >][m[K’
+   55 | EIGEN_STRONG_INLINE Derived& [01;36m[KMatrixBase<Derived>[m[K::operator=(const MatrixBase& other)
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:453[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Transpose.h:52:37:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[Kconstexpr Eigen::TransposeImpl<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>, Eigen::Dense>::TransposeImpl(const Eigen::TransposeImpl<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>, Eigen::Dense>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+   52 | template<typename MatrixType> class [01;35m[KTranspose[m[K
+      |                                     [01;35m[K^~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:424[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Assign.h:55:30:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::TransposeImpl<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>, Eigen::Dense>[m[K’ has user-provided ‘[01m[KDerived& Eigen::MatrixBase<Derived>::operator=(const Eigen::MatrixBase<Derived>&) [with Derived = Eigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >][m[K’
+   55 | EIGEN_STRONG_INLINE Derived& [01;36m[KMatrixBase<Derived>[m[K::operator=(const MatrixBase& other)
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:453[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Transpose.h:52:37:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>::Block(const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+   52 | template<typename MatrixType> class [01;35m[KTranspose[m[K
+      |                                     [01;35m[K^~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:72[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:827:52:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false>[m[K’ has user-provided ‘[01m[KEigen::BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Eigen::Dense>& Eigen::BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Eigen::Dense>::operator=(const Eigen::BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Eigen::Dense>&) [with XprType = const Eigen::Matrix<double, 3, 3>; int BlockRows = 1; int BlockCols = 3; bool InnerPanel = false][m[K’
+  827 |     EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& [01;36m[Koperator[m[K=(const Derived& other) \
+      |                                                    [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:839:53:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K’
+  839 | #define EIGEN_INHERIT_ASSIGNMENT_OPERATORS(Derived) [01;36m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K(Derived)
+      |                                                     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:161:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K’
+  161 |     [01;36m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K(BlockImpl)
+      |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:440[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/CwiseBinaryOp.h:105:9:[m[K [01;36m[Knote: [m[Ksynthesized method ‘[01m[KEigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >::Transpose(const Eigen::Transpose<const Eigen::Block<const Eigen::Matrix<double, 3, 3>, 1, 3, false> >&)[m[K’ first required here
+  105 |       : [01;36m[Km_lhs(aLhs)[m[K, m_rhs(aRhs), m_functor(func)
+      |         [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/CwiseBinaryOp.h:105:22:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>::Block(const Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+  105 |       : m_lhs(aLhs), [01;35m[Km_rhs(aRhs)[m[K, m_functor(func)
+      |                      [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:72[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:827:52:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>[m[K’ has user-provided ‘[01m[KEigen::BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Eigen::Dense>& Eigen::BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Eigen::Dense>::operator=(const Eigen::BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Eigen::Dense>&) [with XprType = const Eigen::Matrix<double, 3, 1>; int BlockRows = 3; int BlockCols = 1; bool InnerPanel = true][m[K’
+  827 |     EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& [01;36m[Koperator[m[K=(const Derived& other) \
+      |                                                    [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:839:53:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K’
+  839 | #define EIGEN_INHERIT_ASSIGNMENT_OPERATORS(Derived) [01;36m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K(Derived)
+      |                                                     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:161:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K’
+  161 |     [01;36m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K(BlockImpl)
+      |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:451[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:103:81:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::BlockImpl<const Eigen::Matrix<double, 3, 1>, 3, 1, true, Eigen::Dense>::BlockImpl(const Eigen::BlockImpl<const Eigen::Matrix<double, 3, 1>, 3, 1, true, Eigen::Dense>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+  103 | template<typename XprType, int BlockRows, int BlockCols, bool InnerPanel> class [01;35m[KBlock[m[K
+      |                                                                                 [01;35m[K^~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:72[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:827:52:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::BlockImpl<const Eigen::Matrix<double, 3, 1>, 3, 1, true, Eigen::Dense>[m[K’ has user-provided ‘[01m[KEigen::internal::BlockImpl_dense<XprType, BlockRows, BlockCols, InnerPanel, true>& Eigen::internal::BlockImpl_dense<XprType, BlockRows, BlockCols, InnerPanel, true>::operator=(const Eigen::internal::BlockImpl_dense<XprType, BlockRows, BlockCols, InnerPanel, true>&) [with XprType = const Eigen::Matrix<double, 3, 1>; int BlockRows = 3; int BlockCols = 1; bool InnerPanel = true][m[K’
+  827 |     EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& [01;36m[Koperator[m[K=(const Derived& other) \
+      |                                                    [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/util/Macros.h:839:53:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K’
+  839 | #define EIGEN_INHERIT_ASSIGNMENT_OPERATORS(Derived) [01;36m[KEIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR[m[K(Derived)
+      |                                                     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:341:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K’
+  341 |     [01;36m[KEIGEN_INHERIT_ASSIGNMENT_OPERATORS[m[K(BlockImpl_dense)
+      |     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:451[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:154:7:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 1>, 3, 1, true, true>::BlockImpl_dense(const Eigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 1>, 3, 1, true, true>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+  154 | class [01;35m[KBlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Dense>[m[K
+      |       [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:424[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Assign.h:55:30:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 1>, 3, 1, true, true>[m[K’ has user-provided ‘[01m[KDerived& Eigen::MatrixBase<Derived>::operator=(const Eigen::MatrixBase<Derived>&) [with Derived = Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>][m[K’
+   55 | EIGEN_STRONG_INLINE Derived& [01;36m[KMatrixBase<Derived>[m[K::operator=(const MatrixBase& other)
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:451[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:329:7:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[KEigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>, 0>::MapBase(const Eigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>, 0>&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+  329 | class [01;35m[KBlockImpl_dense<XprType,BlockRows,BlockCols, InnerPanel,true>[m[K
+      |       [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:424[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Assign.h:55:30:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>, 0>[m[K’ has user-provided ‘[01m[KDerived& Eigen::MatrixBase<Derived>::operator=(const Eigen::MatrixBase<Derived>&) [with Derived = Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>][m[K’
+   55 | EIGEN_STRONG_INLINE Derived& [01;36m[KMatrixBase<Derived>[m[K::operator=(const MatrixBase& other)
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:448[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/MapBase.h:37:34:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[Kconstexpr Eigen::MatrixBase<Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true> >::MatrixBase(const Eigen::MatrixBase<Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true> >&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+   37 | template<typename Derived> class [01;35m[KMapBase<Derived, ReadOnlyAccessors>[m[K
+      |                                  [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:424[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Assign.h:55:30:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[KEigen::MatrixBase<Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true> >[m[K’ has user-provided ‘[01m[KDerived& Eigen::MatrixBase<Derived>::operator=(const Eigen::MatrixBase<Derived>&) [with Derived = Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>][m[K’
+   55 | EIGEN_STRONG_INLINE Derived& [01;36m[KMatrixBase<Derived>[m[K::operator=(const MatrixBase& other)
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:451[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:329:7:[m[K [01;36m[Knote: [m[Ksynthesized method ‘[01m[KEigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>, 0>::MapBase(const Eigen::MapBase<Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>, 0>&)[m[K’ first required here
+  329 | class [01;36m[KBlockImpl_dense<XprType,BlockRows,BlockCols, InnerPanel,true>[m[K
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:154:7:[m[K [01;36m[Knote: [m[Ksynthesized method ‘[01m[KEigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 1>, 3, 1, true, true>::BlockImpl_dense(const Eigen::internal::BlockImpl_dense<const Eigen::Matrix<double, 3, 1>, 3, 1, true, true>&)[m[K’ first required here
+  154 | class [01;36m[KBlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Dense>[m[K
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/Block.h:103:81:[m[K [01;36m[Knote: [m[Ksynthesized method ‘[01m[KEigen::BlockImpl<const Eigen::Matrix<double, 3, 1>, 3, 1, true, Eigen::Dense>::BlockImpl(const Eigen::BlockImpl<const Eigen::Matrix<double, 3, 1>, 3, 1, true, Eigen::Dense>&)[m[K’ first required here
+  103 | template<typename XprType, int BlockRows, int BlockCols, bool InnerPanel> class [01;36m[KBlock[m[K
+      |                                                                                 [01;36m[K^~~~~[m[K
+In file included from [01m[K/usr/local/include/eigen3/Eigen/Core:440[m[K,
+                 from [01m[K/usr/local/include/eigen3/Eigen/Dense:1[m[K,
+                 from [01m[K/home/chen/px4_ws/src/px4_payload_nmpc/src/payload_odom_from_vrpn.cpp:6[m[K:
+[01m[K/usr/local/include/eigen3/Eigen/src/Core/CwiseBinaryOp.h:105:22:[m[K [01;36m[Knote: [m[Ksynthesized method ‘[01m[KEigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>::Block(const Eigen::Block<const Eigen::Matrix<double, 3, 1>, 3, 1, true>&)[m[K’ first required here
+  105 |       : m_lhs(aLhs), [01;36m[Km_rhs(aRhs)[m[K, m_functor(func)
+      |                      [01;36m[K^~~~~~~~~~~[m[K

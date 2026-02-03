@@ -1,0 +1,2 @@
+source;share/px4_payload_estimator/environment/ament_prefix_path.sh
+source;share/px4_payload_estimator/environment/path.sh
