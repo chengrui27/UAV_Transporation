@@ -1,0 +1,51 @@
+#include "input.hpp"
+
+void OdomData::feed(const nav_msgs::msg::Odometry::SharedPtr &m)
+{
+  msg = *m;
+  stamp = rclcpp::Time(msg.header.stamp);
+  received = true;
+}
+
+void ImuData::feed(const sensor_msgs::msg::Imu::SharedPtr &m)
+{
+  msg = *m;
+  stamp = rclcpp::Time(msg.header.stamp);
+  received = true;
+}
+
+void CommandData::feed(const px4ctrl::msg::PositionCommand::SharedPtr &m)
+{
+  msg = *m;
+  stamp = rclcpp::Time(msg.header.stamp);
+  received = true;
+}
+
+bool CommandData::ready() const
+{
+  return received;
+}
+
+void TrajectoryData::feed(const px4ctrl::msg::PositionCommandTrajectory::SharedPtr &m)
+{
+  msg = *m;
+  stamp = rclcpp::Time(msg.header.stamp);
+  received = true;
+}
+
+bool TrajectoryData::ready() const
+{
+  return received && !msg.points.empty();
+}
+
+void GoalPoseData::feed(const geometry_msgs::msg::PoseStamped::SharedPtr &m)
+{
+  msg = *m;
+  stamp = rclcpp::Time(msg.header.stamp);
+  received = true;
+}
+
+bool GoalPoseData::ready() const
+{
+  return received;
+}
