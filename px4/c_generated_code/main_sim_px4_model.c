@@ -73,6 +73,13 @@ int main()
     x_current[7] = 0.0;
     x_current[8] = 0.0;
     x_current[9] = 0.0;
+    x_current[10] = 0.0;
+    x_current[11] = 0.0;
+    x_current[12] = 0.0;
+    x_current[13] = 0.0;
+    x_current[14] = 0.0;
+    x_current[15] = 0.0;
+    x_current[16] = 0.0;
 
   
     x_current[0] = 0;
@@ -85,6 +92,13 @@ int main()
     x_current[7] = 0;
     x_current[8] = 0;
     x_current[9] = 0;
+    x_current[10] = 15.05835;
+    x_current[11] = 0;
+    x_current[12] = 0;
+    x_current[13] = 0;
+    x_current[14] = 0;
+    x_current[15] = 0;
+    x_current[16] = 0;
     
   
 

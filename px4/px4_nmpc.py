@@ -1,5 +1,5 @@
 from acados_template import AcadosOcp, AcadosOcpSolver, AcadosModel, AcadosSimSolver
-from casadi import vertcat, SX, dot
+from casadi import vertcat, SX, dot, log, exp
 from px4_model import *
 import numpy as np
 import scipy.linalg
@@ -22,8 +22,8 @@ def create_nmpc_solver():
     ny_e = nx
 
     # 设置代价函数类型
-    ocp.cost.cost_type = 'LINEAR_LS'
-    ocp.cost.cost_type_e = 'LINEAR_LS'
+    ocp.cost.cost_type = 'NONLINEAR_LS'
+    ocp.cost.cost_type_e = 'NONLINEAR_LS'
 
     # 状态变量权重矩阵
     Q = np.eye(nx)
@@ -37,77 +37,79 @@ def create_nmpc_solver():
     Q[7, 7] = 20    # qx四元数权重增加
     Q[8, 8] = 20    # qy四元数权重增加
     Q[9, 9] = 20    # qz四元数权重增加
+    Q[10, 10] = 5   # 推力权重
+    Q[11, 11] = 8   # roll角速度权重
+    Q[12, 12] = 8   # pitch角速度权重
+    Q[13, 13] = 8   # yaw角速度权重
+    Q[14, 14] = 5   # roll角速度导数权重
+    Q[15, 15] = 5   # pitch角速度导数权重
+    Q[16, 16] = 5   # yaw角速度导数权重
 
     # 输入权重矩阵（增加以抑制控制饱和）
     R = np.eye(nu)
-    R[0, 0] = 5.0   # 推力权重增加
-    R[1, 1] = 20.0   # roll角速度权重增加
-    R[2, 2] = 20.0   # pitch角速度权重增加
-    R[3, 3] = 20.0   # yaw角速度权重增加
+    R[0, 0] = 1.0   # 推力导数权重增加
+    R[1, 1] = 3.0   # roll角速度二阶导数权重增加
+    R[2, 2] = 3.0   # pitch角速度二阶导数权重增加
+    R[3, 3] = 3.0   # yaw角速度二阶导数权重增加
 
-    # 设置过程和末端的权重矩阵
-    ocp.cost.W = scipy.linalg.block_diag(Q, R)
-    ocp.cost.W_e = 50 * np.eye(ny_e)
-
-    # 投影矩阵
-    Vx = np.zeros((ny, nx))
-    Vx[0, 0] = 1.0
-    Vx[1, 1] = 1.0
-    Vx[2, 2] = 1.0
-    Vx[3, 3] = 1.0
-    Vx[4, 4] = 1.0
-    Vx[5, 5] = 1.0
-    Vx[6, 6] = 1.0
-    Vx[7, 7] = 1.0
-    Vx[8, 8] = 1.0
-    Vx[9, 9] = 1.0
-    ocp.cost.Vx = Vx
-
-    Vu = np.zeros((ny, nu))
-    Vu[10, 0] = 1.0
-    Vu[11, 1] = 1.0
-    Vu[12, 2] = 1.0
-    Vu[13, 3] = 1.0
-    ocp.cost.Vu = Vu
-
-    Vx_e = np.zeros((ny_e, nx))
-    Vx_e[0, 0] = 1.0
-    Vx_e[1, 1] = 1.0
-    Vx_e[2, 2] = 1.0
-    Vx_e[3, 3] = 1.0
-    Vx_e[4, 4] = 1.0
-    Vx_e[5, 5] = 1.0
-    Vx_e[6, 6] = 1.0
-    Vx_e[7, 7] = 1.0
-    Vx_e[8, 8] = 1.0
-    Vx_e[9, 9] = 1.0
-    ocp.cost.Vx_e = Vx_e
+    # 终端状态变量权重矩阵
+    W_e = np.eye(nx)
+    W_e[0, 0] = 50    # x位置权重降低
+    W_e[1, 1] = 50    # y位置权重降低
+    W_e[2, 2] = 50    # z位置权重降低
+    W_e[3, 3] = 10    # vx速度权重降低
+    W_e[4, 4] = 10    # vy速度权重降低
+    W_e[5, 5] = 10    # vz速度权重降低
+    W_e[6, 6] = 20    # qw四元数权重增加
+    W_e[7, 7] = 20    # qx四元数权重增加
+    W_e[8, 8] = 20    # qy四元数权重增加
+    W_e[9, 9] = 20    # qz四元数权重增加
+    W_e[10, 10] = 5   # 推力权重
+    W_e[11, 11] = 5   # roll角速度权重
+    W_e[12, 12] = 5   # pitch角速度权重
+    W_e[13, 13] = 5   # yaw角速度权重
+    W_e[14, 14] = 1   # roll角速度导数权重
+    W_e[15, 15] = 1   # pitch角速度导数权重
+    W_e[16, 16] = 1   # yaw角速度导数权重
 
     # 设置参考向量（状态+输入）
-    thrust = 1.585 * 9.81
-    ocp.cost.yref = np.array([0.0, 1.0, 3.0, 
-                              0.0, 0.0, 0.0, 
-                              1.0, 0.0, 0.0, 0.0, 
-                              thrust, 0.0, 0.0, 0.0])
-    ocp.cost.yref_e = np.array([0.0, 1.0, 3.0, 
-                                0.0, 0.0, 0.0, 
-                                1.0, 0.0, 0.0, 0.0])
+    thrust = 1.535 * 9.81
     
     # 构建控制输入约束
-    ocp.constraints.lbu = np.array([0.0, -2.0, -2.0, -2.0])
-    ocp.constraints.ubu = np.array([23.0, 2.0, 2.0, 2.0])
+    ocp.constraints.lbu = np.array([-1.5, -1.0, -1.0, -1.0])
+    ocp.constraints.ubu = np.array([1.5, 1.0, 1.0, 1.0])
     ocp.constraints.idxbu = np.array([0, 1, 2, 3])
     ocp.constraints.x0 = np.array([0.0, 0.0, 2.0,
                                    0.0, 0.0, 0.0,
-                                   1.0, 0.0, 0.0, 0.0])
+                                   1.0, 0.0, 0.0, 0.0,
+                                   thrust, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+
+    # 状态约束：推力、速度
+    # max_thrust = 20.0
+    # min_thrust = 10.0
+    # max_vel = 2.0
+    # ocp.constraints.idxbx = np.array([3, 4, 5, 10])
+    # ocp.constraints.lbx = np.array([-max_vel, -max_vel, -max_vel, min_thrust])
+    # ocp.constraints.ubx = np.array([max_vel, max_vel, max_vel, max_thrust])
 
     # ========== ESDF避障约束 ==========
     # 定义运行时参数: [d_ref, grad_x, grad_y, grad_z, x_ref, y_ref, z_ref]
+    x = model.x
+    u = model.u
+    y_track = vertcat(x, u)
+
     p = SX.sym('p', 7)
     model.p = p
 
+    # 避障参数
+    beta = 10.0
+    lambda_c = 1.0
+    safety_distance = 0.5  # 安全距离 (m)
+
+    # 避障代价项列表
+    obs_terms = []
+
     # 提取状态中的位置
-    x = model.x
     pos = x[0:3]  # [px, py, pz]
 
     # 提取参数
@@ -118,25 +120,40 @@ def create_nmpc_solver():
     # 一阶Taylor展开：d(pos) ≈ d_ref + grad·(pos - pos_ref)
     d_approx = d_ref + dot(grad, pos - pos_ref)
 
-    # 约束：d_approx >= safety_distance
-    safety_distance = 0.4  # 安全距离 (m)
-    h_expr = d_approx - safety_distance
+    # 用对数函数和指数函数构造避障代价项
+    z = beta * (safety_distance**2 - d_approx**2)
+    obs_cost = lambda_c * log(1 + exp(z))
+    obs_terms.append(obs_cost)
 
-    # 设置非线性约束
-    model.con_h_expr = h_expr
-    ocp.constraints.lh = np.array([0.0])
-    ocp.constraints.uh = np.array([100.0])  # h <= 100 (距离最多为100+safety_distance，合理上界)
+    # 构建总的输出表达式（状态+输入+避障代价项）
+    y_expr = vertcat(y_track, vertcat(*obs_terms))
+    ocp.model.cost_y_expr = y_expr
+    ocp.model.cost_y_expr_e = x
 
-    # 使用软约束：对 h_expr >= 0 引入 slack，并在代价函数中强惩罚
-    ocp.constraints.idxsh = np.array([0], dtype=int)
-    ocp.constraints.lsh = np.array([0.0])    # slack >= 0
-    ocp.constraints.ush = np.array([1e3])    # 上界给一个较大值
+    # 重新计算输出维数
+    n_extra_terms = len(obs_terms)
+    ny = nx + nu + n_extra_terms
+    ny_e = nx
 
-    soft_weight = 5e3                        # 软约束权重（越大越接近硬约束）
-    ocp.cost.Zl = 2 * np.array([soft_weight])
-    ocp.cost.Zu = 2 * np.array([soft_weight])
-    ocp.cost.zl = 2 * np.array([soft_weight])
-    ocp.cost.zu = 2 * np.array([soft_weight])
+    # 设置权重矩阵
+    W_track = scipy.linalg.block_diag(Q, R)
+    if n_extra_terms > 0:
+        W_obs = 1000.0 * np.eye(n_extra_terms)
+        ocp.cost.W = scipy.linalg.block_diag(W_track, W_obs)
+    else:
+        ocp.cost.W = W_track
+    ocp.cost.W_e = 20 * W_e
+
+    # 设置参考向量（状态+输入+避障代价项）
+    x_ref = np.array([0.0, 1.0, 3.0,
+                      0.0, 0.0, 0.0,
+                      1.0, 0.0, 0.0, 0.0,
+                      thrust, 0.0, 0.0, 0.0,
+                      0.0, 0.0, 0.0])
+    yref = np.zeros(ny)
+    yref[:nx] = x_ref
+    ocp.cost.yref = yref
+    ocp.cost.yref_e = x_ref
 
     # 设置参数初始值 [d_ref, gx, gy, gz, x_ref, y_ref, z_ref]
     # 默认值：假设远离障碍物
@@ -151,8 +168,8 @@ def create_nmpc_solver():
     ocp.solver_options.print_level = 0
 
     # 设置预测时域：2s 内 40 个离散步长（dt=0.05s）
-    N = 20
-    T = 2
+    N = 40
+    T = 4
     ocp.dims.N = N
     ocp.solver_options.tf = T
 
@@ -168,7 +185,8 @@ def nmpc_sim():
     # 设置初始状态
     x0 = np.array([0, 0, 2, 
                    0, 0, 0, 
-                   1, 0, 0, 0])
+                   1, 0, 0, 0,
+                   1.535 * 9.81, 0, 0, 0, 0, 0, 0])
     
     # 创建求解器和仿真器
     ocp_solver, integrator = create_nmpc_solver()

@@ -46,8 +46,15 @@ MODEL_OBJ := $(MODEL_SRC:.c=.o)
 OCP_SRC=
 
 
-OCP_SRC+= px4_model_constraints/px4_model_constr_h_fun_jac_uxt_zt.c
-OCP_SRC+= px4_model_constraints/px4_model_constr_h_fun.c
+OCP_SRC+= px4_model_cost/px4_model_cost_y_0_fun.c
+OCP_SRC+= px4_model_cost/px4_model_cost_y_0_fun_jac_ut_xt.c
+OCP_SRC+= px4_model_cost/px4_model_cost_y_0_hess.c
+OCP_SRC+= px4_model_cost/px4_model_cost_y_fun.c
+OCP_SRC+= px4_model_cost/px4_model_cost_y_fun_jac_ut_xt.c
+OCP_SRC+= px4_model_cost/px4_model_cost_y_hess.c
+OCP_SRC+= px4_model_cost/px4_model_cost_y_e_fun.c
+OCP_SRC+= px4_model_cost/px4_model_cost_y_e_fun_jac_ut_xt.c
+OCP_SRC+= px4_model_cost/px4_model_cost_y_e_hess.c
 
 OCP_SRC+= acados_solver_px4_model.c
 
@@ -75,8 +82,8 @@ OBJ+= $(OCP_OBJ)
 EXTERNAL_DIR=
 EXTERNAL_LIB=
 
-INCLUDE_PATH = /home/chen/acados/include
-LIB_PATH = /home/chen/acados/lib
+INCLUDE_PATH = /home/rei/acados/include
+LIB_PATH = /home/rei/acados/lib
 
 # preprocessor flags for make's implicit rules
 CPPFLAGS += -DACADOS_WITH_QPOASES
@@ -138,7 +145,7 @@ ocp_cython_c: ocp_shared_lib
 	-o acados_ocp_solver_pyx.c \
 	-I $(INCLUDE_PATH)/../interfaces/acados_template/acados_template \
 	$(INCLUDE_PATH)/../interfaces/acados_template/acados_template/acados_ocp_solver_pyx.pyx \
-	-I /home/chen/px4_ws/px4/c_generated_code \
+	-I /home/rei/px4_ws/px4/c_generated_code \
 
 ocp_cython_o: ocp_cython_c
 	$(CC) $(ACADOS_FLAGS) -c -O2 \
@@ -148,7 +155,7 @@ ocp_cython_o: ocp_cython_c
 	-I $(INCLUDE_PATH)/blasfeo/include/ \
 	-I $(INCLUDE_PATH)/hpipm/include/ \
 	-I $(INCLUDE_PATH) \
-	-I /usr/lib/python3/dist-packages/numpy/core/include \
+	-I /usr/local/lib/python3.10/dist-packages/numpy/core/include \
 	-I /usr/include/python3.10 \
 	acados_ocp_solver_pyx.c \
 
@@ -167,7 +174,7 @@ sim_cython_c: sim_shared_lib
 	-o acados_sim_solver_pyx.c \
 	-I $(INCLUDE_PATH)/../interfaces/acados_template/acados_template \
 	$(INCLUDE_PATH)/../interfaces/acados_template/acados_template/acados_sim_solver_pyx.pyx \
-	-I /home/chen/px4_ws/px4/c_generated_code \
+	-I /home/rei/px4_ws/px4/c_generated_code \
 
 sim_cython_o: sim_cython_c
 	$(CC) $(ACADOS_FLAGS) -c -O2 \
@@ -177,7 +184,7 @@ sim_cython_o: sim_cython_c
 	-I $(INCLUDE_PATH)/blasfeo/include/ \
 	-I $(INCLUDE_PATH)/hpipm/include/ \
 	-I $(INCLUDE_PATH) \
-	-I /usr/lib/python3/dist-packages/numpy/core/include \
+	-I /usr/local/lib/python3.10/dist-packages/numpy/core/include \
 	-I /usr/include/python3.10 \
 	acados_sim_solver_pyx.c \
 

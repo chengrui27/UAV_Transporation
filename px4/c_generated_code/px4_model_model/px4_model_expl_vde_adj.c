@@ -53,12 +53,12 @@ extern "C" {
 
 casadi_real casadi_sq(casadi_real x) { return x*x;}
 
-static const casadi_int casadi_s0[3] = {10, 1, 1};
+static const casadi_int casadi_s0[3] = {17, 1, 1};
 static const casadi_int casadi_s1[3] = {4, 1, 1};
 static const casadi_int casadi_s2[3] = {7, 1, 1};
-static const casadi_int casadi_s3[3] = {14, 1, 1};
+static const casadi_int casadi_s3[3] = {21, 1, 1};
 
-/* px4_model_expl_vde_adj:(i0[10],i1[10],i2[4],i3[7])->(o0[14]) */
+/* px4_model_expl_vde_adj:(i0[17],i1[17],i2[4],i3[7])->(o0[21]) */
 static int casadi_f0(const casadi_real** arg, casadi_real** res, casadi_int* iw, casadi_real* w, int mem) {
   casadi_real a00, a01, a02, a03, a04, a05, a06, a07, a08, a09, a10, a11;
   casadi_real a12, a13, a14, a15, a16, a17, a18, a19;
@@ -72,25 +72,25 @@ static int casadi_f0(const casadi_real** arg, casadi_real** res, casadi_int* iw,
   if (res[0]!=0) res[0][4]=a00;
   a00=arg[1]? arg[1][2] : 0;
   if (res[0]!=0) res[0][5]=a00;
-  a00=arg[2]? arg[2][3] : 0;
+  a00=arg[0]? arg[0][13] : 0;
   a01=5.0000000000000000e-01;
   a02=arg[1]? arg[1][9] : 0;
   a02=(a01*a02);
   a03=(a00*a02);
-  a04=arg[2]? arg[2][2] : 0;
+  a04=arg[0]? arg[0][12] : 0;
   a05=arg[1]? arg[1][8] : 0;
   a05=(a01*a05);
   a06=(a04*a05);
   a03=(a03+a06);
-  a06=arg[2]? arg[2][1] : 0;
+  a06=arg[0]? arg[0][11] : 0;
   a07=arg[1]? arg[1][7] : 0;
   a07=(a01*a07);
   a08=(a06*a07);
   a03=(a03+a08);
   a08=arg[0]? arg[0][6] : 0;
   a09=(a08+a08);
-  a10=arg[2]? arg[2][0] : 0;
-  a11=4.7732696897374699e-01;
+  a10=arg[0]? arg[0][10] : 0;
+  a11=6.5146579804560267e-01;
   a12=arg[1]? arg[1][5] : 0;
   a12=(a11*a12);
   a13=(a10*a12);
@@ -199,6 +199,20 @@ static int casadi_f0(const casadi_real** arg, casadi_real** res, casadi_int* iw,
   a18=(a18*a01);
   a08=(a08-a18);
   if (res[0]!=0) res[0][13]=a08;
+  a08=arg[1]? arg[1][11] : 0;
+  if (res[0]!=0) res[0][14]=a08;
+  a08=arg[1]? arg[1][12] : 0;
+  if (res[0]!=0) res[0][15]=a08;
+  a08=arg[1]? arg[1][13] : 0;
+  if (res[0]!=0) res[0][16]=a08;
+  a08=arg[1]? arg[1][10] : 0;
+  if (res[0]!=0) res[0][17]=a08;
+  a08=arg[1]? arg[1][14] : 0;
+  if (res[0]!=0) res[0][18]=a08;
+  a08=arg[1]? arg[1][15] : 0;
+  if (res[0]!=0) res[0][19]=a08;
+  a08=arg[1]? arg[1][16] : 0;
+  if (res[0]!=0) res[0][20]=a08;
   return 0;
 }
 
